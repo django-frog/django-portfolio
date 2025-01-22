@@ -1,0 +1,33 @@
+{% extends "portfolio/core/base.html" %}
+{% load static %}
+
+{% block content %}
+<content class="bg-gray-100 -z-10 text-gray-800 dark:bg-gray-900 dark:text-gray-100 h-screen flex items-center justify-center">
+     <!-- Main Container -->
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
+
+        <div>
+            <img src="{% static "core/side_img.png" %}" alt="side_img" class="hidden md:block">
+        </div>
+
+        <!-- Text Section -->
+        <div class="text-center md:text-left">
+            <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+                Hello, I'm <span class="text-green-600 dark:text-green-400"><br />Mohammad A. Hamdan</span>
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 mx-4">
+                I'm a passionate developer who loves creating modern and efficient web applications.
+            </p>
+        </div>
+
+        <!-- Image Section -->
+        <div class="w-48 h-48 md:w-64 md:h-64">
+            <img src="{% static "core/my_image.jpeg" %}" alt="My Photo" class="rounded-full shadow-lg object-cover w-full h-full border-gray-900">
+        </div>
+    </div>
+</content>
+{% endblock content %}
+
+{% block title %}
+    Django Dev | Home
+{% endblock title %}

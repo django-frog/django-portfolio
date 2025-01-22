@@ -1,0 +1,45 @@
+<div class="w-full h-full dark:bg-gray-900">
+    <form metod="get" action="{% url "projects:projects_search" %}" class="container mx-auto p-6">
+        <!-- Search Bar -->
+        <div class="flex items-center bg-gray-50 dark:bg-gray-800 shadow-md rounded-lg p-4 space-x-4">
+            
+            <!-- Search Input -->
+            <input 
+                name="title"
+                type="text" 
+                placeholder="Search projects..." 
+                class="flex-grow text-gray-600 dark:text-gray-300 bg-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
+            />
+            
+            <!-- Search Button -->
+            <button 
+                type="submit"
+                class="px-4 py-2 font-mono bg-green-600 text-white rounded-lg hover:bg-green-500 transition duration-300"
+            >
+                Search
+            </button>
+
+        </div>
+
+        <!-- Tag Filtering -->
+        <div multiple class="mt-4 flex flex-row flex-wrap font-mono font-semibold gap-2">
+            {% for tag in search_bar.search_tags %}
+            <div>
+                <input
+                    id="{{tag.id}}"
+                    type="checkbox"
+                    class="hidden peer"
+                    name="tags"
+                    value="{{tag.id}}" 
+                />
+                <label for="{{tag.id}}" 
+                    class="cursor-pointer  hover:text-gray-50  hover:bg-green-500 transition duration-300 peer-checked:bg-green-500 peer-checked:text-gray-50 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-50"
+                >
+                    {{tag.name}}
+                </label>
+            </div>
+            {% endfor %}
+       
+        </div>
+    </form>
+</div>

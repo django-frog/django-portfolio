@@ -1,0 +1,40 @@
+
+<header class="bg-white z-10 sticky top-0 dark:bg-gray-900 shadow-lg shadow-green-500/50" style="position: sticky;top: 0;z-index: 10">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <!-- Logo or Brand -->
+        <a href="{% url 'core:home_page' %}" class="text-2xl font-bold text-green-600 dark:text-green-600">DjangoDev</a>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden md:flex space-x-6">
+            <a href="{% url 'core:home_page' %}" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:duration-300">Home</a>
+            <a href="{% url 'core:about_page' %}" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:duration-300">About</a>
+            <a href="{% url 'projects:projects_page' %}" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:duration-300">Projects</a>
+        </nav>
+
+        <!-- Dark Mode Toggle -->
+        <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:duration-300 focus:outline-none">
+            <svg id="theme-icon-light" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"></circle>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+            </svg>
+            <svg id="theme-icon-dark" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 viewBox="0 0 24 24">
+                <path d="M21.99 12.78A9 9 0 1112 2a9 9 0 009.99 10.78z"></path>
+            </svg>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="menu-toggle" class="block md:hidden text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 viewBox="0 0 24 24">
+                <path d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </div>
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="hidden md:hidden bg-gray-100 dark:bg-gray-800">
+        <a href="{% url 'core:home_page' %}" class="block px-6 py-2 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</a>
+        <a href="{% url 'core:about_page' %}" class="block px-6 py-2 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">About</a>
+        <a href="{% url 'projects:projects_page' %}" class="block px-6 py-2 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Projects</a>
+    </nav>
+</header>

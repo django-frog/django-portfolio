@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{% static 'core/favicon.ico' %}" type="image/x-icon">
+        <title>{% block title %}{% endblock title %}</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+    <body>
+        {% include "portfolio/components/navbar.html" %}
+                
+        {% block content %}{% endblock content %}
+
+        {% include "portfolio/components/footer.html" %}
+    </body>
+
+    {% block script %}
+        <script type="module" src="{% static 'js/base.js' %}"></script>
+    {% endblock script %}
+</html>
