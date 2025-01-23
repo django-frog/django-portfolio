@@ -93,6 +93,9 @@ DATABASES = {
         "USER" : config("MYSQL_DB_USER"),
         "HOST" : config("MYSQL_DB_HOST"),
         "PASSWORD" : config("MYSQL_DB_PASS"),
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     },
     'development': {
         'ENGINE': 'django.db.backends.sqlite3',
