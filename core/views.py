@@ -6,7 +6,6 @@ from django.views.decorators.http import require_GET
 from asgiref.sync import async_to_sync
 
 import httpx
-import json
 
 from .utils import fetch_github_data
 
@@ -77,3 +76,8 @@ class Page500View(generic.TemplateView):
     """
     template_name = "portfolio/500.html"
 
+class HomePageRedirectView(generic.RedirectView):
+    """
+        Home Page Redirect View.
+    """
+    pattern_name = "core:home_page"

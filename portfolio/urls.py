@@ -21,6 +21,7 @@ from django.conf.urls import handler404, handler500
 from core import views
 
 urlpatterns = [
+    path('', views.HomePageRedirectView.as_view()),
     path('settings/admin/dashboard/', admin.site.urls),
     path('home/', include("core.urls")),
     path('projects/', include("projects.urls")),
