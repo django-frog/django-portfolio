@@ -95,6 +95,7 @@ DATABASES = {
         "PASSWORD" : config("MYSQL_DB_PASS"),
         'OPTIONS': {
             'sql_mode': 'traditional',
+            'charset': 'utf8mb4',
         }
     },
     'development': {
