@@ -25,3 +25,61 @@ Welcome to my **Django Portfolio**! This is a simple yet elegant portfolio websi
 - **Frontend**: HTML, Tailwind CSS
 - **APIs**: GitHub API
 - **Version Control**: Git & GitHub
+
+---
+
+## 🚀 Installation
+
+To run this project locally, follow these steps:
+
+1. **Clone the repository**:
+  ```bash
+   git clone https://github.com/django-frog/django-portfolio
+   cd django-portfolio
+  ```
+2. **Set up a virtual environment**:
+  ```bash  
+  python -m venv venv
+  source venv/bin/activate  # On Windows: venv\Scripts\activate
+  ```
+3. **Install dependencies**:
+  ```bash
+    pip install -r requirements.txt
+  ```
+
+4. **Set up environment variables**:
+
+  Create a .env file in the root directory and add your GitHub API token (optional for public repos):
+
+  ```bash
+  cp .test.env .env
+  ```
+
+  Then change environment variables:
+  ```env
+  APP_SECRET = "Django_Application_Secret"
+  GITHUB_API = "Github API Url"
+  GITHUB_TOKEN = "Your Github account token"
+
+  MEMCACHED_SERVERS = "Memcached Server Address"
+  MEMCACHED_PASSWORD = "Memcached Server Poassword"
+  MEMCAHCED_USERNAME = "Memcached username"
+
+  MYSQL_DB_NAME = "MySQL database name"
+  MYSQL_DB_USER = "MySQL database user"
+  MYSQL_DB_HOST = "MySQL database host"
+  MYSQL_DB_PASS = "MySQL database password"
+
+  ```
+
+5. **Run migrations**:
+  ```bash
+  python manage.py migrate
+  ```
+
+6. **Run the development server**:
+  ```bash
+  python manage.py runserver
+  ```
+
+Visit http://127.0.0.1:8000 in your browser to see the project in action!
