@@ -26,22 +26,22 @@
                                 </g>
                             </g>
                         </svg>
-                        <h2 class="font-mono font-bold inline text-3xl dark:text-gray-50 md:text-md">{{project.title}}</h2>
+                        <h2 class="font-mono font-bold inline text-xl md:text-3xl dark:text-gray-50">{{project.title}}</h2>
                     </div>
                     <div class="mx-0 md:mx-6">
-                        <ul class="flex flex-wrap justify-items-center gap-6">
+                        <ul class="flex flex-wrap justify-items-center gap-3 md:gap-6">
                             {% for tag in project.tags.all %}
                                 <li class="p-1 cursor-default text-xs md:text-sm font-bold dark:text-green-400 text-green-600 dark:hover:bg-green-400 hover:bg-green-600 dark:hover:text-gray-50 hover:text-gray-50 hover:duration-300 rounded-3xl border border-solid border-green-600">{{tag}}</li>
                             {% endfor %}
                         </ul>
                     </div>
                     <div>
-                        <p class="dark:text-gray-50">{{project.description}}</p>
+                        <p class="dark:text-gray-50 text-sm">{{project.description}}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-bold text-xs dark:text-gray-50">{{project.start_date}} - {{project.end_date}}</p>
+                        <p class="text-gray-600 font-bold text-xs md:text-xs dark:text-gray-50">{{project.start_date}} - {{project.end_date}}</p>
                     </div>
-                    <div class="flex flex-row justify-start justify-items-center">
+                    <div class="flex flex-row md:justify-start justify-center justify-items-center">
                         <a href="{{project.project_url}}" class="p-3 text-gray-900 cursor-pointer dark:text-gray-50 border-2 border-solid font-bold border-gray-900 dark:border-gray-100 rounded-lg">
                             Show Project
                             <span>

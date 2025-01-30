@@ -14,32 +14,42 @@
             <!-- Search Button -->
             <button 
                 type="submit"
-                class="px-4 py-2 font-mono bg-green-600 text-white rounded-lg hover:bg-green-500 transition duration-300"
+                class="px-4 py-2 font-mono text-sm sm:text-md bg-green-600 text-white rounded-lg hover:bg-green-500 transition duration-300"
             >
                 Search
             </button>
 
         </div>
 
-        <!-- Tag Filtering -->
-        <div multiple class="mt-4 flex flex-row flex-wrap font-mono font-semibold gap-2">
-            {% for tag in search_bar.search_tags %}
-            <div>
-                <input
-                    id="{{tag.id}}"
-                    type="checkbox"
-                    class="hidden peer"
-                    name="tags"
-                    value="{{tag.id}}" 
-                />
-                <label for="{{tag.id}}" 
-                    class="cursor-pointer  hover:text-gray-50  hover:bg-green-500 transition duration-300 peer-checked:bg-green-500 peer-checked:text-gray-50 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-50"
-                >
-                    {{tag.name}}
-                </label>
+        <!-- Tag Filtering Section -->
+        <div class="mt-4">
+            <!-- Scrollable Container -->
+            <div class="relative">
+                <!-- Tags Wrapper -->
+                <div class="flex overflow-x-auto scrollbar-hide tags-container pb-3"> <!-- pb-3 for spacing at the bottom -->
+                    <div class="flex flex-nowrap gap-3 font-mono font-semibold">
+                        {% for tag in search_bar.search_tags %}
+                        <div class="flex-shrink-0 py-3"> <!-- Prevent tags from shrinking -->
+                            <input
+                                id="{{tag.id}}"
+                                type="checkbox"
+                                class="hidden peer"
+                                name="tags"
+                                value="{{tag.id}}"
+                            />
+                            <label for="{{tag.id}}"
+                                class="cursor-pointer text-sm sm:text-base hover:text-gray-50 hover:bg-green-500 transition duration-300 peer-checked:bg-green-500 peer-checked:text-gray-50 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-50 shadow-sm hover:shadow-md peer-checked:shadow-md"
+                            >
+                                {{tag.name}}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            
+                <!-- Gradient Fade Effect (Optional) -->
+                <div class="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white dark:from-gray-900 pointer-events-none"></div>
             </div>
-            {% endfor %}
-       
         </div>
     </form>
 </div>
