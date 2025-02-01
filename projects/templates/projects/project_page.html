@@ -10,10 +10,10 @@
         <div>
             <h1 class="font-sans font-bold text-green-500 dark:text-green-400 text-4xl md:text-5xl">Projects</h1>
         </div>
-        {% if projects.data %}
+        {% if projects %}
 
             {% comment %} Projects Loop {% endcomment %}
-            {% for project in projects.data %}
+            {% for project in projects %}
                 <div class="flex flex-col justify-items-center md:justify-start gap-6 mx-0 md:mx-6">
                     <div class="flex flex-col md:flex-row justify-center md:justify-start gap-12 items-center h-fit">
                         <svg width="60px" height="60px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">        
@@ -80,7 +80,7 @@
     </div>
 
     {% comment %} Pagination {% endcomment %}
-    {% if projects.page_indices|length > 1 %}
+    {% if paginator.num_pages > 1 %}
         {% include "projects/components/paginator.html" %}
     {% endif %}
 
