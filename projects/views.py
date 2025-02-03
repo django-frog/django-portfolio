@@ -68,10 +68,18 @@ class ProjectsSearchView(generic.ListView):
 
         return projects_queryset.filter(
             title_queryObj & tags_queryObj
-        ).order_by("-created_at").prefetch_related("tags")
+        ).distinct().order_by("-created_at").prefetch_related("tags")
 
     def get_context_data(self, **kwargs) -> dict[str]:
         context = super().get_context_data(**kwargs)
+
+        title_query = self.request.GET.get("title")
+        tags_queries = self.request.GET.getlist("tags" , [])
+        tags_str = "&".join(list(map(lambda tag : f"tags={tag}", tags_queries)))
+
+        query_str = f"title={title_query}&{tags_str}"
+
         context["search_bar"] = search_bar_context()
+        context["query_string"] = query_str
         return context
     
