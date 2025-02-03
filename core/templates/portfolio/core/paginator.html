@@ -1,8 +1,17 @@
+{% comment %} 
+    This is Core Pagination Component.
+    This Component is designed to work with class-based views pagination context
+    so it will not work with custom context.
+
+    page_obj: is the current page object
+    paginator: is the paginator object    
+{% endcomment %}
+
 <div class="flex justify-center py-12 items-center space-x-4 dark:bg-gray-900">
     <!-- Previous Button -->
     {% if  page_obj.has_previous %}
     <a
-        href="{% url "projects:projects_page" %}?page={{page_obj.previous_page_number}}" 
+        href="?page={{page_obj.previous_page_number}}&{{query_string}}" 
         class="px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
     >
         Previous
@@ -32,7 +41,7 @@
     <!-- Next Button -->
     {% if page_obj.has_next %}
     <a
-        href="{% url "projects:projects_page" %}?page={{page_obj.next_page_number}}" 
+        href="?page={{page_obj.next_page_number}}&{{query_string}}" 
         class="px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
     >
         Next
