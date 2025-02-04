@@ -1,37 +1,62 @@
+{% comment %} 
+    Core Pagination Component
+    --------------------------
+    This component is designed to work **only** with Django's class-based views that use pagination.
+    It dynamically displays page numbers, handles navigation, and retains query parameters.
+
+    Required context variables:
+    - `page_obj` → The current paginated page (from Django's pagination system).
+    - `paginator` → The paginator instance that manages all pages.
+    - `query_string` → A string containing additional GET parameters (e.g., search filters) to persist across pages.
+    
+    Notes:
+    - If there is no previous or next page, the respective buttons will be disabled.
+    - The current page is highlighted visually.
+{% endcomment %}
 <div class="flex justify-center py-12 items-center space-x-4 dark:bg-gray-900">
     <!-- Previous Button -->
+    {% if  page_obj.has_previous %}
     <a
-        href="{% url "projects:projects_page" %}?page={{projects.prev_page}}" 
-        {% if  projects.prev_page %}
+        href="?page={{page_obj.previous_page_number}}&{{query_string}}" 
         class="px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
-        {% else %}
-        class="opacity-50 cursor-not-allowed px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
-        {% endif %}>
+    >
         Previous
     </a>
+    {% else %}
+    <a
+        class="opacity-50 cursor-not-allowed px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
+    >
+        Previous
+    </a>
+    {% endif %}
 
     <!-- Page Numbers -->
     <div class="flex flex-row gap-2 font-mono font-bold">
-        {% for page in projects.page_indices %}
+        {% for page in paginator.page_range %}
             <a 
-                {% if page == projects.current_page %}
+                {% if page == page_obj.number %}
                 class="px-3 py-2 rounded-lg bg-green-600 text-white shadow-md font-medium cursor-pointer"
                 {% else %}
                 class="px-3 py-2 rounded-lg border bg-white shadow-md hover:bg-gray-100 hover:text-green-600 text-gray-600 focus:outline-none"
                 {% endif %}
-                href="{% url "projects:projects_page" %}?page={{page}}"
+                href="?page={{page}}&{{ query_string }}"
             >{{page}}</a>            
         {% endfor %}
     </div>        
 
     <!-- Next Button -->
+    {% if page_obj.has_next %}
     <a
-        href="{% url "projects:projects_page" %}?page={{projects.next_page}}" 
-        {% if  projects.next_page %}
+        href="?page={{page_obj.next_page_number}}&{{query_string}}" 
         class="px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
-        {% else %}
-        class="opacity-50 cursor-not-allowed px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
-        {% endif %}>
+    >
         Next
-    </a>
+    </a>   
+    {% else %}
+    <span
+        class="opacity-50 cursor-not-allowed px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
+    >
+        Next
+    </span>
+    {% endif %}
 </div>

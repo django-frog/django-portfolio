@@ -1,10 +1,8 @@
-from django.shortcuts import render
-from .models import Project, ProjectTag
 from django.core.cache import cache
-from django.views.decorators.http import require_GET
-from asgiref.sync import sync_to_async
-from core.utils import paginate
+from django.views import generic
+from django.db.models import Q
 
+from .models import Project, ProjectTag
 # Create your views here.
 
 def search_bar_context():
@@ -25,70 +23,73 @@ def search_bar_context():
 
     return context
 
-@require_GET
-@sync_to_async
-def list_projects(request):
-    """
-    Lists all projects with pagination.
+class ProjectsListView(generic.ListView):
+    """View to display a paginated list of projects."""
+    paginate_by = 5
+    model = Project
+    template_name = "projects/project_page.html"
+    context_object_name = "projects"
 
-    Args:
-        request: The HTTP request object.
-
-    Returns:
-        A rendered template with paginated projects and search context.
-    """
-    page_query = request.GET.get("page" , "1")
-    page_num = int(page_query) if page_query.isnumeric() else 1
-
-    projects = Project.objects\
-        .filter(deleted_at = None)\
-            .order_by('-created_at')\
-                .prefetch_related('tags')
+    def get_queryset(self):
+        """Retrieve non-deleted projects ordered by creation date."""
+        return super().get_queryset()\
+            .filter(Q(deleted_at__isnull=True))\
+                .order_by('-created_at')\
+                    .prefetch_related('tags')
     
-    projects_context = paginate(projects, current_page=page_num)
-    template = "projects/project_page.html"
-
-    search_context = search_bar_context()
+    def get_context_data(self, **kwargs):
+        """Add the search bar context to the template."""
+        context = super().get_context_data(**kwargs)
+        context["search_bar"] = search_bar_context()
+        return context
     
-    context = {
-        "projects" : projects_context,
-        "search_bar" : search_context,
-    }
-    return render(request, template, context)
 
-@require_GET
-def search_projects(request):
-    """
-    Filters projects based on title and tags.
+class ProjectsSearchView(generic.ListView):
+    """View to display a filtered list of projects based on search criteria."""
+    context_object_name = "projects"
+    paginate_by = 5
+    template_name = "projects/project_page.html"
+    model = Project
 
-    Args:
-        request: The HTTP request object.
+    def get_queryset(self):
+        """Filter projects based on title and tags."""
+        title_query = self.request.GET.get("title", "")
+        tags_query = self.request.GET.getlist("tags" , [])
+        try:
+            tags = [int(tag) for tag in tags_query]
+        except ValueError:
+            tags = []   # Ignore invalid tag values
 
-    Returns:
-        A rendered template with filtered projects and search context.
-    """
-    title_query = request.GET.get("title" , "")
-    tags_query = request.GET.getlist("tags" , [])
-    tags = [int(tag) for tag in tags_query]
-
-    
-    selected_projects = Project.objects.filter(
-        deleted_at = None,
-        title__contains=title_query,
-    ).order_by("-created_at").prefetch_related('tags')
-
-    if tags:
-        selected_projects = selected_projects.filter(
-            tags__in = tags
+        title_queryObj = Q(
+            deleted_at = None,
+            title__contains=title_query,
         )
+        
+        tags_queryObj =  Q(
+            tags__in = tags
+        ) if tags else Q()
 
-    projects_context = paginate(selected_projects)
-    search_context = search_bar_context()
+        projects_queryset =  super().get_queryset()
 
-    template = "projects/project_page.html"
+        # Apply filters and return sorted results
+        return projects_queryset.filter(
+            title_queryObj & tags_queryObj
+        ).distinct().order_by("-created_at").prefetch_related("tags")
 
-    context = {
-        "projects" : projects_context,
-        "search_bar" : search_context
-    }
-    return render(request, template, context)
+    def get_context_data(self, **kwargs):
+        """Add search parameters and search bar context to the template."""
+        context = super().get_context_data(**kwargs)
+
+        # Build query string for pagination & filters
+        title_query = self.request.GET.get("title")
+        tags_queries = self.request.GET.getlist("tags" , [])
+        query_params = []
+
+        if title_query:
+            query_params.append(f"title={title_query}")
+        query_params.extend(f"tags={tag}" for tag in tags_queries)
+
+        context["query_string"] = "&".join(query_params)
+        context["search_bar"] = search_bar_context()
+        return context
+    
