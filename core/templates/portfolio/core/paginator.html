@@ -13,6 +13,7 @@
     - If there is no previous or next page, the respective buttons will be disabled.
     - The current page is highlighted visually.
 {% endcomment %}
+{% load i18n %}
 <div class="flex justify-center py-12 items-center space-x-4 dark:bg-gray-900">
     <!-- Previous Button -->
     {% if  page_obj.has_previous %}
@@ -20,13 +21,13 @@
         href="?page={{page_obj.previous_page_number}}&{{query_string}}" 
         class="px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
     >
-        Previous
+        {% trans "Previous" %}
     </a>
     {% else %}
     <a
         class="opacity-50 cursor-not-allowed px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
     >
-        Previous
+        {% trans "Previous" %}
     </a>
     {% endif %}
 
@@ -50,13 +51,13 @@
         href="?page={{page_obj.next_page_number}}&{{query_string}}" 
         class="px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
     >
-        Next
+        {% trans "Next" %}
     </a>   
     {% else %}
     <span
         class="opacity-50 cursor-not-allowed px-4 py-2 font-mono font-semibold dark:text-gray-50 dark:bg-gray-900 p-1 rounded-lg border hover:bg-gray-100 hover:text-green-600 shadow-lg shadow-green-500 text-gray-600 focus:outline-none"
     >
-        Next
+        {% trans "Next" %}
     </span>
     {% endif %}
 </div>

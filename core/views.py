@@ -1,8 +1,11 @@
 from django.conf import settings
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.core.cache import cache
 from django.views import generic
 from django.views.decorators.http import require_GET
+from django.shortcuts import redirect
+from django.utils.translation import activate
 from asgiref.sync import async_to_sync
 
 import httpx
@@ -45,6 +48,35 @@ async def get_github_data(request):
     except Exception as e:
         return JsonResponse({"error": "An unexpected error occurred"}, status=500)
 
+@require_GET
+def switch_language(request):
+    """
+    Custom set language view.
+
+    Args:
+        request (HttpRequest): HTTP request with 'lang' query parameter.
+
+    Returns:
+        HttpResponseRedirect: Redirects to the referring page.
+    """
+    lang_code = request.GET.get("lang", "en")  # Get language from query string
+
+    activate(lang_code)  # Activate language for the current request
+
+    # Store language in session
+    request.session["django_language"] = lang_code
+    request.session.modified = True  # Ensure the session is updated
+
+    # Set language in a cookie
+    response = redirect(request.META.get("HTTP_REFERER", "/"))
+    response.set_cookie(
+        "django_language",  # Correct language cookie name
+        lang_code,
+        max_age=getattr(settings, "LANGUAGE_COOKIE_AGE", 31536000),  # Default: 1 year
+        path="/",
+    )
+
+    return response
 
 class FrontPageView(generic.TemplateView):
     """
