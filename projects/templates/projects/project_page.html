@@ -1,5 +1,6 @@
 {% extends "portfolio/core/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %} 
     {% comment %} Search bar {% endcomment %}
@@ -8,7 +9,7 @@
     {% comment %} Projects {% endcomment %}
     <div class="flex flex-col dark:bg-gray-900 justify-items-center md:justify-items-start p-12 md:px-32 gap-12 h-full">
         <div>
-            <h1 class="font-sans font-bold text-green-500 dark:text-green-400 text-4xl md:text-5xl">Projects</h1>
+            <h1 class="font-sans font-bold text-green-500 dark:text-green-400 text-4xl md:text-5xl">{% trans "Projects" %}</h1>
         </div>
         {% if projects %}
 

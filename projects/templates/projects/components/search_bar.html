@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="w-full h-full dark:bg-gray-900">
     <form metod="get" action="{% url "projects:projects_search" %}" class="container mx-auto p-6">
         <!-- Search Bar -->
@@ -16,7 +17,7 @@
                 type="submit"
                 class="px-4 py-2 font-mono text-sm sm:text-md bg-green-600 text-white rounded-lg hover:bg-green-500 transition duration-300"
             >
-                Search
+                {% trans "Search" %}
             </button>
 
         </div>
