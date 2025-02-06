@@ -1,14 +1,15 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class Project(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=700)
-    start_date = models.DateField(default=timezone.now)
-    end_date = models.DateField()
-    project_url = models.URLField()
-    tags = models.ManyToManyField('ProjectTag')
+    title = models.CharField(verbose_name=_("Title"), max_length=200)
+    description = models.CharField(verbose_name=_("Description"),max_length=700)
+    start_date = models.DateField(verbose_name=_("Start Date"),default=timezone.now)
+    end_date = models.DateField(verbose_name=_("End Date"))
+    project_url = models.URLField(verbose_name=_("Project URL"))
+    tags = models.ManyToManyField('ProjectTag', verbose_name=_("Tags"))
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
 
@@ -24,7 +25,7 @@ class Project(models.Model):
         self.save()
 
 class ProjectTag(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(verbose_name=_("Name"),max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
