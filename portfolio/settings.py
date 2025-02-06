@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from django.utils.translation import gettext_lazy as _
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -177,6 +178,26 @@ CRISPY_TEMPLATE_PACK = 'tailwind'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Translation and Localization
+# https://docs.djangoproject.com/en/5.1/topics/i18n/translation/
+LANGUAGE_CODE = 'en'
+
+USE_I18N = True
+USE_L10N = True
+
+# Available languages (English + Japanese)
+LANGUAGES = [
+    ("en", _("English")),
+    ("ja", _("Japanese")),
+]
+
+LANG_COOKIE_NAME = "django_language"
+LANG_COOKIE_AGE = 31536000  # One Year
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale"
+]
 
 # Github API URL
 GITHUB_API = config("GITHUB_API")
