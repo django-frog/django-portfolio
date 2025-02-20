@@ -48,45 +48,7 @@
                 </ul>
             </li>
         </ul>
-    </div>
-
-    <div class="p-5 flex flex-col text-center gap-12 justify-items-start">
-        <p class="text-lg md:text-2xl font-sans dark:text-gray-50 text-black font-extrabold">
-            {% trans "My Github Account" %} ⚡️
-        </p>
-    </div>
-    
-    <div class="flex flex-col items-center gap-6">
-        
-        <div class="text-center">
-            <div id="github_name_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-            <h2 id="github_name" class="hidden font-bold text-xl font-mono dark:text-white text-gray-800"></h2>
-        </div>
-    
-        <div id="github_img_placeholder" class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse ">
-            <div class="flex items-center justify-center w-48 h-48 bg-gray-300 rounded dark:bg-gray-700">
-                <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
-                </svg>
-            </div>
-        </div>
-        <div>
-            <img id="github_img" class="hidden h-48 rounded-full w-48 border border-solid" src="{% static 'core/github_account.jpeg' %}" />
-        </div>
-        <div class="flex flex-col md:flex-row justify-between justify-items-center gap-6">
-            <div>
-                <p class="font-mono text-center font-semibold uppercase text-gray-600 dark:text-gray-50">{% trans "# Followers" %}</p>
-                <div id="followers_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-                <p id="n_followers" class="font-mono hidden text-center font-semibold uppercase text-gray-600 dark:text-gray-50"></p>
-            </div>
-            <div>
-                <p class="font-mono text-center font-semibold uppercase text-gray-600 dark:text-gray-50">{% trans "# Following" %}</p>
-                <div id="following_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-                <p id="n_following" class="font-mono hidden text-center font-semibold uppercase text-gray-600 dark:text-gray-50"></p>
-            </div>
-        </div>
-    </div>
-    
+    </div>    
 </div>
 
 {% endblock content %}
@@ -94,10 +56,3 @@
 {% block title %}
     Django Dev | About Me
 {% endblock title %}
-
-{% block script %}
-<script type="module">
-    import { load_github_data } from "{% static "js/about.js" %}"
-    load_github_data("{% url "core:github_data" %}") 
-</script>
-{% endblock script %}

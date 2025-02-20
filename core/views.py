@@ -96,6 +96,12 @@ class ProjectsPageView(generic.TemplateView):
     """
     template_name = "portfolio/project_page.html"
 
+class MediaPageView(generic.TemplateView):
+    """
+        SocailMedia-Page View Class
+    """
+    template_name = "portfolio/media_page.html"
+
 class Page404View(generic.TemplateView):
     """
         Page Not Found (404) Custom Handler
