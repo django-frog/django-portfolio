@@ -1,0 +1,118 @@
+{% extends "portfolio/core/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="flex flex-col justify-center items-center p-12 md:h-full min-h-screen gap-6 bg-gray-50 dark:bg-gray-900">
+    
+    <div>
+        <h1 class="text-3xl md:text-5xl text-green-600 dark:text-green-500 font-bold uppercase">{% trans "Social Media:" %}</h1>
+    </div>
+
+    <div class="p-5 flex flex-col text-center gap-12 justify-items-start">
+        <p class="text-lg md:text-2xl font-sans dark:text-gray-50 text-black font-extrabold">
+            {% trans "My Github Account" %} ⚡️
+        </p>
+    </div>
+
+    <div class="flex flex-col items-center gap-6">
+
+        <div class="text-center">
+            <div id="github_name_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+            <h2 id="github_name" class="hidden font-bold text-xl font-mono dark:text-white text-gray-800"></h2>
+        </div>
+
+        <div id="github_img_placeholder" class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse ">
+            <div class="flex items-center justify-center w-48 h-48 bg-gray-300 rounded dark:bg-gray-700">
+                <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                </svg>
+            </div>
+        </div>
+        <div>
+            <img id="github_img" class="hidden h-48 rounded-full w-48 border border-solid" src="{% static 'core/github_account.jpeg' %}" />
+        </div>
+        <div class="flex flex-col md:flex-row justify-between justify-items-center gap-6">
+            <div>
+                <p class="font-mono text-center font-semibold uppercase text-gray-600 dark:text-gray-50">{% trans "# Followers" %}</p>
+                <div id="followers_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+                <p id="n_followers" class="font-mono hidden text-center font-semibold uppercase text-gray-600 dark:text-gray-50"></p>
+            </div>
+            <div>
+                <p class="font-mono text-center font-semibold uppercase text-gray-600 dark:text-gray-50">{% trans "# Following" %}</p>
+                <div id="following_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+                <p id="n_following" class="font-mono hidden text-center font-semibold uppercase text-gray-600 dark:text-gray-50"></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="p-5 flex flex-col text-center gap-12 justify-items-start">
+        <p class="text-lg md:text-2xl font-sans dark:text-gray-50 text-black font-extrabold">
+            {% trans "My LeetCode Account" %} ⚡️
+        </p>
+    </div>
+    
+    <div class="flex flex-col items-center gap-6">
+        <!-- LeetCode Username -->
+        <div class="text-center">
+            <div id="leetcode_name_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+            <h2 id="leetcode_name" class="hidden font-bold text-xl font-mono dark:text-white text-gray-800"></h2>
+        </div>
+    
+        <!-- LeetCode Profile Image -->
+        <div id="leetcode_img_placeholder" class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse">
+            <div class="flex items-center justify-center w-48 h-48 bg-gray-300 rounded-full dark:bg-gray-700">
+                <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                </svg>
+            </div>
+        </div>
+        <div>
+            <img id="leetcode_img" class="hidden h-48 rounded-full w-48 border-4 border-green-500 shadow-lg" />
+        </div>
+    
+        <!-- LeetCode Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+            <!-- Easy Problems Card -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <h3 class="text-lg font-semibold text-green-600 dark:text-green-500 mb-4">{% trans "Easy Problems" %}</h3>
+                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4">
+                    <div id="easy_progress" class="h-full bg-green-500 rounded-full" style="width: 60%;"></div>
+                </div>
+                <div id="easy_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-24 mb-4 mx-auto"></div>
+                <p id="easy_problems" class="font-mono hidden text-center text-2xl font-bold text-gray-800 dark:text-gray-100"></p>
+            </div>
+    
+            <!-- Medium Problems Card -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <h3 class="text-lg font-semibold text-yellow-600 dark:text-yellow-500 mb-4">{% trans "Medium Problems" %}</h3>
+                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4">
+                    <div id="medium_progress" class="h-full bg-yellow-500 rounded-full" style="width: 40%;"></div>
+                </div>
+                <div id="medium_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-24 mb-4 mx-auto"></div>
+                <p id="medium_problems" class="font-mono hidden text-center text-2xl font-bold text-gray-800 dark:text-gray-100"></p>
+            </div>
+    
+            <!-- Hard Problems Card -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <h3 class="text-lg font-semibold text-red-600 dark:text-red-500 mb-4">{% trans "Hard Problems" %}</h3>
+                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4">
+                    <div id="hard_progress" class="h-full bg-red-500 rounded-full" style="width: 20%;"></div>
+                </div>
+                <div id="hard_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-24 mb-4 mx-auto"></div>
+                <p id="hard_problems" class="font-mono hidden text-center text-2xl font-bold text-gray-800 dark:text-gray-100"></p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock content %}
+
+{% block script %}
+<script type="module">
+    import { load_github_data, load_leetcode_data} from "{% static "js/media.js" %}"
+    load_github_data("{% url "core:github_data" %}") 
+    load_leetcode_data("{% url "core:leetcode_data" %}")
+</script>
+{% endblock script %}

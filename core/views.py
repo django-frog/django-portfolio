@@ -10,7 +10,7 @@ from asgiref.sync import async_to_sync
 
 import httpx
 
-from .utils import fetch_github_data
+from .utils import fetch_github_data, fetch_leetcode_data
 
 # Create your views here.
 @require_GET
@@ -46,6 +46,20 @@ async def get_github_data(request):
             return JsonResponse({"error": str(e)}, status=e.response.status_code)
     
     except Exception as e:
+        return JsonResponse({"error": "An unexpected error occurred"}, status=500)
+
+@require_GET
+@async_to_sync
+async def get_leetcode_data(request):
+    leetcode_cache_key = "leecode_data"
+    try:
+        leetcode_data = await fetch_leetcode_data(cache_key=leetcode_cache_key)
+        return JsonResponse(leetcode_data)
+    except httpx.HTTPStatusError as e:
+            return JsonResponse({"error": str(e)}, status=e.response.status_code)
+    
+    except Exception as e:
+        print(e)
         return JsonResponse({"error": "An unexpected error occurred"}, status=500)
 
 @require_GET
@@ -95,6 +109,12 @@ class ProjectsPageView(generic.TemplateView):
         Project-Page View Class
     """
     template_name = "portfolio/project_page.html"
+
+class MediaPageView(generic.TemplateView):
+    """
+        SocailMedia-Page View Class
+    """
+    template_name = "portfolio/media_page.html"
 
 class Page404View(generic.TemplateView):
     """

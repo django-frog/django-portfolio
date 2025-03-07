@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-06 17:15+0000\n"
+"POT-Creation-Date: 2025-03-07 12:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: 日本語 <LL@li.org>\n"
@@ -56,25 +56,13 @@ msgstr ""
 msgid "Skills"
 msgstr "スキル"
 
-#: core/templates/portfolio/about_page.html:55
-msgid "My Github Account"
-msgstr "私のGithubアカウント"
-
-#: core/templates/portfolio/about_page.html:78
-msgid "# Followers"
-msgstr "# フォロワー"
-
-#: core/templates/portfolio/about_page.html:83
-msgid "# Following"
-msgstr "# 続く"
-
-#: core/templates/portfolio/core/paginator.html:23
-#: core/templates/portfolio/core/paginator.html:29
+#: core/templates/portfolio/core/paginator.html:24
+#: core/templates/portfolio/core/paginator.html:30
 msgid "Previous"
 msgstr "前の"
 
-#: core/templates/portfolio/core/paginator.html:53
-#: core/templates/portfolio/core/paginator.html:59
+#: core/templates/portfolio/core/paginator.html:54
+#: core/templates/portfolio/core/paginator.html:60
 msgid "Next"
 msgstr "次"
 
@@ -91,6 +79,38 @@ msgstr "最新で効率的なWebアプリケーションの開発を愛する情
 #: core/templates/portfolio/front_page.html:25
 msgid "Download CV"
 msgstr "履歴書をダウンロード"
+
+#: core/templates/portfolio/media_page.html:10
+msgid "Social Media:"
+msgstr ""
+
+#: core/templates/portfolio/media_page.html:15
+msgid "My Github Account"
+msgstr "私のGithubアカウント"
+
+#: core/templates/portfolio/media_page.html:38
+msgid "# Followers"
+msgstr "# フォロワー"
+
+#: core/templates/portfolio/media_page.html:43
+msgid "# Following"
+msgstr "# 続く"
+
+#: core/templates/portfolio/media_page.html:52
+msgid "My LeetCode Account"
+msgstr "私のLeetCodeアカウント"
+
+#: core/templates/portfolio/media_page.html:79
+msgid "Easy Problems"
+msgstr "簡単な問題"
+
+#: core/templates/portfolio/media_page.html:89
+msgid "Medium Problems"
+msgstr "中程度の問題"
+
+#: core/templates/portfolio/media_page.html:99
+msgid "Hard Problems"
+msgstr "難しい問題"
 
 #: main_env/lib/python3.9/site-packages/django/contrib/messages/apps.py:15
 msgid "Messages"
@@ -1324,7 +1344,7 @@ msgstr "タグ"
 msgid "Name"
 msgstr "名前"
 
-#: projects/templates/projects/components/search_bar.html:19
+#: projects/templates/projects/components/search_bar.html:20
 msgid "Search"
 msgstr ""
 
