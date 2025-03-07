@@ -40,12 +40,12 @@ export async function load_leetcode_data(leetcode_url) {
     const leetcode_data = await response.json();
     
     // // Update username
-    document.getElementById('leetcode_name').textContent = leetcode_data.username;
+    document.getElementById('leetcode_name').textContent = leetcode_data.user.username;
     document.getElementById('leetcode_name').classList.remove('hidden');
     document.getElementById('leetcode_name_placeholder').classList.add('hidden');
 
     // // Update profile image
-    document.getElementById('leetcode_img').src = leetcode_data.profile.userAvatar;
+    document.getElementById('leetcode_img').src = leetcode_data.user.avatar	;
     document.getElementById('leetcode_img').classList.remove('hidden');
     document.getElementById('leetcode_img_placeholder').classList.add('hidden');
 
@@ -68,9 +68,9 @@ export async function load_leetcode_data(leetcode_url) {
     };
 
     updateStats(
-        leetcode_data.submitStatsGlobal.acSubmissionNum[1].count, 
-        leetcode_data.submitStatsGlobal.acSubmissionNum[2].count, 
-        leetcode_data.submitStatsGlobal.acSubmissionNum[3].count
+        leetcode_data.profile.easySolved, 
+        leetcode_data.profile.mediumSolved, 
+        leetcode_data.profile.hardSolved
     )
 
 }
