@@ -81,7 +81,17 @@ To run this project locally, follow these steps:
   python manage.py migrate
   ```
 
-6. **Run the development server**:
+6. **Collect static files**:
+  ```bash
+  python manage.py collectstatic
+  ```
+
+7. **Compile Language File**
+```bash
+python manage.py compilemessages
+```
+
+8. **Run the development server**:
   ```bash
   python manage.py runserver
   ```
