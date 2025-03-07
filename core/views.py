@@ -10,7 +10,7 @@ from asgiref.sync import async_to_sync
 
 import httpx
 
-from .utils import fetch_github_data, fetch_leetcode_data
+from .utils import *
 
 # Create your views here.
 @require_GET
@@ -51,15 +51,27 @@ async def get_github_data(request):
 @require_GET
 @async_to_sync
 async def get_leetcode_data(request):
-    leetcode_cache_key = "leecode_data"
+    graphql_option = request.GET.get("graphql" , "")
     try:
-        leetcode_data = await fetch_leetcode_data(cache_key=leetcode_cache_key)
-        return JsonResponse(leetcode_data)
+        if graphql_option:
+            leetcode_cache_key = "leetcode_data"
+            leetcode_data = await fetch_graphql_leetcode_data(cache_key=leetcode_cache_key)
+            return JsonResponse(leetcode_data)
+        else:
+            leetcode_user_cache_key = "leetcode_user_data"
+            leetcode_problems_cache_key = "leetcode_problems_data"
+
+            leetcode_user_data = await fetch_rest_leetcode_user(cache_key=leetcode_user_cache_key)
+            leetcode_profile_data = await fetch_rest_leetcode_profile(cache_key=leetcode_problems_cache_key)
+            return JsonResponse({
+                "user" : leetcode_user_data,
+                "profile" : leetcode_profile_data
+            })
+            
     except httpx.HTTPStatusError as e:
             return JsonResponse({"error": str(e)}, status=e.response.status_code)
-    
+
     except Exception as e:
-        print(e)
         return JsonResponse({"error": "An unexpected error occurred"}, status=500)
 
 @require_GET
