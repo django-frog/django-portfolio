@@ -70,8 +70,10 @@ To run this project locally, follow these steps:
   MYSQL_DB_HOST = "MySQL database host"
   MYSQL_DB_PASS = "MySQL database password"
 
-  LEETCODE_GRAPHQL_URL = "https://leetcode.com/graphql" # LeetCode GraphQL API
-  LEETCODE_USERNAME = "leetcode_username" 
+
+  LEETCODE_GRAPHQL_API = "https://leetcode.com/graphql"
+  LEETCODE_REST_API = "https://alfa-leetcode-api.onrender.com/"
+  LEETCODE_USERNAME = "mohammadAsCP"
   ```
 
 5. **Run migrations**:
