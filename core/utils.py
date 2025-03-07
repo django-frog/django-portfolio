@@ -1,6 +1,9 @@
-import httpx
 from django.core.cache import cache
 from django.core import paginator
+from django.conf import settings
+
+import httpx
+
 
 async def fetch_github_data(api_url, token, cache_key, timeout=10):
     """
@@ -29,6 +32,56 @@ async def fetch_github_data(api_url, token, cache_key, timeout=10):
         data = response.json()
         cache.set(cache_key, data, timeout=cache_timeout_secs)
         return data
+
+async def fetch_leetcode_data(cache_key):
+    """
+    Fetches and parses data from a LeetCode profile page.
+
+    Returns:
+        dict: A dictionary containing the account name, profile image URL,
+              and the number of problems solved (easy, medium, hard).
+              Returns None if an error occurs.
+    """
+    cache_timeout_secs = 60 * 15
+    data = cache.get(cache_key)
+    if data:
+        return data
+    
+    # Define the GraphQL API endpoint
+    leetcode_api = settings.LEETCODE_GRAPHQL_URL
+
+    # GraphQL query to fetch user profile details
+    GRAPHQL_QUERY = """
+    query getUserProfile($username: String!) {
+        matchedUser(username: $username) {
+            username
+            profile {
+              realName
+              userAvatar
+              ranking
+            }
+            submitStatsGlobal {
+              acSubmissionNum {
+                difficulty
+                count
+              }
+            }
+        }
+    }
+    """
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            leetcode_api,
+            json={"query": GRAPHQL_QUERY, "variables": {"username": settings.LEETCODE_USERNAME}},
+            headers={"Content-Type": "application/json"},
+        )
+        response.raise_for_status()
+        data = response.json()
+        user_data = data["data"]["matchedUser"]
+        cache.set(cache_key, user_data, timeout=cache_timeout_secs)
+
+        return user_data
 
 
 def paginate(queryset, page_size = 5, current_page = 1):
