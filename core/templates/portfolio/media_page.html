@@ -33,7 +33,7 @@
         <div>
             <img id="github_img" class="hidden h-48 rounded-full w-48 border border-solid" src="{% static 'core/github_account.jpeg' %}" />
         </div>
-        <div class="flex flex-col md:flex-row justify-between justify-items-center gap-6">
+        <div class="flex flex-row gap-8 md:gap-6 justify-between justify-items-center">
             <div>
                 <p class="font-mono text-center font-semibold uppercase text-gray-600 dark:text-gray-50">{% trans "# Followers" %}</p>
                 <div id="followers_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
@@ -52,61 +52,72 @@
             {% trans "My LeetCode Account" %} ⚡️
         </p>
     </div>
-    
-    <div class="flex flex-col items-center gap-6">
-        <!-- LeetCode Username -->
-        <div class="text-center">
-            <div id="leetcode_name_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-            <h2 id="leetcode_name" class="hidden font-bold text-xl font-mono dark:text-white text-gray-800"></h2>
-        </div>
-    
-        <!-- LeetCode Profile Image -->
-        <div id="leetcode_img_placeholder" class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse">
-            <div class="flex items-center justify-center w-48 h-48 bg-gray-300 rounded-full dark:bg-gray-700">
-                <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
-                </svg>
+
+    <div class="flex flex-col items-center gap-8 px-4 py-6 w-full">
+        <!-- Profile Section -->
+        <div class="flex flex-col items-center gap-6 w-full">
+            
+            <!-- LeetCode Profile Image - Fixed Version -->
+            <div class="relative">
+                <!-- Loading Placeholder -->
+                <div id="leetcode_img_placeholder" class="flex items-center justify-center w-48 h-48 bg-gray-300 rounded-full dark:bg-gray-700 animate-pulse">
+                    <svg class="w-12 h-12 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                    </svg>
+                </div>
+
+                <!-- Actual Image - Fixed Properties -->
+                <img id="leetcode_img" 
+                     class="hidden absolute inset-0 w-full h-full rounded-full border-4 border-green-500 dark:border-green-600 object-cover shadow-lg"
+                     alt="LeetCode Profile Picture"
+                     onerror="this.style.display='none'; document.getElementById('leetcode_img_placeholder').style.display='flex';" />
+            </div>
+            
+            <!-- Username -->
+            <div class="text-center">
+                <div id="leetcode_name_placeholder" class="h-6 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-48 mb-3 mx-auto"></div>
+                <h2 id="leetcode_name" class="hidden font-bold text-xl md:text-2xl font-mono dark:text-white text-gray-800 tracking-tight"></h2>
             </div>
         </div>
-        <div>
-            <img id="leetcode_img" class="hidden h-48 rounded-full w-48 border-4 border-green-500 shadow-lg" />
-        </div>
     
-        <!-- LeetCode Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
-            <!-- Easy Problems Card -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <h3 class="text-lg font-semibold text-green-600 dark:text-green-500 mb-4">{% trans "Easy Problems" %}</h3>
-                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4">
-                    <div id="easy_progress" class="h-full bg-green-500 rounded-full" style="width: 60%;"></div>
+        <!-- Stats Cards - Responsive Layout -->
+        <div class="w-full max-w-4xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+                <!-- Easy Card -->
+                <div class="bg-white dark:bg-gray-800 p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-lg md:text-xl font-semibold text-green-600 dark:text-green-400 mb-3 md:mb-4">Easy</h3>
+                    <div class="h-2 md:h-2.5 bg-gray-200 dark:bg-gray-700 rounded-full mb-4 md:mb-5">
+                        <div id="easy_progress" class="h-full bg-green-500 rounded-full" style="width: 60%"></div>
+                    </div>
+                    <div id="easy_placeholder" class="h-7 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-32 mb-3 mx-auto"></div>
+                    <p id="easy_problems" class="font-mono hidden text-center text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100"></p>
                 </div>
-                <div id="easy_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-24 mb-4 mx-auto"></div>
-                <p id="easy_problems" class="font-mono hidden text-center text-2xl font-bold text-gray-800 dark:text-gray-100"></p>
-            </div>
-    
-            <!-- Medium Problems Card -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <h3 class="text-lg font-semibold text-yellow-600 dark:text-yellow-500 mb-4">{% trans "Medium Problems" %}</h3>
-                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4">
-                    <div id="medium_progress" class="h-full bg-yellow-500 rounded-full" style="width: 40%;"></div>
+                
+                <!-- Medium Card -->
+                <div class="bg-white dark:bg-gray-800 p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-lg md:text-xl font-semibold text-yellow-600 dark:text-yellow-400 mb-3 md:mb-4">Medium</h3>
+                    <div class="h-2 md:h-2.5 bg-gray-200 dark:bg-gray-700 rounded-full mb-4 md:mb-5">
+                        <div id="medium_progress" class="h-full bg-yellow-500 rounded-full" style="width: 40%"></div>
+                    </div>
+                    <div id="medium_placeholder" class="h-7 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-32 mb-3 mx-auto"></div>
+                    <p id="medium_problems" class="font-mono hidden text-center text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100"></p>
                 </div>
-                <div id="medium_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-24 mb-4 mx-auto"></div>
-                <p id="medium_problems" class="font-mono hidden text-center text-2xl font-bold text-gray-800 dark:text-gray-100"></p>
-            </div>
-    
-            <!-- Hard Problems Card -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <h3 class="text-lg font-semibold text-red-600 dark:text-red-500 mb-4">{% trans "Hard Problems" %}</h3>
-                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-4">
-                    <div id="hard_progress" class="h-full bg-red-500 rounded-full" style="width: 20%;"></div>
+                
+                <!-- Hard Card -->
+                <div class="bg-white dark:bg-gray-800 p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-lg md:text-xl font-semibold text-red-600 dark:text-red-400 mb-3 md:mb-4">Hard</h3>
+                    <div class="h-2 md:h-2.5 bg-gray-200 dark:bg-gray-700 rounded-full mb-4 md:mb-5">
+                        <div id="hard_progress" class="h-full bg-red-500 rounded-full" style="width: 20%"></div>
+                    </div>
+                    <div id="hard_placeholder" class="h-7 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-32 mb-3 mx-auto"></div>
+                    <p id="hard_problems" class="font-mono hidden text-center text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100"></p>
                 </div>
-                <div id="hard_placeholder" class="h-5 bg-gray-200 animate-pulse rounded-full dark:bg-gray-700 w-24 mb-4 mx-auto"></div>
-                <p id="hard_problems" class="font-mono hidden text-center text-2xl font-bold text-gray-800 dark:text-gray-100"></p>
             </div>
         </div>
     </div>
-    
+
 </div>
+
 {% endblock content %}
 
 {% block script %}
