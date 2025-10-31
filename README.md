@@ -75,23 +75,33 @@ To run this project locally, follow these steps:
   LEETCODE_REST_API = "https://alfa-leetcode-api.onrender.com/"
   LEETCODE_USERNAME = "mohammadAsCP"
   ```
+5. **Export Mode System Variable**:
+   - *For Production*:
+   ```bash
+   export DJANGO_SETTINGS_MODULE=portfolio.settings.prod
+   ```
 
-5. **Run migrations**:
+   - *For Development*:
+   ```bash
+   export DJANGO_SETTINGS_MODULE=portfolio.settings.dev
+   ``` 
+
+6. **Run migrations**:
   ```bash
   python manage.py migrate
   ```
 
-6. **Collect static files**:
+7. **Collect static files**:
   ```bash
   python manage.py collectstatic
   ```
 
-7. **Compile Language File**
+8. **Compile Language File**
 ```bash
 python manage.py compilemessages
 ```
 
-8. **Run the development server**:
+9. **Run the development server**:
   ```bash
   python manage.py runserver
   ```
