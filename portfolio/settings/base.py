@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    "tailwind",
+    "theme",
     'core.apps.CoreConfig',
     'projects.apps.ProjectsConfig',
 ]
@@ -166,6 +168,10 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Tailwind-Django Integration
+# https://pypi.org/project/django-tailwind/
+
+TAILWIND_APP_NAME = "theme"
 
 # Crispy forms 
 # https://django-crispy-forms.readthedocs.io/en/latest/
