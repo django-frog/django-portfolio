@@ -1,45 +1,527 @@
 {% extends "portfolio/core/base.html" %}
 {% load static %}
 {% load i18n %}
-
 {% block content %}
-<content class="bg-gray-100 -z-10 text-gray-800 dark:bg-gray-900 dark:text-gray-100 h-screen flex items-center justify-center">
-     <!-- Main Container -->
-    <div class="container mx-auto flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
-
-        <div>
-            <img src="{% static "core/side_img.png" %}" alt="side_img" class="hidden md:block">
-        </div>
-
-        <!-- Text Section -->
-        <div class="flex flex-col items-center justify-items-center text-center md:justify-start md:text-left md:justify-items-start md:items-start">
+<div x-data="{ open: false }">
+   <content class="relative bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 h-screen flex items-center justify-center">
+      <!-- DRAG HANDLE (FLOATING ON TOP OF MAIN SECTION) -->
+      <div
+         @click="open = true"
+         x-show="!open"
+         class="absolute bottom-4 left-1/2 -translate-x-1/2
+         flex flex-col items-center cursor-pointer select-none
+         animate-pulse"
+         >
+         <div class="w-12 h-2 rounded-full bg-gray-400 dark:bg-gray-600"></div>
+         <p class="text-sm mt-2 text-gray-600 dark:text-gray-300">
+            {% trans "Swipe / Tap to See More" %}
+        </p>
+      </div>
+      <!-- Main Container -->
+      <div class="container mx-auto flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
+         <div>
+            <img src="{% static 'core/side_img.png' %}" alt="side_img" class="hidden md:block">
+         </div>
+         <div class="flex flex-col items-center text-center md:text-left md:items-start">
             <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-                {% trans "Hello, I'm" %} <span class="text-green-600 dark:text-green-400"><br />Mohammad A. Hamdan</span>
+               {% trans "Hello, I'm" %} 
+               <span class="text-green-600 dark:text-green-400"><br />Mohammad A. Hamdan</span>
             </h1>
             <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 mx-4">
-                {% trans "I'm a passionate developer who loves creating modern and efficient web applications." %}
+               {% trans "I'm a passionate developer who loves creating modern and efficient web applications." %}
             </p>
             <a
-            class="flex flex-row justify-items-center text-center justify-center items-center w-fit font-mono my-4 font-bold gap-4 rounded-full p-4 bg-green-600 text-white shadow-lg shadow-green-700" 
-            href="https://drive.usercontent.google.com/download?id=1nOFRGmp4ajwVuSS8YlqHLc69zbdmHZ5U&export=download&authuser=0">
-                <p>{% trans "Download CV" %}</p>   
-                <span>
-                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
+               class="flex flex-row items-center w-fit font-mono my-4 font-bold gap-4 rounded-full p-4 
+               bg-green-600 text-white shadow-lg shadow-green-700" 
+               href="https://drive.usercontent.google.com/download?id=1nOFRGmp4ajwVuSS8YlqHLc69zbdmHZ5U&export=download&authuser=0">
+               <p>{% trans "Download CV" %}</p>
+               <span>
+                  <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                     <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+               </span>
             </a>
-        </div>
+         </div>
+         <div class="w-48 h-48 md:w-64 md:h-64">
+            <img src="{% static 'core/my_image.jpeg' %}" alt="My Photo"
+               class="rounded-full shadow-lg object-cover w-full h-full border-gray-900">
+         </div>
+      </div>
+   </content>
 
-        <!-- Image Section -->
-        <div class="w-48 h-48 md:w-64 md:h-64">
-            <img src="{% static "core/my_image.jpeg" %}" alt="My Photo" class="rounded-full shadow-lg object-cover w-full h-full border-gray-900">
-        </div>
-    </div>
-</content>
+   <!-- Expandable Sections -->
+   <!-- DOMAINS SECTION -->
+   <div 
+      x-show="open"
+      x-transition.duration.500ms
+      class="w-full bg-gray-100 dark:bg-gray-900 mt-0 text-gray-800 dark:text-gray-200"
+      >
+      <link href="https://unpkg.com/pattern.css" rel="stylesheet">
+      <section class="py-5 relative">
+         <!-- Outer full-width wrapper — no container -->
+         <div class="mx-auto px-5 max-w-6xl">
+            <!-- Inner max-width constraint for cards/content -->
+            <!-- Header -->
+            <div class="text-center mb-20">
+               <h1 class="mb-4 text-4xl font-extrabold sm:text-5xl md:text-6xl">
+                    {% trans "Domains" %}
+               </h1>
+               <div class="flex mt-6 justify-center">
+                  <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
+               </div>
+            </div>
+            <!-- Skill Cards -->
+            <div class="flex flex-wrap justify-center items-center sm:-m-4 -mx-4 -mb-10 -mt-4">
+               <!-- Backend Engineering -->
+               <div class="p-10 md:w-1/3 mb-6 flex flex-col">
+                  <div class="pattern-dots-md gray-light">
+                     <div class="rounded bg-gray-100 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 p-8 shadow-sm transform translate-x-6 -translate-y-6">
+                        <!-- Icon -->
+                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-green-100 text-green-600 mb-5">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                 d="M4 7h16M4 12h16M4 17h16M7 7v10" />
+                           </svg>
+                        </div>
+                        <!-- Header -->
+                        <h2 class="text-xl font-bold text-center mb-3 text-gray-900 dark:text-gray-100">
+                        {% trans "Backend Engineering" %}
+                        </h2>
+                        <!-- Description -->
+                        <p class="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
+                        {% trans "I build reliable backend systems using Django with clean, secure, and scalable architecture. My focus is performance, optimized databases, and APIs." %}
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <!-- Odoo Development -->
+               <div class="p-10 md:w-1/3 mb-6 flex flex-col">
+                  <div class="pattern-dots-md gray-light">
+                     <div class="rounded bg-gray-100 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 p-8 shadow-sm transform translate-x-6 -translate-y-6">
+                        <!-- Icon -->
+                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-purple-200 text-purple-600 mb-5">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                 d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" />
+                           </svg>
+                        </div>
+                        <h2 class="text-xl font-bold text-center mb-3 text-gray-900 dark:text-gray-100">
+                        {% trans "Odoo Development" %}
+                        </h2>
+                        <p class="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
+                        {% trans "I customize and extend Odoo to create smooth business workflows and efficient modules. My work improves performance, usability, and integrations across company processes." %}
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <!-- Data Engineering -->
+               <div class="p-10 md:w-1/3 mb-6 flex flex-col">
+                  <div class="pattern-dots-md gray-light">
+                     <div class="rounded bg-gray-100 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 p-8 shadow-sm transform translate-x-6 -translate-y-6">
+                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-blue-100 text-blue-600 mb-5">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                 d="M4 7v10c0 2.2 3.6 4 8 4s8-1.8 8-4V7m-16 0c0-2.2 3.6-4 8-4s8 1.8 8 4M4 12c0 2.2 3.6 4 8 4s8-1.8 8-4" />
+                           </svg>
+                        </div>
+                        <h2 class="text-xl font-bold text-center mb-3 text-gray-900 dark:text-gray-100">
+                        {% trans "Data Engineering" %}
+                        </h2>
+                        <p class="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
+                        {% trans "I design data pipelines that clean, organize, and structure information for analytics. My solutions ensure fast performance, clear insights, and scalable data operations." %}
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- end inner max-width -->
+      </section>
+
+        <!-- Skills and Tools -->
+      <section class="w-full py-20 bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors">
+         <!-- Header -->
+         <div class="text-center mb-20">
+            <h1 class="mb-4 text-4xl font-extrabold sm:text-5xl md:text-6xl">
+                {% trans "Skills" %}
+            </h1>
+            <div class="flex mt-6 justify-center">
+               <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
+            </div>
+         </div>
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 px-6 max-w-7xl mx-auto">
+            <!-- BACK-END CARD -->
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full">
+               <h3 class="text-2xl font-bold text-center mb-6">
+                {% trans "Back-End" %}
+               </h3>
+               <section x-data="skillDisplayBackend" class="space-y-8">
+                  <!-- TAGS -->
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                     <template x-for="skill in skills">
+                        <button x-text="skill.title"
+                           class="px-3 py-1 text-xs h-10 w-full rounded-md transition 
+                           bg-blue-100 text-blue-800 hover:bg-blue-200
+                           dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700"
+                           :class="(currentSkill.title == skill.title) && 'font-bold ring-2 ring-blue-400 dark:ring-blue-300'"
+                           @click="currentSkill = skill"></button>
+                     </template>
+                  </div>
+                  <!-- CIRCLE -->
+                  <div class="flex items-center justify-center relative" 
+                     x-data="{ circumference: 2 * Math.PI * 60 }">
+                     <svg class="transform -rotate-90 w-40 h-40">
+                        <circle cx="80" cy="80" r="60"
+                           stroke-width="18"
+                           stroke="currentColor"
+                           class="text-gray-200 dark:text-gray-700"
+                           fill="transparent" />
+                        <circle cx="80" cy="80" r="60"
+                           stroke-width="18"
+                           fill="transparent"
+                           stroke="currentColor"
+                           :stroke-dasharray="circumference"
+                           :stroke-dashoffset="circumference - currentSkill.percent / 100 * circumference"
+                           class="text-blue-500 dark:text-blue-400 transition-all duration-500" />
+                     </svg>
+                     <span class="absolute text-3xl font-bold"
+                        x-text="`${currentSkill.percent}%`"></span>
+                  </div>
+               </section>
+            </div>
+            <!-- ODOO CARD -->
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full">
+               <h3 class="text-2xl font-bold text-center mb-6">
+                {% trans "Odoo Development" %}
+               </h3>
+               <section x-data="skillDisplayOdoo" class="space-y-8">
+                  <!-- TAGS -->
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                     <template x-for="skill in skills">
+                        <button x-text="skill.title"
+                           class="px-3 py-1 text-xs h-10 w-full rounded-md transition
+                           bg-purple-100 text-purple-800 hover:bg-purple-200
+                           dark:bg-purple-700 dark:text-white dark:hover:bg-purple-800"
+                           :class="(currentSkill.title == skill.title) && 'font-bold ring-2 ring-purple-400 dark:ring-purple-300'"
+                           @click="currentSkill = skill"></button>
+                     </template>
+                  </div>
+                  <!-- CIRCLE -->
+                  <div class="flex items-center justify-center relative"
+                     x-data="{ circumference: 2 * Math.PI * 60 }">
+                     <svg class="transform -rotate-90 w-40 h-40">
+                        <circle cx="80" cy="80" r="60"
+                           stroke="currentColor"
+                           stroke-width="18"
+                           class="text-gray-200 dark:text-gray-700"
+                           fill="transparent" />
+                        <circle cx="80" cy="80" r="60"
+                           stroke-width="18"
+                           stroke="currentColor"
+                           fill="transparent"
+                           :stroke-dasharray="circumference"
+                           :stroke-dashoffset="circumference - currentSkill.percent / 100 * circumference"
+                           class="text-purple-500 dark:text-purple-400 transition-all duration-500" />
+                     </svg>
+                     <span class="absolute text-3xl font-bold"
+                        x-text="`${currentSkill.percent}%`"></span>
+                  </div>
+               </section>
+            </div>
+            <!-- DATA ENGINEERING CARD -->
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full">
+               <h3 class="text-2xl font-bold text-center mb-6">
+                {% trans "Data Engineering" %}
+               </h3>
+               <section x-data="skillDisplayData" class="space-y-8">
+                  <!-- TAGS -->
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                     <template x-for="skill in skills">
+                        <button x-text="skill.title"
+                           class="px-3 py-1 text-xs h-10 w-full rounded-md transition
+                           bg-yellow-100 text-yellow-800 hover:bg-yellow-200
+                           dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-700"
+                           :class="(currentSkill.title == skill.title) && 'font-bold ring-2 ring-yellow-400 dark:ring-yellow-300'"
+                           @click="currentSkill = skill"></button>
+                     </template>
+                  </div>
+                  <!-- CIRCLE -->
+                  <div class="flex items-center justify-center relative"
+                     x-data="{ circumference: 2 * Math.PI * 60 }">
+                     <svg class="transform -rotate-90 w-40 h-40">
+                        <circle cx="80" cy="80" r="60"
+                           stroke="currentColor"
+                           stroke-width="18"
+                           class="text-gray-200 dark:text-gray-700"
+                           fill="transparent" />
+                        <circle cx="80" cy="80" r="60"
+                           stroke-width="18"
+                           stroke="currentColor"
+                           fill="transparent"
+                           :stroke-dasharray="circumference"
+                           :stroke-dashoffset="circumference - currentSkill.percent / 100 * circumference"
+                           class="text-yellow-500 dark:text-yellow-400 transition-all duration-500" />
+                     </svg>
+                     <span class="absolute text-3xl font-bold"
+                        x-text="`${currentSkill.percent}%`"></span>
+                  </div>
+               </section>
+            </div>
+         </div>
+      </section>
+
+      <!-- Work Experience -->
+
+      <section class="w-full py-16 bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+         <!-- Section Header -->
+         <div class="text-center mb-10 px-4">
+            <h1 class="text-4xl font-bold mb-2">
+                {% trans "Work Experience" %}
+            </h1>
+            <div class="flex mt-6 justify-center">
+               <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
+            </div>
+         </div>
+         <div class="flex flex-col md:flex-row items-start justify-center gap-12 px-4 md:px-40">
+            <!-- Timeline (Left Side) -->
+            <div class="relative">
+               <!-- Vertical dashed line -->
+               <div class="absolute top-0 left-3 h-full border-l-4 border-dashed border-gray-400 dark:border-gray-600"></div>
+               <!-- Starter dash -->
+               <div class="absolute -top-6 left-3 h-6 border-l-4 border-dashed border-gray-400 dark:border-gray-600"></div>
+               <!-- MILESTONES -->
+               <div class="space-y-8">
+                  <!-- Milestone Template -->
+                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="1">
+                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
+                        bg-green-600 dark:bg-green-500"></div>
+                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
+                        {% trans "Back-end Developer Free-Lancer (2023 - Present)" %}
+                    </p>
+                  </div>
+                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="2">
+                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
+                        bg-green-600 dark:bg-green-500"></div>
+                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
+                        {% trans "Odoo Developer Intership (2024 Sep. - 2024 Dec.)" %}
+                    </p>
+                  </div>
+                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="3">
+                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
+                        bg-green-600 dark:bg-green-500"></div>
+                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
+                        {% trans "Odoo Developer (2025 Marc. - Present)" %}
+                     </p>
+                  </div>
+                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="4">
+                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
+                        bg-green-600 dark:bg-green-500"></div>
+                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
+                        {% trans "Prompt Engineering Intership (2025 Jun. - 2025 Jul.)" %}
+                     </p>
+                  </div>
+                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="5">
+                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
+                        bg-green-600 dark:bg-green-500"></div>
+                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
+                        {% trans "Data Engineer Intership (2025 Aug. - 2026 Jun.)" %}
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <!-- DETAILS PANEL (Right Side) -->
+            <div id="detailsPanel" class="flex-1 max-w-xl p-6 rounded-xl bg-white text-gray-900 shadow
+               dark:bg-gray-800 dark:text-gray-100">
+               <h3 class="text-2xl font-semibold mb-4">Full-stack Developer at XYZ Corp</h3>
+               <p class="leading-relaxed text-gray-700 dark:text-gray-300">
+                  Developed large-scale Django backend systems, optimized APIs,
+                  built responsive UIs with TailwindCSS, and improved performance
+                  for enterprise clients. Led team code reviews and CI/CD setups.
+               </p>
+            </div>
+         </div>
+      </section>
+
+      <!-- ===== CTA Section with Floating Dots ===== -->
+      <section class="relative py-24 overflow-hidden bg-gray-100 dark:bg-gray-900">
+         <!-- Floating Dots Layer -->
+         <div class="absolute inset-0 pointer-events-none opacity-25 dark:opacity-30">
+            <!-- 12 Randomized Floating Dots -->
+            <div class="floating-dot dot1"></div>
+            <div class="floating-dot dot2"></div>
+            <div class="floating-dot dot3"></div>
+            <div class="floating-dot dot4"></div>
+            <div class="floating-dot dot5"></div>
+            <div class="floating-dot dot6"></div>
+            <div class="floating-dot dot7"></div>
+            <div class="floating-dot dot8"></div>
+            <div class="floating-dot dot9"></div>
+            <div class="floating-dot dot10"></div>
+            <div class="floating-dot dot11"></div>
+            <div class="floating-dot dot12"></div>
+         </div>
+         <!-- CTA Content -->
+         <div class="relative max-w-3xl mx-auto text-center px-6">
+            <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+               {% trans "Let's Build Something Great Together" %}
+            </h2>
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-10 leading-relaxed">
+                {% trans "Whether you need help with Odoo development, backend engineering, or data solutions — I’m always open to discussing new projects and collaborations." %}
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+               <a href="mailto:mohammadasdjangodev@gmail.com"
+                  class="px-8 py-3 rounded-xl bg-green-600 text-white font-medium shadow-md hover:bg-green-700 transition">
+               {% trans "Contact Me" %}
+               </a>
+               <a href="https://www.linkedin.com/in/mohammad-hamdan-824963324/"
+                  target="_blank"
+                  class="px-8 py-3 rounded-xl border border-gray-400 dark:border-gray-600
+                  text-gray-800 dark:text-gray-200 font-medium shadow-md 
+                  hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+               Connect on LinkedIn
+               </a>
+            </div>
+         </div>
+      </section>
+      <!-- Floating Dots Animation -->
+      <style>
+         /* Keyframes for random-ish floating motion */
+         @keyframes randomFloat {
+         0%   { transform: translate(0, 0) scale(1); }
+         25%  { transform: translate(20px, -30px) scale(1.1); }
+         50%  { transform: translate(-15px, -10px) scale(0.95); }
+         75%  { transform: translate(25px, 20px) scale(1.05); }
+         100% { transform: translate(0, 0) scale(1); }
+         }
+         /* Base Style */
+         .floating-dot {
+         position: absolute;
+         border-radius: 9999px;
+         animation: randomFloat linear infinite;
+         opacity: 0.8;
+         }
+         /* Individual Dot Settings */
+         .dot1  { width:8px;  height:8px;  top:10%; left:20%; background:#60a5fa; animation-duration:7s; animation-delay:0s; }
+         .dot2  { width:6px;  height:6px;  top:30%; left:70%; background:#c084fc; animation-duration:9s; animation-delay:1s; }
+         .dot3  { width:10px; height:10px; top:50%; left:15%; background:#4ade80; animation-duration:11s; animation-delay:2s; }
+         .dot4  { width:7px;  height:7px;  top:65%; left:80%; background:#fb7185; animation-duration:8s; animation-delay:0.5s; }
+         .dot5  { width:5px;  height:5px;  top:20%; left:55%; background:#38bdf8; animation-duration:10s; animation-delay:1.5s; }
+         .dot6  { width:9px;  height:9px;  top:75%; left:30%; background:#a78bfa; animation-duration:12s; animation-delay:0.8s; }
+         .dot7  { width:6px;  height:6px;  top:40%; left:10%; background:#4ade80; animation-duration:13s; animation-delay:2.5s; }
+         .dot8  { width:7px;  height:7px;  top:85%; left:60%; background:#f472b6; animation-duration:9s; animation-delay:1.2s; }
+         .dot9  { width:10px; height:10px; top:15%; left:80%; background:#60a5fa; animation-duration:14s; animation-delay:0.3s; }
+         .dot10 { width:6px;  height:6px;  top:55%; left:50%; background:#c084fc; animation-duration:10s; animation-delay:1.7s; }
+         .dot11 { width:5px;  height:5px;  top:72%; left:10%; background:#a3e635; animation-duration:11s; animation-delay:0.6s; }
+         .dot12 { width:8px;  height:8px;  top:25%; left:40%; background:#38bdf8; animation-duration:13s; animation-delay:2s; }
+      </style>
+   </div>
+</div>
+
+<script>
+   document.addEventListener('alpine:init', () => {
+   
+       // BACK-END SKILLS
+       Alpine.data('skillDisplayBackend', () => ({
+           skills: [
+               { title: 'Django', percent: 65 },
+               { title: 'Fast API', percent: 45},
+               { title: 'REST APIs', percent: 85},
+               { title: 'PostGreSQL', percent: 86},
+               { title: 'JSON-RPC', percent: 80},
+               { title: 'Spring Boot', percent: 35},
+           ],
+           currentSkill: { title: 'Django', percent: 65 }
+       }));
+   
+       // ODOO SKILLS
+       Alpine.data('skillDisplayOdoo', () => ({
+           skills: [
+               { title: 'Odoo Web Library', percent: 50 },
+               { title: 'Odoo Framework', percent: 85 },
+               { title: 'Odoo Functional', percent: 60 },
+               { title: 'MVC', percent: 95 },
+           ],
+           currentSkill: { title: 'Odoo Framework', percent: 85 }
+       }));
+   
+       // DATA ENGINEERING SKILLS
+       Alpine.data('skillDisplayData', () => ({
+           skills: [
+               { title: 'Python', percent: 80 },
+               { title: 'ETL Pipelines', percent: 75 },
+               { title: 'Data Modeling', percent: 70 },
+               { title: 'SQL', percent: 85 },
+               { title: 'Prefect', percent: 45 },
+           ],
+           currentSkill: { title: 'Python', percent: 80 }
+       }));
+   });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+         
+        const details = {
+            1: {
+                title: "Freelance Backend Developer",
+                text: "Worked on multiple projects including a social media platform similar to Instagram and a hospital management system. Built secure Django backends, optimized database structures, created REST APIs, and delivered scalable system architectures tailored to client needs."
+            },
+            2: {
+                title: "Odoo Developer Intern at EBTech",
+                text: "Completed an internship focused on Odoo development, learning key concepts of module customization, ORM usage, and business workflow automation. Contributed to enhancements in HR, accounting, and inventory modules."
+            },
+            3: {
+                title: "Odoo Developer at EBTech",
+                text: "Hired full-time after the internship. Developed custom Odoo modules, improved company ERP workflows, implemented automated processes, and delivered deployment-ready enhancements used across production systems."
+            },
+            4: {
+                title: "AI Website Developer Intern at Fontee Aperta",
+                text: "Built dynamic websites using AI-powered workflows, prompt engineering, and content generation systems. Improved automation processes, integrated AI models, and delivered fast landing pages and microsites for various clients."
+            },
+            5: {
+                title: "Data Engineer Intern at Yasmeen AI",
+                text: "Designed and maintained ETL pipelines, cleaned and transformed datasets, improved data reliability, and supported machine-learning workflows. Focused on efficient data ingestion, API integrations, and pipeline performance optimization."
+            }
+        };
+
+
+        const milestones = document.querySelectorAll(".milestone");
+        const panel = document.getElementById("detailsPanel");
+
+        // Activate default (first item)
+        setActive(1);
+
+        milestones.forEach(m => {
+            m.addEventListener("click", () => {
+                const id = m.getAttribute("data-id");
+                setActive(id);
+            });
+        });
+
+        function setActive(id) {
+
+            // Update Panel
+            panel.querySelector("h3").textContent = details[id].title;
+            panel.querySelector("p").textContent = details[id].text;
+
+            // Reset all dots
+            document.querySelectorAll(".milestone .dot").forEach(dot => {
+                dot.classList.remove("ring-4", "ring-green-400");
+            });
+
+            // Highlight active one
+            const activeMilestone = document.querySelector(`.milestone[data-id="${id}"] .dot`);
+            activeMilestone.classList.add("ring-4", "ring-green-400");
+        }
+         
+    });
+</script>
+
+
+
 {% endblock content %}
-
 {% block title %}
-    Django Dev | Home
+Django Dev | Home
 {% endblock title %}
