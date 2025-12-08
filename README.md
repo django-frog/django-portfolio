@@ -86,22 +86,27 @@ To run this project locally, follow these steps:
    export DJANGO_SETTINGS_MODULE=portfolio.settings.dev
    ``` 
 
-6. **Run migrations**:
+6. **Install Tailwind CSS Dependencies**:
+```bash
+python manage.py tailwind install
+```
+
+7. **Run migrations**:
   ```bash
   python manage.py migrate
   ```
 
-7. **Collect static files**:
+8. **Collect static files**:
   ```bash
   python manage.py collectstatic
   ```
 
-8. **Compile Language File**
+9. **Compile Language File**
 ```bash
 python manage.py compilemessages
 ```
 
-9. **Run the development server**:
+10. **Run the development server**:
   ```bash
   python manage.py runserver
   ```
