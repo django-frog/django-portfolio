@@ -3,52 +3,105 @@
 {% load i18n %}
 {% block content %}
 <div x-data="{ open: false }">
-   <content class="relative bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 h-screen flex items-center justify-center">
-      <!-- DRAG HANDLE (FLOATING ON TOP OF MAIN SECTION) -->
-      <div
-         @click="open = true"
-         x-show="!open"
-         class="absolute bottom-4 left-1/2 -translate-x-1/2
-         flex flex-col items-center cursor-pointer select-none
-         animate-pulse"
-         >
-         <div class="w-12 h-2 rounded-full bg-gray-400 dark:bg-gray-600"></div>
-         <p class="text-sm mt-2 text-gray-600 dark:text-gray-300">
-            {% trans "Swipe / Tap to See More" %}
-        </p>
+
+   <content id="heroSection"
+      class="relative bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100
+      h-screen flex items-center justify-center">
+
+
+      <!-- SCROLL / SWIPE HINT (Mobile Version) -->
+      <div id="mobileScrollHint"
+           class="flex md:hidden flex-col items-center absolute bottom-20 
+                  animate-fade-in select-none pointer-events-none z-50">
+
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 animate-bounce"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 9l-7 7-7-7"/>
+          </svg>
       </div>
+
+      <!-- SCROLL / SWIPE HINT (Mouse Icon) -->
+      <div id="swipeHint"
+           @click="open = true"
+           x-show="!open"
+           class="hidden absolute bottom-24 left-1/2 
+                  md:flex flex-col items-center cursor-pointer select-none
+                  animate-fade-in pointer-events-auto">
+
+
+            <div class="mouse-icon relative flex items-center justify-center w-6">
+                <svg
+                    viewBox="0 0 19 30"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="drop-shadow-lg block mx-auto"
+                >
+                    <!-- Mouse Body -->
+                    <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M16.875 20.625V9.375C16.875 7.38588 16.0848 5.47822 14.6783 4.0717C13.2718 2.66518 11.3641 1.875 9.375 1.875C7.38588 1.875 5.47822 2.66518 4.0717 4.0717C2.66518 5.47822 1.875 7.38588 1.875 9.375V20.625C1.875 22.6141 2.66518 24.5218 4.0717 25.9283C5.47822 27.3348 7.38588 28.125 9.375 28.125C11.3641 28.125 13.2718 27.3348 14.6783 25.9283C16.0848 24.5218 16.875 22.6141 16.875 20.625Z"
+                        class="mouse fill-none stroke-green-500"
+                    ></path>
+            
+                    <!-- Cursor (Animated) -->
+                    <path
+                        d="M10.0379 7.39959C9.8621 7.22377 9.62364 7.125 9.375 7.125C9.12636 7.125 8.8879 7.22377 8.71209 7.39959C8.53627 7.5754 8.4375 7.81386 8.4375 8.0625V11.8125C8.4375 12.0611 8.53627 12.2996 8.71209 12.4754C8.8879 12.6512 9.12636 12.75 9.375 12.75C9.62364 12.75 9.8621 12.6512 10.0379 12.4754C10.2137 12.2996 10.3125 12.0611 10.3125 11.8125V8.0625C10.3125 7.81386 10.2137 7.5754 10.0379 7.39959Z"
+                        class="cursor fill-green-500 animate-scrollCursor"
+                    ></path>
+                </svg>
+            </div>
+
+            <p class="text-sm mt-3 font-semibold text-gray-700 dark:text-gray-200 relative z-50">
+                {% trans "Scroll to explore" %}
+            </p>
+
+      </div>
+      
+
       <!-- Main Container -->
-      <div class="container mx-auto flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
+      <div class="container mx-auto flex flex-col md:flex-row items-center justify-center
+         space-y-4 md:space-y-0 md:space-x-16">
+
          <div>
             <img src="{% static 'core/side_img.png' %}" alt="side_img" class="hidden md:block">
          </div>
+
          <div class="flex flex-col items-center text-center md:text-left md:items-start">
             <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-               {% trans "Hello, I'm" %} 
+               {% trans "Hello, I'm" %}
                <span class="text-green-600 dark:text-green-400"><br />Mohammad A. Hamdan</span>
             </h1>
+
             <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 mx-4">
                {% trans "I'm a passionate developer who loves creating modern and efficient web applications." %}
             </p>
-            <a
-               class="flex flex-row items-center w-fit font-mono my-4 font-bold gap-4 rounded-full p-4 
-               bg-green-600 text-white shadow-lg shadow-green-700" 
+
+            <a class="flex flex-row items-center w-fit font-mono my-4 font-bold gap-4 rounded-full p-4
+               bg-green-600 text-white shadow-lg shadow-green-700"
                href="https://drive.usercontent.google.com/download?id=1nOFRGmp4ajwVuSS8YlqHLc69zbdmHZ5U&export=download&authuser=0">
+
                <p>{% trans "Download CV" %}</p>
+
                <span>
-                  <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                     <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                     <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+                     <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
+                        stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                     <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625"
+                        stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                </span>
             </a>
          </div>
+
          <div class="w-48 h-48 md:w-64 md:h-64">
             <img src="{% static 'core/my_image.jpeg' %}" alt="My Photo"
                class="rounded-full shadow-lg object-cover w-full h-full border-gray-900">
          </div>
+
       </div>
    </content>
+
 
    <!-- Expandable Sections -->
    <!-- DOMAINS SECTION -->
@@ -58,7 +111,7 @@
       class="w-full bg-gray-100 dark:bg-gray-900 mt-0 text-gray-800 dark:text-gray-200"
       >
       <link href="https://unpkg.com/pattern.css" rel="stylesheet">
-      <section class="py-5 relative">
+      <section class="py-5 pt-28 relative">
          <!-- Outer full-width wrapper — no container -->
          <div class="mx-auto px-5 max-w-6xl">
             <!-- Inner max-width constraint for cards/content -->
@@ -519,6 +572,123 @@
     });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof window === 'undefined') return;
+
+  let triggered = false;
+
+  const alpineRoot = document.querySelector('[x-data*="open"], [x-data*="open:"]')
+                      || document.querySelector('[x-data]');
+
+  const swipeHint = document.getElementById("swipeHint");           // Desktop hint
+  const mobileHint = document.getElementById("mobileScrollHint");   // Mobile hint
+
+  function hideHints() {
+    if (swipeHint) swipeHint.style.display = "none";
+    if (mobileHint) mobileHint.style.display = "none";
+  }
+
+  function ensureOpen() {
+    if (!alpineRoot) return Promise.resolve();
+
+    try {
+      if (alpineRoot.__x && alpineRoot.__x.$data && alpineRoot.__x.$data.open === false) {
+        alpineRoot.__x.$data.open = true;
+        return Promise.resolve();
+      }
+      if (alpineRoot.__x && typeof alpineRoot.__x.getUnobservedData === "function") {
+        const d = alpineRoot.__x.getUnobservedData();
+        if (d && d.open === false) d.open = true;
+        return Promise.resolve();
+      }
+    } catch(e) {}
+
+    if (swipeHint) {
+      try { swipeHint.click(); return Promise.resolve(); } catch(e) {}
+    }
+
+    alpineRoot.dispatchEvent(new CustomEvent("openExpand", { bubbles: true }));
+    return Promise.resolve();
+  }
+
+  function scrollToFirstExpanded() {
+    const candidates = Array.from(document.querySelectorAll("section, content, [x-show]"))
+      .filter(el => {
+        if (el.id === "heroSection") return false;
+        const style = window.getComputedStyle(el);
+        return style.display !== "none" &&
+               style.visibility !== "hidden" &&
+               el.offsetHeight > 0;
+      });
+
+    if (candidates.length === 0) return;
+
+    const first = candidates[0];
+    try {
+      first.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e) {
+      first.scrollIntoView();
+    }
+  }
+
+  async function openThenScrollOnce() {
+    if (triggered) return;
+    triggered = true;
+
+    hideHints();
+
+    await ensureOpen();
+
+    setTimeout(() => scrollToFirstExpanded(), 220);
+  }
+
+  function onWheel(e) {
+    if (e.deltaY > 10) openThenScrollOnce();
+  }
+
+  function onKey(e) {
+    if (["PageDown", "ArrowDown", " ", "Spacebar"].includes(e.key)) {
+      openThenScrollOnce();
+    }
+  }
+
+  let touchStartY = 0;
+  function onTouchStart(e) {
+    if (e.touches.length) touchStartY = e.touches[0].clientY;
+  }
+  function onTouchMove(e) {
+    if (!touchStartY) return;
+    const dy = touchStartY - e.touches[0].clientY;
+    if (dy > 30) openThenScrollOnce();
+  }
+
+  function onScroll() {
+    if (window.scrollY > 30) openThenScrollOnce();
+  }
+
+  // Attach listeners
+  window.addEventListener("wheel", onWheel, { passive: true });
+  window.addEventListener("keydown", onKey);
+  window.addEventListener("touchstart", onTouchStart, { passive: true });
+  window.addEventListener("touchmove", onTouchMove, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  if (swipeHint) {
+    swipeHint.addEventListener("click", ev => {
+      ev.preventDefault();
+      openThenScrollOnce();
+    });
+  }
+
+  if (mobileHint) {
+    mobileHint.addEventListener("click", ev => {
+      ev.preventDefault();
+      openThenScrollOnce();
+    });
+  }
+});
+</script>
 
 
 {% endblock content %}
