@@ -74,6 +74,8 @@ To run this project locally, follow these steps:
   LEETCODE_GRAPHQL_API = "https://leetcode.com/graphql"
   LEETCODE_REST_API = "https://alfa-leetcode-api.onrender.com/"
   LEETCODE_USERNAME = "mohammadAsCP"
+
+  HF_TOKEN = "Hugging face token"
   ```
 5. **Export Mode System Variable**:
    - *For Production*:
