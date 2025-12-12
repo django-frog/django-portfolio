@@ -3,12 +3,15 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.core.cache import cache
 from django.views import generic
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import redirect
 from django.utils.translation import activate
 from asgiref.sync import async_to_sync
+from django_ratelimit.decorators import ratelimit
+from openai import OpenAI
 
 import httpx
+from json import loads
 
 from .utils import *
 
@@ -73,6 +76,93 @@ async def get_leetcode_data(request):
 
     except Exception as e:
         return JsonResponse({"error": "An unexpected error occurred"}, status=500)
+
+
+def rate_limit_view(request, exception=None):
+    """
+    Standard JSON response used when a request exceeds rate limits.
+    """
+
+    details = str(exception) if exception else ""
+
+    return JsonResponse({
+        "error": "You exceeded the maximum allowed requests",
+        "message": "You exceeded the maximum allowed requests. Please wait before trying again.",
+        "details": details,
+    }, status=429)
+
+
+@require_POST
+@ratelimit(key="ip", rate="3/1h", block=True)
+def ai_chatbot(request):
+
+    try:
+        body = loads(request.body.decode("utf-8"))
+        question = body.get("question", "").strip()
+    except Exception:
+        return JsonResponse({"error": "Invalid JSON body"}, status=400)
+
+    if not question:
+        return JsonResponse({"error": "Missing 'question' field"}, status=400)
+
+    # Initialize OpenAI client
+    try:
+        client = OpenAI(
+            base_url="https://router.huggingface.co/v1",
+            api_key=settings.HF_TOKEN,
+        )
+    except Exception as e:
+        return JsonResponse({"error": "Failed to init AI client", "details": str(e)}, status=500)
+
+    # Enhanced context
+    PORTFOLIO_CONTEXT = (
+        "Mohammad Hamdan is a senior full-stack engineer specializing in Django, Python, "
+        "database design, Odoo (ERP), and modern front-end development using TailwindCSS and Alpine.js. "
+        "He builds scalable, clean, and maintainable systems with a strong focus on performance and UX. "
+
+        "He has deep experience across: "
+        "• Backend engineering (Django, DRF, PostgreSQL, Redis, Celery). "
+        "• Odoo development (HR, Payroll, Accounting, Custom Modules, Integrations). "
+        "• Data engineering (ETL pipelines, Prefect, automation). "
+        "• Front-end design using TailwindCSS, Alpine.js, and responsive UI/UX. "
+
+        "Key traits: extremely detail-oriented, solves complex problems, strong architecture sense, "
+        "writes clean code, and focuses on delivering production-quality solutions. "
+
+        "All answers must be short, clear, and strictly based on this context only and only with 120 tokens."
+    )
+
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are Mohammad's portfolio assistant. "
+                "Use ONLY the provided context. "
+                "Keep answers short, direct, and easy to read. "
+                f"Context: {PORTFOLIO_CONTEXT}"
+            ),
+        },
+        {"role": "user", "content": question},
+    ]
+
+    try:
+        completion = client.chat.completions.create(
+            model="mistralai/Mistral-7B-Instruct-v0.2:featherless-ai",
+            messages=messages,
+            temperature=0.1,
+            max_tokens=120,
+        )
+
+        answer = completion.choices[0].message.content.strip()
+
+        return JsonResponse({
+            "question": question,
+            "reply": answer,
+        })
+
+    except Exception as e:
+        return JsonResponse({"error": "AI request failed", "details": str(e)}, status=500)
+
 
 @require_GET
 def switch_language(request):

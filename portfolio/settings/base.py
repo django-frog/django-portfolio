@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django_ratelimit.middleware.RatelimitMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio.urls'
@@ -126,6 +127,10 @@ CACHES = {
         'LOCATION': 'unique-snowflake',  # A unique identifier for the cache
     }
 }
+
+# Rate-Limiting
+
+RATELIMIT_VIEW = "core.views.rate_limit_view"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -210,3 +215,4 @@ GITHUB_API_TOKEN = config("GITHUB_TOKEN")
 LEETCODE_GRAPHQL_API = config("LEETCODE_GRAPHQL_API")
 LEETCODE_USERNAME = config("LEETCODE_USERNAME")
 LEETCODE_REST_API = config("LEETCODE_REST_API")
+HF_TOKEN = config("HF_TOKEN")
