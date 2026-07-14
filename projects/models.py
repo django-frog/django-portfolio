@@ -35,7 +35,6 @@ class Project(models.Model):
         max_length=250,
         unique=True,
         db_index=True,
-        allow_unicode=True,
     )
     start_date = models.DateField(
         verbose_name=_("Start Date"),
@@ -96,17 +95,7 @@ class Project(models.Model):
 
     def save(self, *args: object, **kwargs: object) -> None:
         if not self.slug:
-            base_slug: str = slugify(self.title, allow_unicode=True) or "project"
-            slug: str = base_slug
-            counter: int = 1
-            while (
-                Project.objects.filter(slug=slug)
-                .exclude(pk=self.pk)
-                .exists()
-            ):
-                counter += 1
-                slug = f"{base_slug}-{counter}"
-            self.slug = slug
+            self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self) -> str:
