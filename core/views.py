@@ -16,7 +16,7 @@ from json import loads
 from typing import Any
 
 from .forms import ContactInquiryForm
-from .models import ContactInquiry, TechnicalDomain, WorkExperience
+from .models import ContactInquiry, SocialPlatform, TechnicalDomain, WorkExperience
 from .utils import *
 
 # Create your views here.
@@ -231,9 +231,66 @@ class ProjectsPageView(generic.TemplateView):
 
 class MediaPageView(generic.TemplateView):
     """
-        SocailMedia-Page View Class
+        Social Media & Coding Platforms page.
     """
     template_name = "portfolio/media_page.html"
+
+    _STAT_COLOR_CLASSES: dict[str, dict[str, str]] = {
+        "green":  {
+            "border": "border-emerald-500",
+            "text":   "text-emerald-700 dark:text-emerald-300",
+            "bg":     "bg-emerald-50 dark:bg-emerald-900/30",
+        },
+        "yellow": {
+            "border": "border-yellow-500",
+            "text":   "text-yellow-700 dark:text-yellow-300",
+            "bg":     "bg-yellow-50 dark:bg-yellow-900/30",
+        },
+        "red":    {
+            "border": "border-red-500",
+            "text":   "text-red-700 dark:text-red-300",
+            "bg":     "bg-red-50 dark:bg-red-900/30",
+        },
+        "blue":   {
+            "border": "border-blue-500",
+            "text":   "text-blue-700 dark:text-blue-300",
+            "bg":     "bg-blue-50 dark:bg-blue-900/30",
+        },
+        "purple": {
+            "border": "border-purple-500",
+            "text":   "text-purple-700 dark:text-purple-300",
+            "bg":     "bg-purple-50 dark:bg-purple-900/30",
+        },
+        "gray":   {
+            "border": "border-gray-400",
+            "text":   "text-gray-700 dark:text-gray-300",
+            "bg":     "bg-gray-50 dark:bg-gray-800/50",
+        },
+    }
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context: dict[str, Any] = super().get_context_data(**kwargs)
+
+        stat_platforms = (
+            SocialPlatform.objects
+            .filter(is_active=True, platform_type="stat_driven")
+            .prefetch_related("stats")
+            .order_by("sort_order", "name")
+        )
+        for platform in stat_platforms:
+            for stat in platform.stats.all():
+                stat.color_classes = self._STAT_COLOR_CLASSES.get(
+                    stat.stat_color,
+                    self._STAT_COLOR_CLASSES["gray"],
+                )
+
+        context["stat_platforms"] = stat_platforms
+        context["simple_platforms"] = (
+            SocialPlatform.objects
+            .filter(is_active=True, platform_type="simple_link")
+            .order_by("sort_order", "name")
+        )
+        return context
 
 class Page404View(generic.TemplateView):
     """

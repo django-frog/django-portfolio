@@ -173,3 +173,111 @@ class WorkExperience(models.Model):
         if self.end_date:
             return self.end_date.strftime("%b %Y")
         return ""
+
+
+class SocialPlatform(models.Model):
+    """A social or coding platform that appears on the Media page."""
+
+    PLATFORM_TYPE_CHOICES: list[tuple[str, "str"]] = [
+        ("stat_driven", _("Live Stats Platform (GitHub, LeetCode, etc.)")),
+        ("simple_link", _("Simple Profile Link (LinkedIn, X, etc.)")),
+    ]
+
+    name = models.CharField(
+        verbose_name=_("Platform Name"),
+        max_length=100,
+    )
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        db_index=True,
+    )
+    profile_url = models.URLField(verbose_name=_("Profile URL"))
+    username_handle = models.CharField(
+        verbose_name=_("Username / Handle"),
+        max_length=100,
+    )
+    avatar_or_logo = models.ImageField(
+        verbose_name=_("Custom Avatar/Logo"),
+        upload_to="media_platforms/",
+        blank=True,
+        null=True,
+    )
+    icon_class = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text=_("FontAwesome or SVG class/identifier for the platform logo"),
+    )
+    platform_type = models.CharField(
+        max_length=20,
+        choices=PLATFORM_TYPE_CHOICES,
+        default="simple_link",
+        db_index=True,
+    )
+    api_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        help_text=_(
+            "Identifier used by the background stats fetcher "
+            "(e.g., 'github', 'leetcode')"
+        ),
+    )
+    is_active = models.BooleanField(default=True, db_index=True)
+    sort_order = models.PositiveIntegerField(default=0, db_index=True)
+
+    class Meta:
+        ordering = ["sort_order", "name"]
+        verbose_name = _("Social Platform")
+        verbose_name_plural = _("Social Platforms")
+        indexes = [
+            models.Index(fields=["is_active", "platform_type", "sort_order"]),
+        ]
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class PlatformStat(models.Model):
+    """A single key/value metric displayed on a stat-driven platform card."""
+
+    STAT_COLOR_CHOICES: list[tuple[str, str]] = [
+        ("green", _("Green")),
+        ("yellow", _("Yellow")),
+        ("red", _("Red")),
+        ("blue", _("Blue")),
+        ("purple", _("Purple")),
+        ("gray", _("Gray")),
+    ]
+
+    platform = models.ForeignKey(
+        SocialPlatform,
+        on_delete=models.CASCADE,
+        related_name="stats",
+        verbose_name=_("Platform"),
+    )
+    label = models.CharField(
+        verbose_name=_("Metric Label"),
+        max_length=50,
+    )
+    value = models.CharField(
+        verbose_name=_("Metric Value"),
+        max_length=50,
+    )
+    stat_color = models.CharField(
+        max_length=20,
+        choices=STAT_COLOR_CHOICES,
+        default="gray",
+        verbose_name=_("Accent Color for UI Badge/Progress"),
+    )
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["sort_order", "label"]
+        verbose_name = _("Platform Stat")
+        verbose_name_plural = _("Platform Stats")
+        indexes = [
+            models.Index(fields=["platform", "sort_order"]),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.platform.name} - {self.label}: {self.value}"

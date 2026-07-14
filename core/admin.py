@@ -8,7 +8,9 @@ from django.http import HttpRequest
 
 from .models import (
     ContactInquiry,
+    PlatformStat,
     Skill,
+    SocialPlatform,
     TechnicalDomain,
     WorkExperience,
 )
@@ -83,6 +85,38 @@ class WorkExperienceAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+
+class PlatformStatInline(admin.TabularInline):
+    """Edit metrics directly under their parent SocialPlatform."""
+
+    model = PlatformStat
+    fields = ("label", "value", "stat_color", "sort_order")
+    extra = 1
+
+
+@admin.register(SocialPlatform)
+class SocialPlatformAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "platform_type",
+        "username_handle",
+        "is_active",
+        "sort_order",
+    )
+    list_editable = ("is_active", "sort_order")
+    list_filter = ("platform_type", "is_active")
+    search_fields = ("name", "username_handle", "api_identifier")
+    prepopulated_fields = {"slug": ("name",)}
+    inlines = [PlatformStatInline]
+
+
+@admin.register(PlatformStat)
+class PlatformStatAdmin(admin.ModelAdmin):
+    list_display = ("platform", "label", "value", "stat_color", "sort_order")
+    list_filter = ("platform", "stat_color")
+    list_editable = ("value", "stat_color", "sort_order")
+    search_fields = ("label", "value")
 
 
 @admin.register(ContactInquiry)
