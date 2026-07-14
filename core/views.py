@@ -12,74 +12,73 @@ from django_ratelimit.decorators import ratelimit
 from openai import OpenAI
 
 import httpx
+import logging
 from json import loads
 from typing import Any
 
 from .forms import ContactInquiryForm
 from .models import ContactInquiry, SocialPlatform, TechnicalDomain, WorkExperience
-from .utils import *
+from .services.external_stats import (
+    GITHUB_CACHE_KEY,
+    LEETCODE_CACHE_KEY,
+    fetch_github_data,
+    update_leetcode_cache,
+)
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 @require_GET
-@async_to_sync
-async def get_github_data(request):
+def get_github_data(request):
     """
-        Connect with Github API to get account information.
+    Return the cached GitHub account data, or a clean JSON error.
 
-        Args:
-            HTTP Request
-            
-        Rseturns:
-            JSON Response 
+    This view is read-only: it never blocks the page render on a network
+    call. It reads the persistent cache populated by the
+    ``update_external_stats`` management command. If the cache is empty
+    (e.g., first request after a deploy, before the cron has run), a
+    synchronous fallback fetch is attempted exactly once. If that fails,
+    a 503 JSON error is returned.
     """
-    if not settings.GITHUB_API_TOKEN:
-        return JsonResponse({
-            "error" : "API token is not set"
-        }, status=500)
+    data = cache.get(GITHUB_CACHE_KEY)
+    if data is None:
+        try:
+            data = async_to_sync(fetch_github_data)()
+        except Exception as exc:
+            logger.exception("GitHub fallback fetch failed: %s", exc)
+            data = None
 
-    user_resource_url = settings.GITHUB_API + "user"
-    github_cache_key = "github_data"
-
-    try:
-        github_account_data = await fetch_github_data(
-            api_url= user_resource_url,
-            token=settings.GITHUB_API_TOKEN,
-            cache_key=github_cache_key
+    if data is None:
+        return JsonResponse(
+            {"error": "Data warming up, please try again soon"},
+            status=503,
         )
-        
-        return JsonResponse(github_account_data)
-    
-    except httpx.HTTPStatusError as e:
-            return JsonResponse({"error": str(e)}, status=e.response.status_code)
-    
-    except Exception as e:
-        return JsonResponse({"error": "An unexpected error occurred"}, status=500)
+    return JsonResponse(data)
+
 
 @require_GET
-@async_to_sync
-async def get_leetcode_data(request):
-    graphql_option = request.GET.get("graphql" , "")
-    try:
-        if graphql_option:
-            leetcode_cache_key = "leetcode_data"
-            leetcode_data = await fetch_graphql_leetcode_data(cache_key=leetcode_cache_key)
-            return JsonResponse(leetcode_data)
-        else:
-            leetcode_user_cache_key = "leetcode_user_data"
-            leetcode_problems_cache_key = "leetcode_problems_data"
+def get_leetcode_data(request):
+    """
+    Return the cached LeetCode data, or a clean JSON error.
 
-            leetcode_user_data = await fetch_rest_leetcode_user(cache_key=leetcode_user_cache_key)
-            leetcode_profile_data = await fetch_rest_leetcode_profile(cache_key=leetcode_problems_cache_key)
-            return JsonResponse({
-                "user" : leetcode_user_data,
-                "profile" : leetcode_profile_data
-            })
-            
-    except httpx.HTTPStatusError as e:
-            return JsonResponse({"error": str(e)}, status=e.response.status_code)
+    Like ``get_github_data``, this is fully decoupled from the upstream
+    API. It reads the persistent cache and only falls back to a
+    synchronous fetch when the cache is empty.
+    """
+    data = cache.get(LEETCODE_CACHE_KEY)
+    if data is None:
+        try:
+            data = async_to_sync(update_leetcode_cache)()
+        except Exception as exc:
+            logger.exception("LeetCode fallback fetch failed: %s", exc)
+            data = None
 
-    except Exception as e:
-        return JsonResponse({"error": "An unexpected error occurred"}, status=500)
+    if data is None:
+        return JsonResponse(
+            {"error": "Data warming up, please try again soon"},
+            status=503,
+        )
+    return JsonResponse(data)
 
 
 def rate_limit_view(request, exception=None):
