@@ -3,16 +3,20 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.core.cache import cache
 from django.views import generic
-from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import redirect
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from django.shortcuts import redirect, render
 from django.utils.translation import activate
+from django.contrib import messages
 from asgiref.sync import async_to_sync
 from django_ratelimit.decorators import ratelimit
 from openai import OpenAI
 
 import httpx
 from json import loads
+from typing import Any
 
+from .forms import ContactInquiryForm
+from .models import ContactInquiry, TechnicalDomain, WorkExperience
 from .utils import *
 
 # Create your views here.
@@ -203,8 +207,21 @@ class FrontPageView(generic.TemplateView):
 class AboutPageView(generic.TemplateView):
     """
         About-Page View Class.
+
+        Renders the about page with the dynamic, database-driven
+        technical domains / skills and work-experience timeline.
     """
     template_name = "portfolio/about_page.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context: dict[str, Any] = super().get_context_data(**kwargs)
+        context["domains"] = (
+            TechnicalDomain.objects
+            .prefetch_related("skills")
+            .all()
+        )
+        context["experiences"] = WorkExperience.objects.all()
+        return context
 
 class ProjectsPageView(generic.TemplateView):
     """
@@ -235,3 +252,64 @@ class HomePageRedirectView(generic.RedirectView):
         Home Page Redirect View.
     """
     pattern_name = "core:home_page"
+
+
+def _get_client_ip(request) -> str | None:
+    """Return the originating client IP, honouring common proxy headers."""
+    forwarded_for: str | None = request.META.get("HTTP_X_FORWARDED_FOR")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+    return request.META.get("REMOTE_ADDR")
+
+
+@ratelimit(key="ip", rate="5/1h", block=True)
+@require_http_methods(["GET", "POST"])
+def contact_view(request):
+    """
+        Public contact form view.
+
+        Renders the contact template on GET; on POST, validates the
+        ``ContactInquiryForm``, records the client IP, and saves the
+        inquiry. Rate-limited to 5 submissions per IP per hour.
+    """
+    is_ajax: bool = request.headers.get("x-requested-with") == "XMLHttpRequest"
+
+    if request.method == "POST":
+        form = ContactInquiryForm(request.POST)
+        if form.is_valid():
+            inquiry: ContactInquiry = form.save(commit=False)
+            inquiry.ip_address = _get_client_ip(request)
+            inquiry.save()
+
+            if is_ajax:
+                return JsonResponse(
+                    {
+                        "success": True,
+                        "message": "Thank you! Your inquiry has been received.",
+                    },
+                    status=201,
+                )
+
+            messages.success(
+                request,
+                "Thank you! Your inquiry has been received. "
+                "I'll get back to you shortly.",
+            )
+            return redirect("core:contact_page")
+
+        if is_ajax:
+            return JsonResponse(
+                {
+                    "success": False,
+                    "errors": form.errors,
+                },
+                status=400,
+            )
+    else:
+        form = ContactInquiryForm()
+
+    return render(
+        request,
+        "portfolio/contact_page.html",
+        {"form": form},
+    )

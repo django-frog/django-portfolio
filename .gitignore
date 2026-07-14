@@ -2,5 +2,6 @@ package-lock.json
 portfolio_db
 node_modules/
 main_env/
+.venv/
 .env
 staticfiles/

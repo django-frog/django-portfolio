@@ -44,6 +44,28 @@ class ProjectsListView(generic.ListView):
         return context
     
 
+class ProjectDetailView(generic.DetailView):
+    """View to display the full case study for a single project."""
+    model = Project
+    template_name = "projects/project_detail.html"
+    context_object_name = "project"
+    slug_url_kwarg = "slug"
+
+    def get_queryset(self):
+        """Return only non-deleted projects with prefetched tags."""
+        return (
+            Project.objects
+            .filter(deleted_at__isnull=True)
+            .prefetch_related("tags")
+        )
+
+    def get_context_data(self, **kwargs):
+        """Expose the search bar context to the detail template."""
+        context = super().get_context_data(**kwargs)
+        context["search_bar"] = search_bar_context()
+        return context
+
+
 class ProjectsSearchView(generic.ListView):
     """View to display a filtered list of projects based on search criteria."""
     context_object_name = "projects"

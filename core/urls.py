@@ -11,4 +11,5 @@ urlpatterns = [
     path("media/github/", view=get_github_data, name="github_data"),
     path("media/leetcode/", get_leetcode_data, name="leetcode_data"),
     path("api/ai-chat/", ai_chatbot, name="ai_chat"),
+    path("contact/", view=contact_view, name="contact_page"),
 ]

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "theme",
     'core.apps.CoreConfig',
     'projects.apps.ProjectsConfig',
+    'markdownx',
 ]
 
 MIDDLEWARE = [

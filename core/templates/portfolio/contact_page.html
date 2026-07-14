@@ -1,0 +1,97 @@
+{% extends "portfolio/core/base.html" %}
+{% load static tailwind_tags %}
+
+{% block title %}Contact | Mohammad Hamdan{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-16 px-4">
+  <div class="max-w-3xl mx-auto">
+
+    <header class="text-center mb-10">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+        Let's Build Something Together
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Have a project in mind or want to collaborate? Drop me a message below.
+      </p>
+    </header>
+
+    {% if messages %}
+      <div class="mb-6 space-y-2">
+        {% for message in messages %}
+          <div class="p-4 rounded-lg
+            {% if message.tags == 'success' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+            {% elif message.tags == 'error' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
+            {% else %}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post"
+          action="{% url 'core:contact_page' %}"
+          class="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 space-y-5"
+          data-contact-form>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="p-3 rounded-lg bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 text-sm">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div>
+        <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          {{ form.name.label }}
+        </label>
+        {{ form.name }}
+        {% if form.name.errors %}
+          <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.name.errors|join:", " }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          {{ form.email.label }}
+        </label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.email.errors|join:", " }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="{{ form.subject.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          {{ form.subject.label }}
+        </label>
+        {{ form.subject }}
+        {% if form.subject.errors %}
+          <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.subject.errors|join:", " }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="{{ form.message.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          {{ form.message.label }}
+        </label>
+        {{ form.message }}
+        {% if form.message.errors %}
+          <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.message.errors|join:", " }}</p>
+        {% endif %}
+      </div>
+
+      <div class="pt-2">
+        <button type="submit"
+                class="w-full sm:w-auto px-6 py-3 bg-green-600 hover:bg-green-700
+                       text-white font-medium rounded-lg shadow-md
+                       focus:outline-none focus:ring-2 focus:ring-green-500
+                       transition">
+          Send Inquiry
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+{% endblock %}
