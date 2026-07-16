@@ -109,21 +109,8 @@ DATABASES = {
 # Cache
 # https://docs.djangoproject.com/en/5.1/topics/cache/
 
-servers = config("MEMCACHED_SERVERS")
-username = config("MEMCAHCED_USERNAME")
-password = config("MEMCACHED_PASSWORD")
-
 CACHES = {
-    'default' : {
-        'BACKEND': 'django_bmemcached.memcached.BMemcached',
-        'LOCATION' : servers,
-        'TIMEOUT' : None,
-        'OPTIONS' : {
-            'username' : username,
-            'password' : password
-        }
-    },
-    'development': {
+    'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'unique-snowflake',  # A unique identifier for the cache
     }
@@ -179,7 +166,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 TAILWIND_APP_NAME = "theme"
 
-# Crispy forms 
+# Crispy forms
 # https://django-crispy-forms.readthedocs.io/en/latest/
 CRISPY_TEMPLATE_PACK = 'tailwind'
 
