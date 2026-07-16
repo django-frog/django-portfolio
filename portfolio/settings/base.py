@@ -89,18 +89,7 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": config("MYSQL_DB_NAME"),
-        "USER" : config("MYSQL_DB_USER"),
-        "HOST" : config("MYSQL_DB_HOST"),
-        "PASSWORD" : config("MYSQL_DB_PASS"),
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-            'charset': 'utf8mb4',
-        }
-    },
-    'development': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'portfolio_db',
     }

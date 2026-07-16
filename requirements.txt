@@ -33,7 +33,6 @@ Markdown==3.7
 markdown-it-py==4.0.0
 MarkupSafe==3.0.3
 mdurl==0.1.2
-mysqlclient==2.2.7
 openai==2.11.0
 packaging==24.2
 pillow==11.0.0
