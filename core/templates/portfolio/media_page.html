@@ -186,9 +186,26 @@
   {# Empty-state fallback                                         #}
   {# ============================================================ #}
   {% if not stat_platforms and not simple_platforms %}
-    <p class="text-center text-gray-500 dark:text-gray-400">
-      {% trans "No platforms configured yet." %}
-    </p>
+    <div class="flex flex-col items-center justify-center py-16 px-4">
+      <div class="bg-white dark:bg-gray-800 p-8 sm:p-10 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center max-w-lg w-full transition-all hover:shadow-md">
+
+          <!-- Animated Unplugged/Empty Icon -->
+          <div class="w-24 h-24 mb-6 text-emerald-500 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 p-5 rounded-full flex items-center justify-center">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+              </svg>
+          </div>
+
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+            {% trans "No Platforms Connected" %}
+          </h3>
+
+          <p class="text-gray-500 dark:text-gray-400 text-base leading-relaxed">
+            {% trans "It looks like there are no social media or coding platform links in the database right now. Please check back later once they are configured!" %}
+          </p>
+
+      </div>
+    </div>
   {% endif %}
 
 </div>
