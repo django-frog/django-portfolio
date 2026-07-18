@@ -126,67 +126,35 @@
             </div>
             <!-- Skill Cards -->
             <div class="flex flex-wrap justify-center items-center sm:-m-4 -mx-4 -mb-10 -mt-4">
-               <!-- Backend Engineering -->
-               <div class="p-10 md:w-1/3 mb-6 flex flex-col">
-                  <div class="pattern-dots-md gray-light">
-                     <div class="rounded bg-gray-100 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 p-8 shadow-sm transform translate-x-6 -translate-y-6">
-                        <!-- Icon -->
-                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-green-100 text-green-600 mb-5">
-                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                 d="M4 7h16M4 12h16M4 17h16M7 7v10" />
-                           </svg>
+               {% if domains %}
+                  {% for domain in domains %}
+                     <div class="p-10 md:w-1/3 mb-6 flex flex-col">
+                        <div class="pattern-dots-md gray-light">
+                           <div class="rounded bg-gray-100 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 p-8 shadow-sm transform translate-x-6 -translate-y-6">
+                              {% if domain.icon_class %}
+                                 <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-green-100 text-green-600 mb-5">
+                                    <i class="{{ domain.icon_class }} text-2xl" aria-hidden="true"></i>
+                                 </div>
+                              {% endif %}
+                              <h2 class="text-xl font-bold text-center mb-3 text-gray-900 dark:text-gray-100">
+                                 {{ domain.name }}
+                              </h2>
+                              {% if domain.description %}
+                                 <p class="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
+                                    {{ domain.description }}
+                                 </p>
+                              {% endif %}
+                           </div>
                         </div>
-                        <!-- Header -->
-                        <h2 class="text-xl font-bold text-center mb-3 text-gray-900 dark:text-gray-100">
-                        {% trans "Backend Engineering" %}
-                        </h2>
-                        <!-- Description -->
-                        <p class="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
-                        {% trans "I build reliable backend systems using Django with clean, secure, and scalable architecture. My focus is performance, optimized databases, and APIs." %}
-                        </p>
                      </div>
+                  {% endfor %}
+               {% else %}
+                  <div class="p-10 md:w-1/3 mb-6 flex flex-col">
+                     <p class="text-center italic text-gray-500 dark:text-gray-400">
+                        {% trans "No technical domains configured yet." %}
+                     </p>
                   </div>
-               </div>
-               <!-- Odoo Development -->
-               <div class="p-10 md:w-1/3 mb-6 flex flex-col">
-                  <div class="pattern-dots-md gray-light">
-                     <div class="rounded bg-gray-100 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 p-8 shadow-sm transform translate-x-6 -translate-y-6">
-                        <!-- Icon -->
-                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-purple-200 text-purple-600 mb-5">
-                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                 d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" />
-                           </svg>
-                        </div>
-                        <h2 class="text-xl font-bold text-center mb-3 text-gray-900 dark:text-gray-100">
-                        {% trans "Odoo Development" %}
-                        </h2>
-                        <p class="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
-                        {% trans "I customize and extend Odoo to create smooth business workflows and efficient modules. My work improves performance, usability, and integrations across company processes." %}
-                        </p>
-                     </div>
-                  </div>
-               </div>
-               <!-- Data Engineering -->
-               <div class="p-10 md:w-1/3 mb-6 flex flex-col">
-                  <div class="pattern-dots-md gray-light">
-                     <div class="rounded bg-gray-100 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 p-8 shadow-sm transform translate-x-6 -translate-y-6">
-                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-blue-100 text-blue-600 mb-5">
-                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                 d="M4 7v10c0 2.2 3.6 4 8 4s8-1.8 8-4V7m-16 0c0-2.2 3.6-4 8-4s8 1.8 8 4M4 12c0 2.2 3.6 4 8 4s8-1.8 8-4" />
-                           </svg>
-                        </div>
-                        <h2 class="text-xl font-bold text-center mb-3 text-gray-900 dark:text-gray-100">
-                        {% trans "Data Engineering" %}
-                        </h2>
-                        <p class="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
-                        {% trans "I design data pipelines that clean, organize, and structure information for analytics. My solutions ensure fast performance, clear insights, and scalable data operations." %}
-                        </p>
-                     </div>
-                  </div>
-               </div>
+               {% endif %}
             </div>
          </div>
          <!-- end inner max-width -->
@@ -203,128 +171,70 @@
                <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
             </div>
          </div>
-         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 px-6 max-w-7xl mx-auto">
-            <!-- BACK-END CARD -->
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full">
-               <h3 class="text-2xl font-bold text-center mb-6">
-                {% trans "Back-End" %}
-               </h3>
-               <section x-data="skillDisplayBackend" class="space-y-8">
-                  <!-- TAGS -->
-                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                     <template x-for="skill in skills">
-                        <button x-text="skill.title"
-                           class="px-3 py-1 text-xs h-10 w-full rounded-md transition 
-                           bg-blue-100 text-blue-800 hover:bg-blue-200
-                           dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700"
-                           :class="(currentSkill.title == skill.title) && 'font-bold ring-2 ring-blue-400 dark:ring-blue-300'"
-                           @click="currentSkill = skill"></button>
-                     </template>
+
+         {% if domains %}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 px-6 max-w-7xl mx-auto">
+               {% for domain in domains %}
+                  <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full"
+                       x-data="domainSkillDisplay({
+                          skills: [
+                             {% for skill in domain.skills.all %}
+                                { title: {{ skill.name|escapejs }}, percent: {{ skill.proficiency }} }{% if not forloop.last %},{% endif %}
+                             {% empty %}
+                             {% endfor %}
+                          ],
+                          themeIndex: {{ forloop.counter0 }}
+                       })">
+                     <h3 class="text-2xl font-bold text-center mb-6">
+                        {{ domain.name }}
+                     </h3>
+
+                     <!-- TAGS -->
+                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <template x-for="skill in skills" :key="skill.title">
+                           <button x-text="skill.title"
+                              :class="[
+                                 themeClass('tagBg'),
+                                 currentSkill && currentSkill.title === skill.title
+                                    ? 'font-bold ring-2 ' + themeClass('tagRing')
+                                    : ''
+                              ]"
+                              class="px-3 py-1 text-xs h-10 w-full rounded-md transition"
+                              @click="currentSkill = skill"></button>
+                        </template>
+                     </div>
+
+                     <!-- CIRCLE -->
+                     <div class="flex items-center justify-center relative"
+                          x-data="{ circumference: 2 * Math.PI * 60 }">
+                        <svg class="transform -rotate-90 w-40 h-40">
+                           <circle cx="80" cy="80" r="60"
+                              stroke-width="18"
+                              stroke="currentColor"
+                              class="text-gray-200 dark:text-gray-700"
+                              fill="transparent" />
+                           <circle cx="80" cy="80" r="60"
+                              stroke-width="18"
+                              fill="transparent"
+                              stroke="currentColor"
+                              :stroke-dasharray="circumference"
+                              :stroke-dashoffset="circumference - (currentSkill ? currentSkill.percent : 0) / 100 * circumference"
+                              :class="[themeClass('ringStroke'), 'transition-all duration-500']"></circle>
+                        </svg>
+                        <span class="absolute text-3xl font-bold"
+                              x-text="currentSkill ? `${currentSkill.percent}%` : ''"></span>
+                     </div>
                   </div>
-                  <!-- CIRCLE -->
-                  <div class="flex items-center justify-center relative" 
-                     x-data="{ circumference: 2 * Math.PI * 60 }">
-                     <svg class="transform -rotate-90 w-40 h-40">
-                        <circle cx="80" cy="80" r="60"
-                           stroke-width="18"
-                           stroke="currentColor"
-                           class="text-gray-200 dark:text-gray-700"
-                           fill="transparent" />
-                        <circle cx="80" cy="80" r="60"
-                           stroke-width="18"
-                           fill="transparent"
-                           stroke="currentColor"
-                           :stroke-dasharray="circumference"
-                           :stroke-dashoffset="circumference - currentSkill.percent / 100 * circumference"
-                           class="text-blue-500 dark:text-blue-400 transition-all duration-500" />
-                     </svg>
-                     <span class="absolute text-3xl font-bold"
-                        x-text="`${currentSkill.percent}%`"></span>
-                  </div>
-               </section>
+               {% endfor %}
             </div>
-            <!-- ODOO CARD -->
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full">
-               <h3 class="text-2xl font-bold text-center mb-6">
-                {% trans "Odoo Development" %}
-               </h3>
-               <section x-data="skillDisplayOdoo" class="space-y-8">
-                  <!-- TAGS -->
-                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                     <template x-for="skill in skills">
-                        <button x-text="skill.title"
-                           class="px-3 py-1 text-xs h-10 w-full rounded-md transition
-                           bg-purple-100 text-purple-800 hover:bg-purple-200
-                           dark:bg-purple-700 dark:text-white dark:hover:bg-purple-800"
-                           :class="(currentSkill.title == skill.title) && 'font-bold ring-2 ring-purple-400 dark:ring-purple-300'"
-                           @click="currentSkill = skill"></button>
-                     </template>
-                  </div>
-                  <!-- CIRCLE -->
-                  <div class="flex items-center justify-center relative"
-                     x-data="{ circumference: 2 * Math.PI * 60 }">
-                     <svg class="transform -rotate-90 w-40 h-40">
-                        <circle cx="80" cy="80" r="60"
-                           stroke="currentColor"
-                           stroke-width="18"
-                           class="text-gray-200 dark:text-gray-700"
-                           fill="transparent" />
-                        <circle cx="80" cy="80" r="60"
-                           stroke-width="18"
-                           stroke="currentColor"
-                           fill="transparent"
-                           :stroke-dasharray="circumference"
-                           :stroke-dashoffset="circumference - currentSkill.percent / 100 * circumference"
-                           class="text-purple-500 dark:text-purple-400 transition-all duration-500" />
-                     </svg>
-                     <span class="absolute text-3xl font-bold"
-                        x-text="`${currentSkill.percent}%`"></span>
-                  </div>
-               </section>
-            </div>
-            <!-- DATA ENGINEERING CARD -->
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full">
-               <h3 class="text-2xl font-bold text-center mb-6">
-                {% trans "Data Engineering" %}
-               </h3>
-               <section x-data="skillDisplayData" class="space-y-8">
-                  <!-- TAGS -->
-                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                     <template x-for="skill in skills">
-                        <button x-text="skill.title"
-                           class="px-3 py-1 text-xs h-10 w-full rounded-md transition
-                           bg-yellow-100 text-yellow-800 hover:bg-yellow-200
-                           dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-700"
-                           :class="(currentSkill.title == skill.title) && 'font-bold ring-2 ring-yellow-400 dark:ring-yellow-300'"
-                           @click="currentSkill = skill"></button>
-                     </template>
-                  </div>
-                  <!-- CIRCLE -->
-                  <div class="flex items-center justify-center relative"
-                     x-data="{ circumference: 2 * Math.PI * 60 }">
-                     <svg class="transform -rotate-90 w-40 h-40">
-                        <circle cx="80" cy="80" r="60"
-                           stroke="currentColor"
-                           stroke-width="18"
-                           class="text-gray-200 dark:text-gray-700"
-                           fill="transparent" />
-                        <circle cx="80" cy="80" r="60"
-                           stroke-width="18"
-                           stroke="currentColor"
-                           fill="transparent"
-                           :stroke-dasharray="circumference"
-                           :stroke-dashoffset="circumference - currentSkill.percent / 100 * circumference"
-                           class="text-yellow-500 dark:text-yellow-400 transition-all duration-500" />
-                     </svg>
-                     <span class="absolute text-3xl font-bold"
-                        x-text="`${currentSkill.percent}%`"></span>
-                  </div>
-               </section>
-            </div>
-         </div>
+         {% else %}
+            <p class="text-center italic text-gray-500 dark:text-gray-400">
+               {% trans "No skill domains configured yet." %}
+            </p>
+         {% endif %}
       </section>
 
-      <!-- Work Experience -->
+            <!-- Work Experience -->
 
       <section class="w-full py-16 bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
          <!-- Section Header -->
@@ -470,42 +380,44 @@
 
 <script>
    document.addEventListener('alpine:init', () => {
-   
-       // BACK-END SKILLS
-       Alpine.data('skillDisplayBackend', () => ({
-           skills: [
-               { title: 'Django', percent: 65 },
-               { title: 'Fast API', percent: 45},
-               { title: 'REST APIs', percent: 85},
-               { title: 'PostGreSQL', percent: 86},
-               { title: 'JSON-RPC', percent: 80},
-               { title: 'Spring Boot', percent: 35},
-           ],
-           currentSkill: { title: 'Django', percent: 65 }
-       }));
-   
-       // ODOO SKILLS
-       Alpine.data('skillDisplayOdoo', () => ({
-           skills: [
-               { title: 'Odoo Web Library', percent: 50 },
-               { title: 'Odoo Framework', percent: 85 },
-               { title: 'Odoo Functional', percent: 60 },
-               { title: 'MVC', percent: 95 },
-           ],
-           currentSkill: { title: 'Odoo Framework', percent: 85 }
-       }));
-   
-       // DATA ENGINEERING SKILLS
-       Alpine.data('skillDisplayData', () => ({
-           skills: [
-               { title: 'Python', percent: 80 },
-               { title: 'ETL Pipelines', percent: 75 },
-               { title: 'Data Modeling', percent: 70 },
-               { title: 'SQL', percent: 85 },
-               { title: 'Prefect', percent: 45 },
-           ],
-           currentSkill: { title: 'Python', percent: 80 }
-       }));
+
+      // One reusable component per skill-domain card. Each card passes
+      // its own skills list and themeIndex from the template.
+      Alpine.data('domainSkillDisplay', (config) => ({
+         skills: config && Array.isArray(config.skills) ? config.skills : [],
+         themeIndex: config && Number.isInteger(config.themeIndex) ? config.themeIndex : 0,
+         currentSkill: null,
+         init() {
+            if (this.skills.length > 0) {
+               this.currentSkill = this.skills[0];
+            }
+         },
+         themeClass(kind) {
+            const themes = [
+               { tagBg: 'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700',
+                 tagRing: 'ring-blue-400 dark:ring-blue-300',
+                 ringStroke: 'text-blue-500 dark:text-blue-400' },
+               { tagBg: 'bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-700 dark:text-white dark:hover:bg-purple-800',
+                 tagRing: 'ring-purple-400 dark:ring-purple-300',
+                 ringStroke: 'text-purple-500 dark:text-purple-400' },
+               { tagBg: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-700',
+                 tagRing: 'ring-yellow-400 dark:ring-yellow-300',
+                 ringStroke: 'text-yellow-500 dark:text-yellow-400' },
+               { tagBg: 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-600 dark:text-white dark:hover:bg-green-700',
+                 tagRing: 'ring-green-400 dark:ring-green-300',
+                 ringStroke: 'text-green-500 dark:text-green-400' },
+               { tagBg: 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-600 dark:text-white dark:hover:bg-red-700',
+                 tagRing: 'ring-red-400 dark:ring-red-300',
+                 ringStroke: 'text-red-500 dark:text-red-400' },
+               { tagBg: 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200 dark:bg-emerald-600 dark:text-white dark:hover:bg-emerald-700',
+                 tagRing: 'ring-emerald-400 dark:ring-emerald-300',
+                 ringStroke: 'text-emerald-500 dark:text-emerald-400' },
+            ];
+            const t = themes[this.themeIndex % themes.length];
+            return t[kind] || '';
+         },
+      }));
+
    });
 </script>
 
