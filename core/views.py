@@ -158,6 +158,11 @@ class FrontPageView(generic.TemplateView):
     """
     template_name = "portfolio/front_page.html"
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context: dict[str, Any] = super().get_context_data(**kwargs)
+        context["experiences"] = WorkExperience.objects.all()
+        return context
+
 class AboutPageView(generic.TemplateView):
     """
         About-Page View Class.

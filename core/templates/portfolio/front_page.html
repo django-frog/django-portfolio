@@ -345,53 +345,50 @@
                <div class="absolute -top-6 left-3 h-6 border-l-4 border-dashed border-gray-400 dark:border-gray-600"></div>
                <!-- MILESTONES -->
                <div class="space-y-8">
-                  <!-- Milestone Template -->
-                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="1">
-                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
-                        bg-green-600 dark:bg-green-500"></div>
-                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
-                        {% trans "Back-end Developer Free-Lancer (2023 - Present)" %}
-                    </p>
-                  </div>
-                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="2">
-                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
-                        bg-green-600 dark:bg-green-500"></div>
-                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
-                        {% trans "Odoo Developer Intership (2024 Sep. - 2024 Dec.)" %}
-                    </p>
-                  </div>
-                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="3">
-                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
-                        bg-green-600 dark:bg-green-500"></div>
-                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
-                        {% trans "Odoo Developer (2025 Marc. - Present)" %}
-                     </p>
-                  </div>
-                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="4">
-                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
-                        bg-green-600 dark:bg-green-500"></div>
-                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
-                        {% trans "Prompt Engineering Intership (2025 Jun. - 2025 Jul.)" %}
-                     </p>
-                  </div>
-                  <div class="milestone relative max-w-md ml-10 cursor-pointer" data-id="5">
-                     <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
-                        bg-green-600 dark:bg-green-500"></div>
-                     <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
-                        {% trans "Data Engineer Intership (2025 Aug. - 2026 Jun.)" %}
-                     </p>
-                  </div>
+                  {% if experiences %}
+                     {% for job in experiences %}
+                        <div class="milestone relative max-w-md ml-10 cursor-pointer"
+                             data-id="{{ forloop.counter }}"
+                             data-title="{{ job.role_title }} @ {{ job.company }}"
+                             data-description="{{ job.description }}">
+                           <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
+                              bg-green-600 dark:bg-green-500"></div>
+                           <p class="mt-4 pl-4 text-gray-800 dark:text-gray-200">
+                              {{ job.role_title }} @ {{ job.company }}
+                              <span class="block text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                 {{ job.start_date|date:"M Y" }} – {{ job.get_duration_display }}
+                                 {% if job.location %} · {{ job.location }}{% endif %}
+                              </span>
+                           </p>
+                        </div>
+                     {% endfor %}
+                  {% else %}
+                     <div class="milestone relative max-w-md ml-10">
+                        <div class="dot absolute top-0 -left-10 h-7 w-7 rounded-full border-4 border-gray-100 shadow
+                           bg-gray-300 dark:bg-gray-600"></div>
+                        <p class="mt-4 pl-4 italic text-gray-500 dark:text-gray-400">
+                           {% trans "No work experience listed yet." %}
+                        </p>
+                     </div>
+                  {% endif %}
                </div>
             </div>
             <!-- DETAILS PANEL (Right Side) -->
             <div id="detailsPanel" class="flex-1 max-w-xl p-6 rounded-xl bg-white text-gray-900 shadow
                dark:bg-gray-800 dark:text-gray-100">
-               <h3 class="text-2xl font-semibold mb-4">Full-stack Developer at XYZ Corp</h3>
-               <p class="leading-relaxed text-gray-700 dark:text-gray-300">
-                  Developed large-scale Django backend systems, optimized APIs,
-                  built responsive UIs with TailwindCSS, and improved performance
-                  for enterprise clients. Led team code reviews and CI/CD setups.
-               </p>
+               {% if experiences %}
+                  <h3 id="detailsPanelTitle" class="text-2xl font-semibold mb-4">
+                     {{ experiences.0.role_title }} @ {{ experiences.0.company }}
+                  </h3>
+                  <p id="detailsPanelText" class="leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                     {{ experiences.0.description }}
+                  </p>
+               {% else %}
+                  <h3 class="text-2xl font-semibold mb-4">{% trans "Work Experience" %}</h3>
+                  <p class="leading-relaxed text-gray-700 dark:text-gray-300">
+                     {% trans "Add work experience records via the Django admin to populate this timeline." %}
+                  </p>
+               {% endif %}
             </div>
          </div>
       </section>
@@ -515,60 +512,42 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-         
-        const details = {
-            1: {
-                title: "Freelance Backend Developer",
-                text: "Worked on multiple projects including a social media platform similar to Instagram and a hospital management system. Built secure Django backends, optimized database structures, created REST APIs, and delivered scalable system architectures tailored to client needs."
-            },
-            2: {
-                title: "Odoo Developer Intern at EBTech",
-                text: "Completed an internship focused on Odoo development, learning key concepts of module customization, ORM usage, and business workflow automation. Contributed to enhancements in HR, accounting, and inventory modules."
-            },
-            3: {
-                title: "Odoo Developer at EBTech",
-                text: "Hired full-time after the internship. Developed custom Odoo modules, improved company ERP workflows, implemented automated processes, and delivered deployment-ready enhancements used across production systems."
-            },
-            4: {
-                title: "AI Website Developer Intern at Fontee Aperta",
-                text: "Built dynamic websites using AI-powered workflows, prompt engineering, and content generation systems. Improved automation processes, integrated AI models, and delivered fast landing pages and microsites for various clients."
-            },
-            5: {
-                title: "Data Engineer Intern at Yasmeen AI",
-                text: "Designed and maintained ETL pipelines, cleaned and transformed datasets, improved data reliability, and supported machine-learning workflows. Focused on efficient data ingestion, API integrations, and pipeline performance optimization."
-            }
-        };
-
 
         const milestones = document.querySelectorAll(".milestone");
         const panel = document.getElementById("detailsPanel");
+        const titleEl = document.getElementById("detailsPanelTitle");
+        const textEl = document.getElementById("detailsPanelText");
 
-        // Activate default (first item)
-        setActive(1);
+        function setActive(node) {
+            if (!node || !panel || !titleEl || !textEl) {
+                return;
+            }
 
-        milestones.forEach(m => {
-            m.addEventListener("click", () => {
-                const id = m.getAttribute("data-id");
-                setActive(id);
-            });
-        });
-
-        function setActive(id) {
-
-            // Update Panel
-            panel.querySelector("h3").textContent = details[id].title;
-            panel.querySelector("p").textContent = details[id].text;
+            // Update panel from data-* attributes so we never need a static map.
+            titleEl.textContent = node.dataset.title || "";
+            textEl.textContent = node.dataset.description || "";
 
             // Reset all dots
             document.querySelectorAll(".milestone .dot").forEach(dot => {
                 dot.classList.remove("ring-4", "ring-green-400");
             });
 
-            // Highlight active one
-            const activeMilestone = document.querySelector(`.milestone[data-id="${id}"] .dot`);
-            activeMilestone.classList.add("ring-4", "ring-green-400");
+            // Highlight active dot
+            const dot = node.querySelector(".dot");
+            if (dot) {
+                dot.classList.add("ring-4", "ring-green-400");
+            }
         }
-         
+
+        // Activate the first milestone by default (if any).
+        if (milestones.length > 0) {
+            setActive(milestones[0]);
+        }
+
+        milestones.forEach(m => {
+            m.addEventListener("click", () => setActive(m));
+        });
+
     });
 </script>
 
