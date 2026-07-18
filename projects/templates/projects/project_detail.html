@@ -1,0 +1,178 @@
+{% extends "portfolio/core/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ project.title }} | Mohammad Hamdan{% endblock %}
+
+{% block content %}
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 px-4 sm:px-6 lg:px-8 py-12">
+
+  {# Back link #}
+  <div class="max-w-5xl mx-auto mb-6">
+    <a href="{% url 'projects:projects_page' %}"
+       class="inline-flex items-center gap-2 text-sm font-medium
+              text-emerald-700 dark:text-emerald-400 hover:underline">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+           aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 19l-7-7 7-7"/>
+      </svg>
+      {% trans "Back to Projects" %}
+    </a>
+  </div>
+
+  <article class="max-w-5xl mx-auto
+                  bg-white dark:bg-gray-800
+                  border border-gray-200 dark:border-gray-700
+                  rounded-2xl shadow-sm overflow-hidden">
+
+    {# Hero / header #}
+    <header class="px-6 sm:px-10 py-8 border-b border-gray-200 dark:border-gray-700">
+
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+
+        <div class="flex items-start gap-5 min-w-0">
+          {% if project.thumbnail %}
+            <img src="{{ project.thumbnail.url }}"
+                 alt="{{ project.title }} thumbnail"
+                 class="h-16 w-16 md:h-20 md:w-20 rounded-xl object-cover
+                        ring-2 ring-emerald-500/30 shrink-0">
+          {% else %}
+            <span class="h-16 w-16 md:h-20 md:w-20 rounded-xl
+                         bg-emerald-100 text-emerald-700
+                         dark:bg-emerald-900 dark:text-emerald-300
+                         inline-flex items-center justify-center
+                         font-bold text-2xl shrink-0">
+              {{ project.title|slice:":1" }}
+            </span>
+          {% endif %}
+
+          <div class="min-w-0">
+            <h1 class="text-3xl sm:text-4xl font-extrabold
+                       text-gray-900 dark:text-gray-100 break-words">
+              {{ project.title }}
+            </h1>
+
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              {{ project.get_duration_display }}
+            </p>
+
+            {% if project.tags.all %}
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {% for tag in project.tags.all %}
+                  <li class="inline-flex items-center px-3 py-1 rounded-full
+                             text-xs font-medium
+                             bg-emerald-100 text-emerald-800
+                             dark:bg-emerald-900 dark:text-emerald-200">
+                    {{ tag.name }}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+
+        {# Featured badge + quick links #}
+        <div class="flex flex-col items-start md:items-end gap-3 shrink-0">
+          {% if project.is_featured %}
+            <span class="inline-flex items-center px-3 py-1 rounded-full
+                         text-xs font-semibold
+                         bg-yellow-100 text-yellow-800
+                         dark:bg-yellow-900 dark:text-yellow-200">
+              {% trans "Featured" %}
+            </span>
+          {% endif %}
+
+          <div class="flex flex-wrap gap-2">
+            {% if project.repository_url %}
+              <a href="{{ project.repository_url }}"
+                 target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg
+                        text-sm font-medium
+                        bg-gray-900 text-white
+                        dark:bg-gray-100 dark:text-gray-900
+                        hover:opacity-90 transition">
+                {% trans "Repository" %}
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if project.live_demo_url %}
+              <a href="{{ project.live_demo_url }}"
+                 target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg
+                        text-sm font-medium
+                        bg-emerald-600 text-white
+                        hover:bg-emerald-700 transition">
+                {% trans "Live Demo" %}
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if project.project_url %}
+              <a href="{{ project.project_url }}"
+                 target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg
+                        text-sm font-medium
+                        border border-gray-300 dark:border-gray-600
+                        text-gray-700 dark:text-gray-200
+                        hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                {% trans "Project Link" %}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {# Short description as a lead #}
+      {% if project.short_description %}
+        <p class="mt-6 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          {{ project.short_description }}
+        </p>
+      {% endif %}
+    </header>
+
+    {# Markdown content #}
+    <section class="px-6 sm:px-10 py-10">
+      {% if project.content %}
+        <div class="prose dark:prose-invert max-w-none
+                    text-gray-800 dark:text-gray-200">
+          {{ project.content|linebreaks }}
+        </div>
+      {% else %}
+        <p class="italic text-gray-500 dark:text-gray-400">
+          {% trans "No detailed documentation has been published for this project yet." %}
+        </p>
+      {% endif %}
+    </section>
+
+    {# Footer meta #}
+    <footer class="px-6 sm:px-10 py-4
+                   border-t border-gray-200 dark:border-gray-700
+                   text-xs text-gray-500 dark:text-gray-400
+                   flex flex-wrap items-center justify-between gap-2">
+      <span>{% trans "Created" %}: {{ project.created_at|date:"M j, Y" }}</span>
+      {% if project.start_date %}
+        <span>{% trans "Started" %}: {{ project.start_date|date:"M Y" }}</span>
+      {% endif %}
+      {% if project.end_date %}
+        <span>{% trans "Ended" %}: {{ project.end_date|date:"M Y" }}</span>
+      {% elif project.start_date %}
+        <span>{% trans "Status" %}: {% trans "Ongoing" %}</span>
+      {% endif %}
+    </footer>
+
+  </article>
+
+</div>
+
+{% endblock %}

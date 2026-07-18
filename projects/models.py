@@ -101,6 +101,17 @@ class Project(models.Model):
     def get_absolute_url(self) -> str:
         return reverse("projects:project_detail", kwargs={"slug": self.slug})
 
+    def get_duration_display(self) -> str:
+        """Return a friendly date-range label, e.g. 'Aug 2025 – Present'."""
+        start: str = (
+            self.start_date.strftime("%b %Y") if self.start_date else ""
+        )
+        if not self.end_date:
+            end: str = "Present"
+        else:
+            end = self.end_date.strftime("%b %Y")
+        return f"{start} – {end}" if start else end
+
     def soft_delete(self) -> None:
         self.deleted_at = timezone.now()
         self.save()
