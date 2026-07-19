@@ -82,6 +82,106 @@ class Skill(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    LAYER_ORDER: tuple[str, ...] = (
+        "languages",
+        "frameworks",
+        "data",
+        "devops",
+    )
+
+    LAYER_LABELS: dict[str, str] = {
+        "languages": "Languages & Core Syntax",
+        "frameworks": "Frameworks & Platforms",
+        "data": "Databases & Event Streams",
+        "devops": "DevOps & Cloud Infrastructure",
+    }
+
+    LAYER_KEYWORDS: dict[str, tuple[str, ...]] = {
+        "languages": (
+            "python", "javascript", "typescript", "go", "golang", "rust",
+            "java", "kotlin", "swift", "c", "c++", "c#", "ruby", "php",
+            "scala", "bash", "shell", "sql", "html", "css",
+        ),
+        "frameworks": (
+            "django", "flask", "fastapi", "fast api", "starlette", "express",
+            "react", "next.js", "nextjs", "vue", "angular", "svelte",
+            "odoo", "openerp", "rails", "laravel", "spring", "odoo.sh",
+        ),
+        "data": (
+            "postgres", "postgresql", "mysql", "mariadb", "sqlite", "redis",
+            "mongodb", "cassandra", "kafka", "rabbitmq", "celery",
+            "elasticsearch", "dynamodb", "influxdb",
+        ),
+        "devops": (
+            "docker", "kubernetes", "k8s", "helm", "terraform", "ansible",
+            "jenkins", "github actions", "gitlab ci", "circleci", "argo",
+            "nginx", "apache", "aws", "azure", "gcp", "digitalocean",
+            "linux", "ubuntu", "debian", "centos", "prometheus",
+            "grafana", "datadog", "ci/cd", "cicd",
+        ),
+    }
+
+    LAYER_ICONS: dict[str, str] = {
+        "languages": "code",
+        "frameworks": "layers",
+        "data": "database",
+        "devops": "cloud",
+    }
+
+    def _normalized_token(self) -> str:
+        return (self.slug or self.name or "").strip().lower()
+
+    def _token_matches(self, token: str, keyword: str) -> bool:
+        """Match a keyword against the skill token on word boundaries.
+
+        Both ``token`` (the lowercased slug/name) and ``keyword`` are
+        normalised on non-alphanumeric separators so phrases such as
+        ``"CI/CD"`` or ``"github actions"`` match against slugs like
+        ``"ci-cd"`` and ``"github-actions"``. The implementation is
+        order-independent at the keyword-token level but requires every
+        keyword token to be present in the skill token, which prevents
+        ``"go"`` from matching ``"django"`` and ``"c"`` from matching
+        ``"docker"``.
+        """
+        if not token or not keyword:
+            return False
+
+        def _split(value: str) -> list[str]:
+            normalised = value.replace("-", " ").replace("/", " ")
+            return [t for t in normalised.split() if t]
+
+        skill_tokens = _split(token)
+        kw_tokens = _split(keyword)
+        if not kw_tokens:
+            return False
+        skill_set = set(skill_tokens)
+        return all(t in skill_set for t in kw_tokens)
+
+    def get_layer(self) -> str:
+        """Return the technical-stack layer key for this skill.
+
+        The layer is derived non-destructively from the skill's ``slug``
+        or ``name`` by matching against known keywords on word
+        boundaries. New skills fall back to ``"languages"`` when no
+        keyword matches, keeping the helper total and template-safe
+        without requiring any schema changes.
+        """
+        token = self._normalized_token()
+        for layer_key in self.LAYER_ORDER:
+            keywords = self.LAYER_KEYWORDS.get(layer_key, ())
+            for kw in keywords:
+                if self._token_matches(token, kw):
+                    return layer_key
+        return "languages"
+
+    def get_layer_label(self) -> str:
+        """Return the human-readable layer name for this skill."""
+        return self.LAYER_LABELS.get(self.get_layer(), self.LAYER_LABELS["languages"])
+
+    def get_layer_icon(self) -> str:
+        """Return the icon identifier for the layer this skill belongs to."""
+        return self.LAYER_ICONS.get(self.get_layer(), self.LAYER_ICONS["languages"])
+
 
 class TechnicalDomain(models.Model):
     """A grouping of related skills (e.g. 'Backend Architecture')."""
@@ -179,6 +279,20 @@ class WorkExperience(models.Model):
         if self.end_date:
             return self.end_date.strftime("%b %Y")
         return ""
+
+    def get_technologies(self):
+        """Return the list of technologies used in this role.
+
+        The model intentionally does not declare a technologies relation
+        to keep the schema stable; this helper exposes a template-safe
+        empty list so the work-experience template can render its
+        tech-stack footer unconditionally with ``{% if job.get_technologies %}``
+        and only iterate when the relation is wired up in the future.
+        """
+        related = getattr(self, "technologies", None)
+        if related is None:
+            return []
+        return related.all()
 
 
 class SocialPlatform(models.Model):

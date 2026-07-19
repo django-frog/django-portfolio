@@ -7,7 +7,38 @@ from django.utils.html import escape
 from django.utils.safestring import mark_safe
 import markdown as _markdown
 
+from core.models import Skill
+
 register = template.Library()
+
+
+@register.simple_tag
+def skill_layers(skills):
+    """Group a queryset/list of ``Skill`` instances by technical-stack layer.
+
+    Returns a list of dicts ``{"key", "label", "icon", "skills"}`` in the
+    prescribed display order. Empty layers are omitted so the template
+    never renders an empty card.
+    """
+    grouped: dict[str, list] = {}
+    for skill in skills:
+        layer_key = skill.get_layer()
+        grouped.setdefault(layer_key, []).append(skill)
+
+    layers = []
+    for key in Skill.LAYER_ORDER:
+        members = grouped.get(key)
+        if not members:
+            continue
+        layers.append(
+            {
+                "key": key,
+                "label": Skill.LAYER_LABELS[key],
+                "icon": Skill.LAYER_ICONS[key],
+                "skills": members,
+            }
+        )
+    return layers
 
 
 @register.filter(name="markdown")
