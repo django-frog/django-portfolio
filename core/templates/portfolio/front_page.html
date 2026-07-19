@@ -1,6 +1,7 @@
 {% extends "portfolio/core/base.html" %}
 {% load static %}
 {% load i18n %}
+{% load md_extras %}
 {% block content %}
 
 <!-- ============================================================ -->
@@ -23,14 +24,15 @@
             {% trans "Senior Engineer · Open to Opportunities" %}
          </span>
 
-         <h1 class="text-4xl md:text-6xl font-bold leading-tight tracking-tight">
+         <h1 class="text-4xl md:text-6xl font-bold leading-tight tracking-tight
+                    text-slate-900 dark:text-white">
             {% trans "Hello, I'm" %}
             <span class="block text-emerald-600 dark:text-emerald-400 mt-2">
                Mohammad A. Hamdan
             </span>
          </h1>
 
-         <p class="mt-6 text-base md:text-lg text-gray-600 dark:text-gray-300
+         <p class="mt-6 text-base md:text-lg text-slate-600 dark:text-slate-300
                   max-w-2xl leading-relaxed">
             {% trans "Backend & Odoo Systems Engineer specializing in scalable Python architectures, distributed systems, and automated workflows. Building robust, production-ready software from bare-metal Linux to the cloud." %}
          </p>
@@ -71,10 +73,11 @@
 
       <!-- Header -->
       <div class="text-center mb-14">
-         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">
+         <h2 class="text-3xl md:text-5xl font-bold tracking-tight
+                    text-slate-900 dark:text-white">
             {% trans "Domains" %}
          </h2>
-         <p class="mt-3 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+         <p class="mt-3 text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             {% trans "Core engineering capabilities, applied end-to-end across the stack." %}
          </p>
          <div class="flex mt-6 justify-center">
@@ -86,9 +89,10 @@
       {% if domains %}
          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {% for domain in domains %}
-               <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200
-                           dark:border-slate-700 rounded-xl p-6 shadow-sm
-                           hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+               <div class="bg-white dark:bg-slate-800/80 border border-slate-200
+                           dark:border-slate-700/60 rounded-xl p-6 shadow-sm
+                           hover:shadow-md hover:-translate-y-1 transition-all duration-200
+                           text-slate-800 dark:text-slate-100">
 
                   <div class="flex items-start gap-4">
 
@@ -127,11 +131,11 @@
 
                      <!-- Body -->
                      <div class="flex-1 min-w-0">
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">
                            {{ domain.name }}
                         </h3>
                         {% if domain.description %}
-                           <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                           <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                               {{ domain.description }}
                            </p>
                         {% endif %}
@@ -139,9 +143,12 @@
                         {% if domain.skills.all %}
                            <div class="mt-4 flex flex-wrap gap-2">
                               {% for skill in domain.skills.all %}
-                                 <span class="bg-slate-200 dark:bg-slate-700 text-xs
-                                              px-2.5 py-1 rounded-full font-medium
-                                              text-slate-700 dark:text-slate-200">
+                                 <span class="inline-flex items-center gap-1.5
+                                              px-3 py-1.5 rounded-lg
+                                              bg-white dark:bg-slate-700/60
+                                              border border-slate-200 dark:border-slate-600
+                                              text-sm font-medium
+                                              text-slate-800 dark:text-slate-200 shadow-sm">
                                     {{ skill.name }}
                                  </span>
                               {% endfor %}
@@ -161,16 +168,18 @@
 
 <!-- ============================================================ -->
 <!-- SKILLS SECTION                                                -->
+<!-- Categorized Badge Array: one card per category, compact pills  -->
 <!-- ============================================================ -->
 <section class="py-20 bg-gray-100 dark:bg-gray-900 border-t border-slate-200 dark:border-slate-800">
    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
       <!-- Header -->
       <div class="text-center mb-14">
-         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">
+         <h2 class="text-3xl md:text-5xl font-bold tracking-tight
+                    text-slate-900 dark:text-white">
             {% trans "Skills" %}
          </h2>
-         <p class="mt-3 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+         <p class="mt-3 text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             {% trans "Production-tested toolkits organized by domain of expertise." %}
          </p>
          <div class="flex mt-6 justify-center">
@@ -179,13 +188,16 @@
       </div>
 
       {% if domains %}
-         <!-- Group skills by domain; iterate domains, render their skills as badge grids -->
-         <div class="space-y-12">
+         <!-- Primary path: skills grouped under each TechnicalDomain -->
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {% for domain in domains %}
                {% if domain.skills.all %}
-                  <div>
-                     <div class="flex items-center gap-3 mb-5">
-                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  <div class="rounded-xl bg-slate-50 dark:bg-slate-800/50 border
+                              border-slate-200 dark:border-slate-700 p-6
+                              text-slate-800 dark:text-slate-100 shadow-sm">
+
+                     <div class="flex items-center gap-3 mb-4">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">
                            {{ domain.name }}
                         </h3>
                         <span class="text-xs font-medium px-2.5 py-1 rounded-full
@@ -195,80 +207,39 @@
                         </span>
                      </div>
 
-                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                     <div class="flex flex-wrap gap-2">
                         {% for skill in domain.skills.all %}
-                           {% with skill.proficiency|default:0 as p %}
-                              <div class="bg-slate-50 dark:bg-slate-800/50 border
-                                          border-slate-200 dark:border-slate-700
-                                          rounded-xl p-5 shadow-sm hover:shadow-md
-                                          hover:-translate-y-0.5 transition-all duration-200">
-                                 <div class="flex items-start justify-between gap-3">
-                                    <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100 break-words">
-                                       {{ skill.name }}
-                                    </h4>
-                                    {% if p >= 85 %}
-                                       <span class="shrink-0 text-xs font-semibold px-2 py-0.5
-                                                    rounded-full bg-emerald-100 text-emerald-700
-                                                    dark:bg-emerald-900/40 dark:text-emerald-400">
-                                          {% trans "Advanced" %}
-                                       </span>
-                                    {% elif p >= 70 %}
-                                       <span class="shrink-0 text-xs font-semibold px-2 py-0.5
-                                                    rounded-full bg-sky-100 text-sky-700
-                                                    dark:bg-sky-900/40 dark:text-sky-400">
-                                          {% trans "Production Ready" %}
-                                       </span>
-                                    {% else %}
-                                       <span class="shrink-0 text-xs font-semibold px-2 py-0.5
-                                                    rounded-full bg-slate-200 text-slate-700
-                                                    dark:bg-slate-700 dark:text-slate-200">
-                                          {% trans "Working Knowledge" %}
-                                       </span>
-                                    {% endif %}
-                                 </div>
-                              </div>
-                           {% endwith %}
+                           <span class="inline-flex items-center gap-1.5
+                                        px-3 py-1.5 rounded-lg
+                                        bg-white dark:bg-slate-700/60
+                                        border border-slate-200 dark:border-slate-600
+                                        text-sm font-medium
+                                        text-slate-800 dark:text-slate-200 shadow-sm">
+                              {{ skill.name }}
+                           </span>
                         {% endfor %}
                      </div>
+
                   </div>
                {% endif %}
             {% endfor %}
          </div>
       {% elif skills %}
-         <!-- Fallback: render uncategorized skills as a simple grid -->
-         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for skill in skills %}
-               {% with skill.proficiency|default:0 as p %}
-                  <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200
-                              dark:border-slate-700 rounded-xl p-5 shadow-sm
-                              hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-                     <div class="flex items-start justify-between gap-3">
-                        <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100 break-words">
-                           {{ skill.name }}
-                        </h4>
-                        {% if p >= 85 %}
-                           <span class="shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full
-                                        bg-emerald-100 text-emerald-700
-                                        dark:bg-emerald-900/40 dark:text-emerald-400">
-                              {% trans "Advanced" %}
-                           </span>
-                        {% elif p >= 70 %}
-                           <span class="shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full
-                                        bg-sky-100 text-sky-700
-                                        dark:bg-sky-900/40 dark:text-sky-400">
-                              {% trans "Production Ready" %}
-                           </span>
-                        {% else %}
-                           <span class="shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full
-                                        bg-slate-200 text-slate-700
-                                        dark:bg-slate-700 dark:text-slate-200">
-                              {% trans "Working Knowledge" %}
-                           </span>
-                        {% endif %}
-                     </div>
-                  </div>
-               {% endwith %}
-            {% endfor %}
+         <!-- Fallback: flat skill list → tag-cloud container -->
+         <div class="rounded-xl bg-slate-50 dark:bg-slate-800/50 border
+                     border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+            <div class="flex flex-wrap gap-2">
+               {% for skill in skills %}
+                  <span class="inline-flex items-center gap-1.5
+                               px-3 py-1.5 rounded-lg
+                               bg-white dark:bg-slate-700/60
+                               border border-slate-200 dark:border-slate-600
+                               text-sm font-medium
+                               text-slate-800 dark:text-slate-200 shadow-sm">
+                     {{ skill.name }}
+                  </span>
+               {% endfor %}
+            </div>
          </div>
       {% endif %}
 
@@ -286,10 +257,11 @@
 
       <!-- Header -->
       <div class="text-center mb-14">
-         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">
+         <h2 class="text-3xl md:text-5xl font-bold tracking-tight
+                    text-slate-900 dark:text-white">
             {% trans "Work Experience" %}
          </h2>
-         <p class="mt-3 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+         <p class="mt-3 text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             {% trans "A track record of delivering production systems across teams and stacks." %}
          </p>
          <div class="flex mt-6 justify-center">
@@ -308,25 +280,31 @@
                </span>
 
                <!-- Card -->
-               <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200
-                           dark:border-slate-700 rounded-xl p-6 shadow-sm
-                           hover:shadow-md transition-all duration-200">
+               <div class="bg-white dark:bg-slate-800/60 rounded-xl border
+                           border-slate-200 dark:border-slate-700/80 p-6
+                           shadow-sm mb-6 text-slate-800 dark:text-slate-100">
 
+                  <!-- Metadata Header -->
                   <div class="flex flex-col sm:flex-row sm:items-start
                               sm:justify-between gap-3">
-                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">
+                     <div class="min-w-0">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">
                            {{ job.role_title }}
                         </h3>
-                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-0.5">
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-300 mt-0.5">
                            {% if job.company_url %}
                               <a href="{{ job.company_url }}" target="_blank"
+                                 rel="noopener noreferrer"
                                  class="hover:text-emerald-600 dark:hover:text-emerald-400
                                         transition-colors underline-offset-2 hover:underline">
                                  {{ job.company }}
                               </a>
                            {% else %}
                               {{ job.company }}
+                           {% endif %}
+                           {% if job.location %}
+                              <span class="text-slate-400 dark:text-slate-500"> · </span>
+                              <span class="text-slate-500 dark:text-slate-400">{{ job.location }}</span>
                            {% endif %}
                         </p>
                      </div>
@@ -344,16 +322,27 @@
                      </span>
                   </div>
 
+                  <!-- Description (rendered from Markdown) -->
                   {% if job.description %}
-                     <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-                        {{ job.description }}
-                     </p>
+                     <div class="mt-4 prose dark:prose-invert max-w-none
+                                 text-slate-600 dark:text-slate-300 space-y-2">
+                        {{ job.description|markdown|safe }}
+                     </div>
                   {% endif %}
 
-                  {% if job.location %}
-                     <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
-                        <span class="font-medium">{% trans "Location" %}:</span> {{ job.location }}
-                     </p>
+                  <!-- Optional technologies footer (no-op if model has no relation) -->
+                  {% if job.technologies.all %}
+                     <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700/60
+                                 flex flex-wrap gap-1.5">
+                        {% for tech in job.technologies.all %}
+                           <span class="inline-flex items-center text-xs font-medium
+                                        px-2.5 py-1 rounded-md
+                                        bg-slate-100 text-slate-700
+                                        dark:bg-slate-700/60 dark:text-slate-200">
+                              {{ tech.name }}
+                           </span>
+                        {% endfor %}
+                     </div>
                   {% endif %}
 
                </div>
@@ -377,10 +366,12 @@
                   border border-slate-200 dark:border-slate-800
                   p-8 md:p-12 text-center shadow-sm">
 
-         <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+         <h2 class="text-3xl md:text-4xl font-bold tracking-tight
+                    text-slate-900 dark:text-white">
             {% trans "Let's Build Something Great Together" %}
          </h2>
-         <p class="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto">
+         <p class="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-300
+                    leading-relaxed max-w-2xl mx-auto">
             {% trans "Whether you need help with Odoo development, backend engineering, or data solutions — I'm always open to discussing new projects and collaborations." %}
          </p>
 
