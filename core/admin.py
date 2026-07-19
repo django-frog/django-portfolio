@@ -8,6 +8,7 @@ from django.http import HttpRequest
 
 from .models import (
     ContactInquiry,
+    EngineeringStat,
     PlatformStat,
     Skill,
     SocialPlatform,
@@ -156,3 +157,12 @@ class ContactInquiryAdmin(admin.ModelAdmin):
         )
 
     actions: tuple[str, ...] = ("mark_as_read",)
+
+
+@admin.register(EngineeringStat)
+class EngineeringStatAdmin(admin.ModelAdmin):
+    list_display = ("label", "value", "icon", "sort_order", "is_active")
+    list_editable = ("value", "sort_order", "is_active")
+    list_filter = ("is_active", "icon")
+    search_fields = ("label", "value")
+    ordering = ("sort_order", "label")

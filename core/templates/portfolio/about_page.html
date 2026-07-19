@@ -5,7 +5,7 @@
 {% block content %}
 <meta name="csrf-token" content="{{ csrf_token }}">
 
-<div class="flex flex-col justify-center items-center p-6 sm:p-10 md:p-12 min-h-screen gap-10 bg-gray-50 dark:bg-gray-900">
+<div class="flex flex-col justify-center items-center p-6 sm:p-10 md:p-12 min-h-screen gap-16 bg-gray-50 dark:bg-gray-900">
 
    <!-- ============================================================ -->
    <!-- PAGE HEADER                                                  -->
@@ -268,6 +268,315 @@
          </article>
 
       </div>
+   </section>
+
+
+   <!-- ============================================================ -->
+   <!-- THE ENGINEERING LAB                                          -->
+   <!-- ============================================================ -->
+   <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="text-center max-w-3xl mx-auto mb-10">
+         <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+            {% trans "Current Pursuits" %}
+         </span>
+         <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 mb-6">
+            {% trans "The Engineering Lab" %} 🧪
+         </h3>
+         <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+            {% trans "Active experiments and self-directed system replicas that deconstruct the platforms I depend on in production." %}
+         </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+
+         <!-- Card A: Bare-Metal & Distributed Storage Replicas -->
+         <article class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200
+                         dark:border-slate-700 rounded-2xl p-6 sm:p-8 shadow-sm
+                         flex flex-col h-full
+                         hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-4">
+               <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
+                           bg-emerald-100 text-emerald-600
+                           dark:bg-emerald-900/40 dark:text-emerald-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                     <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                     <path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"></path>
+                     <path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"></path>
+                  </svg>
+               </div>
+               <h4 class="text-lg font-bold text-slate-900 dark:text-white">
+                  {% trans "Bare-Metal & Distributed Storage Replicas" %}
+               </h4>
+            </div>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+               {% blocktrans %}Bypassing commercial cloud providers to build self-hosted object storage services and decentralized storage replicas, deconstructing the core primitives of AWS S3 from scratch on commodity Linux hardware. The goal: full data ownership, predictable performance characteristics, and a deep understanding of erasure coding, replication, and consensus under network partitions.{% endblocktrans %}
+            </p>
+         </article>
+
+         <!-- Card B: Custom DevOps & CLI Tooling -->
+         <article class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200
+                         dark:border-slate-700 rounded-2xl p-6 sm:p-8 shadow-sm
+                         flex flex-col h-full
+                         hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-4">
+               <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
+                           bg-emerald-100 text-emerald-600
+                           dark:bg-emerald-900/40 dark:text-emerald-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                     <polyline points="4 17 10 11 4 5"></polyline>
+                     <line x1="12" y1="19" x2="20" y2="19"></line>
+                  </svg>
+               </div>
+               <h4 class="text-lg font-bold text-slate-900 dark:text-white">
+                  {% trans "Custom DevOps & CLI Tooling" %}
+               </h4>
+            </div>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+               {% blocktrans %}Engineering custom command-line utilities and Docker-powered CLI tools — including <span class="font-semibold text-slate-800 dark:text-slate-100">OdooFlow</span> — designed to automate environment bootstrap, repository synchronization, and continuous deployment workflows for distributed engineering teams. Each tool replaces a manual ritual with a reproducible, idempotent command.{% endblocktrans %}
+            </p>
+         </article>
+
+         <!-- Card C: Polyglot Performance Benchmarking -->
+         <article class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200
+                         dark:border-slate-700 rounded-2xl p-6 sm:p-8 shadow-sm
+                         flex flex-col h-full md:col-span-2
+                         hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-4">
+               <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
+                           bg-emerald-100 text-emerald-600
+                           dark:bg-emerald-900/40 dark:text-emerald-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                     <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+               </div>
+               <h4 class="text-lg font-bold text-slate-900 dark:text-white">
+                  {% trans "Polyglot Performance Benchmarking" %}
+               </h4>
+            </div>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+               {% blocktrans %}Ongoing experiments in high-concurrency data streaming, comparing non-blocking Server-Sent Events (SSE) against full-duplex WebSockets across asynchronous Python (<span class="font-mono text-emerald-700 dark:text-emerald-400">asyncio</span>, <span class="font-mono text-emerald-700 dark:text-emerald-400">aiohttp</span>) and Golang (<span class="font-mono text-emerald-700 dark:text-emerald-400">net/http</span>, <span class="font-mono text-emerald-700 dark:text-emerald-400">gorilla/websocket</span>) architectures. Measurements include p50/p95/p99 latency, memory residency, and connection-fanout ceilings under realistic load profiles.{% endblocktrans %}
+            </p>
+         </article>
+
+      </div>
+   </section>
+
+
+   <!-- ============================================================ -->
+   <!-- BEYOND THE TERMINAL                                          -->
+   <!-- ============================================================ -->
+   <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="text-center max-w-3xl mx-auto mb-10">
+         <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+            {% trans "Off-Screen Logic" %}
+         </span>
+         <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 mb-6">
+            {% trans "Beyond the Terminal" %} ⚡
+         </h3>
+         <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+            {% trans "Analytical problem-solving and technical hobbies that live outside of corporate software development." %}
+         </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+
+         <!-- Card 1: Hardware & Electronic Troubleshooting -->
+         <article class="bg-white dark:bg-slate-800/80 border border-slate-200
+                         dark:border-slate-700 rounded-xl p-6 shadow-sm
+                         flex flex-col justify-between h-full
+                         hover:border-emerald-500/50 transition-all">
+            <div>
+               <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
+                           bg-slate-100 text-slate-700
+                           dark:bg-slate-700/60 dark:text-slate-200 mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                     <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                     <rect x="9" y="9" width="6" height="6"></rect>
+                     <line x1="9" y1="1" x2="9" y2="4"></line>
+                     <line x1="15" y1="1" x2="15" y2="4"></line>
+                     <line x1="9" y1="20" x2="9" y2="23"></line>
+                     <line x1="15" y1="20" x2="15" y2="23"></line>
+                     <line x1="20" y1="9" x2="23" y2="9"></line>
+                     <line x1="20" y1="14" x2="23" y2="14"></line>
+                     <line x1="1" y1="9" x2="4" y2="9"></line>
+                     <line x1="1" y1="14" x2="4" y2="14"></line>
+                  </svg>
+               </div>
+               <h4 class="text-base font-bold text-slate-900 dark:text-white">
+                  {% trans "Hardware & Electronic Troubleshooting" %}
+               </h4>
+               <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {% blocktrans %}Hands-on physical computing — diagnosing hardware faults, reading schematics, and repairing consumer electronics down to the component level. The same forensic mindset I bring to production outages applies to a dead motherboard: trace the signal, isolate the failure, replace the smallest possible part.{% endblocktrans %}
+               </p>
+            </div>
+         </article>
+
+         <!-- Card 2: Interactive Media & Game Development -->
+         <article class="bg-white dark:bg-slate-800/80 border border-slate-200
+                         dark:border-slate-700 rounded-xl p-6 shadow-sm
+                         flex flex-col justify-between h-full
+                         hover:border-emerald-500/50 transition-all">
+            <div>
+               <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
+                           bg-slate-100 text-slate-700
+                           dark:bg-slate-700/60 dark:text-slate-200 mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                     <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                     <line x1="7" y1="12" x2="11" y2="12"></line>
+                     <line x1="9" y1="10" x2="9" y2="14"></line>
+                     <circle cx="17" cy="11" r="1"></circle>
+                     <circle cx="15" cy="14" r="1"></circle>
+                  </svg>
+               </div>
+               <h4 class="text-base font-bold text-slate-900 dark:text-white">
+                  {% trans "Interactive Media & Game Development" %}
+               </h4>
+               <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {% blocktrans %}At the intersection of complex programming logic, interactive storytelling, and digital creative tools — engineering immersive indie PC games as a sandbox for real-time systems, procedural generation, and tight feedback loops between code and player experience.{% endblocktrans %}
+               </p>
+            </div>
+         </article>
+
+         <!-- Card 3: System Deconstruction -->
+         <article class="bg-white dark:bg-slate-800/80 border border-slate-200
+                         dark:border-slate-700 rounded-xl p-6 shadow-sm
+                         flex flex-col justify-between h-full
+                         hover:border-emerald-500/50 transition-all">
+            <div>
+               <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
+                           bg-slate-100 text-slate-700
+                           dark:bg-slate-700/60 dark:text-slate-200 mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                     <circle cx="12" cy="12" r="3"></circle>
+                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+               </div>
+               <h4 class="text-base font-bold text-slate-900 dark:text-white">
+                  {% trans "System Deconstruction" %}
+               </h4>
+               <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {% blocktrans %}A relentless curiosity for tearing down complex systems — whether physical computing hardware or production software architectures — to analyze their underlying mechanics and eliminate performance bottlenecks. Every black box is a temporary state.{% endblocktrans %}
+               </p>
+            </div>
+         </article>
+
+      </div>
+   </section>
+
+
+   <!-- ============================================================ -->
+   <!-- LIVE TELEMETRY & ACTIVITY STATS                              -->
+   <!-- ============================================================ -->
+   <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="mb-10">
+         <h3 class="text-xl font-bold text-center text-slate-900 dark:text-white mb-8">
+            {% trans "Live Engineering Telemetry" %} 📊
+         </h3>
+      </header>
+
+      {% if engineering_stats %}
+         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {% for stat in engineering_stats %}
+               <div class="bg-gradient-to-br from-slate-50 to-slate-100
+                           dark:from-slate-800 dark:to-slate-900
+                           border border-slate-200 dark:border-slate-700/80
+                           rounded-xl p-6 text-center shadow-sm
+                           hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+
+                  {% if stat.icon == "repo" %}
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                     </svg>
+                  {% elif stat.icon == "commit" %}
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <line x1="3" y1="12" x2="9" y2="12"></line>
+                        <line x1="15" y1="12" x2="21" y2="12"></line>
+                     </svg>
+                  {% elif stat.icon == "deploy" %}
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="16 16 12 12 8 16"></polyline>
+                        <line x1="12" y1="12" x2="12" y2="21"></line>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                        <polyline points="16 16 12 12 8 16"></polyline>
+                     </svg>
+                  {% elif stat.icon == "pipeline" %}
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="6" height="6" rx="1"></rect>
+                        <rect x="15" y="15" width="6" height="6" rx="1"></rect>
+                        <path d="M9 6h12"></path>
+                        <path d="M3 18h6"></path>
+                     </svg>
+                  {% elif stat.icon == "contrib" %}
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                     </svg>
+                  {% else %}
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                     </svg>
+                  {% endif %}
+
+                  <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+                     {{ stat.value }}
+                  </div>
+                  <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">
+                     {{ stat.label }}
+                  </div>
+               </div>
+            {% endfor %}
+         </div>
+      {% else %}
+         <!-- Fallback: empty DB or context not populated yet → render the
+              prescribed 4-cell grid with clean baseline values so the
+              layout is 100% ready for backend seeding. -->
+         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
+               <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "GitHub Repositories" %}</div>
+            </div>
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
+               <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "Code Commits" %}</div>
+            </div>
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
+               <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "Production Deployments" %}</div>
+            </div>
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
+               <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "Automated Pipelines" %}</div>
+            </div>
+         </div>
+      {% endif %}
    </section>
 
 </div>

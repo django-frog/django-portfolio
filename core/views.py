@@ -18,6 +18,7 @@ from typing import Any
 from .forms import ContactInquiryForm
 from .models import (
     ContactInquiry,
+    EngineeringStat,
     Skill,
     SocialPlatform,
     TechnicalDomain,
@@ -196,6 +197,11 @@ class AboutPageView(generic.TemplateView):
             .all()
         )
         context["experiences"] = WorkExperience.objects.all()
+        context["engineering_stats"] = (
+            EngineeringStat.objects
+            .filter(is_active=True)
+            .order_by("sort_order", "label")
+        )
         return context
 
 class ProjectsPageView(generic.TemplateView):

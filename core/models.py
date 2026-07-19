@@ -402,3 +402,66 @@ class PlatformStat(models.Model):
 
     def __str__(self) -> str:
         return f"{self.platform.name} - {self.label}: {self.value}"
+
+
+class EngineeringStat(models.Model):
+    """A site-wide engineering metric displayed on the About page.
+
+    Unlike :class:`PlatformStat` which is keyed to a single external
+    platform (GitHub, LeetCode, ...), ``EngineeringStat`` is a flat
+    key/value table that aggregates portfolio-wide engineering telemetry
+    such as total repositories, code commits, production deployments,
+    or number of automated CI/CD pipelines. It is intentionally
+    lightweight so it can be seeded manually, computed by a
+    management command, or refreshed by external services without
+    schema migrations.
+    """
+
+    ICON_CHOICES: tuple[tuple[str, str], ...] = (
+        ("repo", _("Repositories")),
+        ("commit", _("Commits / Contributions")),
+        ("deploy", _("Production Deployments")),
+        ("pipeline", _("Automated Pipelines")),
+        ("contrib", _("Open-Source Contributions")),
+        ("uptime", _("Uptime / Availability")),
+    )
+
+    label = models.CharField(
+        verbose_name=_("Metric Label"),
+        max_length=80,
+        help_text=_("Display name (e.g. 'GitHub Repositories')."),
+    )
+    value = models.CharField(
+        verbose_name=_("Metric Value"),
+        max_length=40,
+        help_text=_("Numeric or short text value (e.g. '42', '1.2k', '99.9%')."),
+    )
+    icon = models.CharField(
+        verbose_name=_("Icon Key"),
+        max_length=30,
+        choices=ICON_CHOICES,
+        default="repo",
+        help_text=_("Inline SVG icon selector."),
+    )
+    sort_order = models.PositiveIntegerField(
+        default=0,
+        db_index=True,
+        verbose_name=_("Display Order"),
+        help_text=_("Lower numbers appear first."),
+    )
+    is_active = models.BooleanField(
+        default=True,
+        db_index=True,
+        verbose_name=_("Show on About Page"),
+    )
+
+    class Meta:
+        ordering = ["sort_order", "label"]
+        verbose_name = _("Engineering Stat")
+        verbose_name_plural = _("Engineering Stats")
+        indexes = [
+            models.Index(fields=["is_active", "sort_order"]),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.label}: {self.value}"
