@@ -16,7 +16,13 @@ from json import loads
 from typing import Any
 
 from .forms import ContactInquiryForm
-from .models import ContactInquiry, SocialPlatform, TechnicalDomain, WorkExperience
+from .models import (
+    ContactInquiry,
+    Skill,
+    SocialPlatform,
+    TechnicalDomain,
+    WorkExperience,
+)
 from .services.ai import AIServiceError, generate_portfolio_response
 from .services.external_stats import (
     GITHUB_CACHE_KEY,
@@ -219,6 +225,13 @@ class FrontPageView(generic.TemplateView):
 
         context["domains"] = domains
         context["domain_themes"] = themes
+
+        # Flat list of all skills for the progress-bar grid (Option A).
+        context["skills"] = (
+            Skill.objects
+            .select_related("domain")
+            .order_by("domain__sort_order", "sort_order", "-proficiency", "name")
+        )
         return context
 
 class AboutPageView(generic.TemplateView):

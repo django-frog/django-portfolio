@@ -172,66 +172,50 @@
             </div>
          </div>
 
-         {% if domains %}
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 px-6 max-w-7xl mx-auto">
-               {% for domain in domains %}
-                  <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full"
-                       x-data="domainSkillDisplay({
-                          skills: [
-                             {% for skill in domain.skills.all %}
-                                { title: {{ skill.name|escapejs }}, percent: {{ skill.proficiency }} }{% if not forloop.last %},{% endif %}
-                             {% empty %}
-                             {% endfor %}
-                          ],
-                          themeIndex: {{ forloop.counter0 }}
-                       })">
-                     <h3 class="text-2xl font-bold text-center mb-6">
-                        {{ domain.name }}
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            {% for skill in skills %}
+               <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md
+                           transition-shadow duration-300 p-6 border border-gray-100
+                           dark:border-gray-700 flex flex-col justify-between">
+
+                  <!-- Skill Header -->
+                  <div class="flex items-center justify-between mb-4 gap-2">
+                     <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 break-words">
+                        {{ skill.name }}
                      </h3>
+                     {% if skill.domain %}
+                        <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded
+                                     text-emerald-700 bg-emerald-100
+                                     dark:bg-emerald-900/30 dark:text-emerald-400
+                                     whitespace-nowrap">
+                           {{ skill.domain.name }}
+                        </span>
+                     {% endif %}
+                  </div>
 
-                     <!-- TAGS -->
-                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <template x-for="skill in skills" :key="skill.title">
-                           <button x-text="skill.title"
-                              :class="[
-                                 themeClass('tagBg'),
-                                 currentSkill && currentSkill.title === skill.title
-                                    ? 'font-bold ring-2 ' + themeClass('tagRing')
-                                    : ''
-                              ]"
-                              class="px-3 py-1 text-xs h-10 w-full rounded-md transition"
-                              @click="currentSkill = skill"></button>
-                        </template>
+                  <!-- Proficiency Bar -->
+                  <div class="mt-2">
+                     <div class="flex justify-between text-sm font-medium
+                                 text-gray-600 dark:text-gray-400 mb-1">
+                        <span>{% trans "Proficiency" %}</span>
+                        <span class="font-bold text-gray-900 dark:text-white">
+                           {{ skill.proficiency|default:0 }}%
+                        </span>
                      </div>
-
-                     <!-- CIRCLE -->
-                     <div class="flex items-center justify-center relative"
-                          x-data="{ circumference: 2 * Math.PI * 60 }">
-                        <svg class="transform -rotate-90 w-40 h-40">
-                           <circle cx="80" cy="80" r="60"
-                              stroke-width="18"
-                              stroke="currentColor"
-                              class="text-gray-200 dark:text-gray-700"
-                              fill="transparent" />
-                           <circle cx="80" cy="80" r="60"
-                              stroke-width="18"
-                              fill="transparent"
-                              stroke="currentColor"
-                              :stroke-dasharray="circumference"
-                              :stroke-dashoffset="circumference - (currentSkill ? currentSkill.percent : 0) / 100 * circumference"
-                              :class="[themeClass('ringStroke'), 'transition-all duration-500']"></circle>
-                        </svg>
-                        <span class="absolute text-3xl font-bold"
-                              x-text="currentSkill ? `${currentSkill.percent}%` : ''"></span>
+                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                        <div class="bg-emerald-500 h-2.5 rounded-full transition-all duration-500"
+                             style="width: {{ skill.proficiency|default:0 }}%;">
+                        </div>
                      </div>
                   </div>
-               {% endfor %}
-            </div>
-         {% else %}
-            <p class="text-center italic text-gray-500 dark:text-gray-400">
-               {% trans "No skill domains configured yet." %}
-            </p>
-         {% endif %}
+
+               </div>
+            {% empty %}
+               <div class="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
+                  {% trans "No skills added to the vault yet." %}
+               </div>
+            {% endfor %}
+         </div>
       </section>
 
             <!-- Work Experience -->
@@ -378,48 +362,6 @@
    </div>
 </div>
 
-<script>
-   document.addEventListener('alpine:init', () => {
-
-      // One reusable component per skill-domain card. Each card passes
-      // its own skills list and themeIndex from the template.
-      Alpine.data('domainSkillDisplay', (config) => ({
-         skills: config && Array.isArray(config.skills) ? config.skills : [],
-         themeIndex: config && Number.isInteger(config.themeIndex) ? config.themeIndex : 0,
-         currentSkill: null,
-         init() {
-            if (this.skills.length > 0) {
-               this.currentSkill = this.skills[0];
-            }
-         },
-         themeClass(kind) {
-            const themes = [
-               { tagBg: 'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700',
-                 tagRing: 'ring-blue-400 dark:ring-blue-300',
-                 ringStroke: 'text-blue-500 dark:text-blue-400' },
-               { tagBg: 'bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-700 dark:text-white dark:hover:bg-purple-800',
-                 tagRing: 'ring-purple-400 dark:ring-purple-300',
-                 ringStroke: 'text-purple-500 dark:text-purple-400' },
-               { tagBg: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-700',
-                 tagRing: 'ring-yellow-400 dark:ring-yellow-300',
-                 ringStroke: 'text-yellow-500 dark:text-yellow-400' },
-               { tagBg: 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-600 dark:text-white dark:hover:bg-green-700',
-                 tagRing: 'ring-green-400 dark:ring-green-300',
-                 ringStroke: 'text-green-500 dark:text-green-400' },
-               { tagBg: 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-600 dark:text-white dark:hover:bg-red-700',
-                 tagRing: 'ring-red-400 dark:ring-red-300',
-                 ringStroke: 'text-red-500 dark:text-red-400' },
-               { tagBg: 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200 dark:bg-emerald-600 dark:text-white dark:hover:bg-emerald-700',
-                 tagRing: 'ring-emerald-400 dark:ring-emerald-300',
-                 ringStroke: 'text-emerald-500 dark:text-emerald-400' },
-            ];
-            const t = themes[this.themeIndex % themes.length];
-            return t[kind] || '';
-         },
-      }));
-
-   });
-</script>
 
 
 <script>

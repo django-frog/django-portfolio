@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from markdownx.models import MarkdownxField
@@ -93,6 +94,7 @@ class Skill(models.Model):
     proficiency = models.PositiveSmallIntegerField(
         verbose_name=_("Proficiency %"),
         default=80,
+        validators=[MinValueValidator(1), MaxValueValidator(100)],
         help_text=_("Percentage from 1 to 100"),
     )
     is_featured = models.BooleanField(
