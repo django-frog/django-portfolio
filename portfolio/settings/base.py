@@ -144,6 +144,11 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# User-uploaded media (avatars, thumbnails, etc.)
+# In production, configure your web server / CDN to serve from MEDIA_ROOT.
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Tailwind-Django Integration
 # https://pypi.org/project/django-tailwind/
 
