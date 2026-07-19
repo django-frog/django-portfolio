@@ -1,6 +1,5 @@
 {% extends "portfolio/core/base.html" %}
 {% load static %}
-{% load i18n %}
 
 {% block title %}{{ project.title }} | Mohammad Hamdan{% endblock %}
 
@@ -18,7 +17,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M15 19l-7-7 7-7"/>
       </svg>
-      {% trans "Back to Projects" %}
+      Back to Projects
     </a>
   </div>
 
@@ -80,7 +79,7 @@
                          text-xs font-semibold
                          bg-yellow-100 text-yellow-800
                          dark:bg-yellow-900 dark:text-yellow-200">
-              {% trans "Featured" %}
+              Featured
             </span>
           {% endif %}
 
@@ -93,7 +92,7 @@
                         bg-gray-900 text-white
                         dark:bg-gray-100 dark:text-gray-900
                         hover:opacity-90 transition">
-                {% trans "Repository" %}
+                Repository
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                      viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -109,7 +108,7 @@
                         text-sm font-medium
                         bg-emerald-600 text-white
                         hover:bg-emerald-700 transition">
-                {% trans "Live Demo" %}
+                Live Demo
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                      viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -126,7 +125,7 @@
                         border border-gray-300 dark:border-gray-600
                         text-gray-700 dark:text-gray-200
                         hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-                {% trans "Project Link" %}
+                Project Link
               </a>
             {% endif %}
           </div>
@@ -150,7 +149,7 @@
         </div>
       {% else %}
         <p class="italic text-gray-500 dark:text-gray-400">
-          {% trans "No detailed documentation has been published for this project yet." %}
+          No detailed documentation has been published for this project yet.
         </p>
       {% endif %}
     </section>
@@ -160,14 +159,14 @@
                    border-t border-gray-200 dark:border-gray-700
                    text-xs text-gray-500 dark:text-gray-400
                    flex flex-wrap items-center justify-between gap-2">
-      <span>{% trans "Created" %}: {{ project.created_at|date:"M j, Y" }}</span>
+      <span>Created: {{ project.created_at|date:"M j, Y" }}</span>
       {% if project.start_date %}
-        <span>{% trans "Started" %}: {{ project.start_date|date:"M Y" }}</span>
+        <span>Started: {{ project.start_date|date:"M Y" }}</span>
       {% endif %}
       {% if project.end_date %}
-        <span>{% trans "Ended" %}: {{ project.end_date|date:"M Y" }}</span>
+        <span>Ended: {{ project.end_date|date:"M Y" }}</span>
       {% elif project.start_date %}
-        <span>{% trans "Status" %}: {% trans "Ongoing" %}</span>
+        <span>Status: Ongoing</span>
       {% endif %}
     </footer>
 

@@ -11,27 +11,8 @@
             <a href="{% url 'projects:projects_page' %}" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:duration-300">Projects</a>
         </nav>
 
-        <!-- Language and Dark Mode Toggle -->
+        <!-- Dark Mode Toggle -->
         <div class="flex items-center space-x-4">
-            <!-- Language Dropdown -->
-            <div class="relative">
-                <button id="language-dropdown" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 flex items-center space-x-2 focus:outline-none">
-                    <span>🌍</span> <!-- Language Globe Emoji -->
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <path d="M6 9l6 6 6-6"></path>
-                    </svg>
-                </button>
-                <div id="language-options" class="absolute right-0 mt-2 w-fit bg-gray-100 dark:bg-gray-800 shadow-lg borrder rounded-md hidden ring-1 ring-gray-300 dark:ring-gray-700">
-                    <a href="{% url "switch_lang" %}?lang=en" class="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md items-center space-x-2">
-                        <span>🇺🇸</span>
-                    </a>
-                    <a href="{% url "switch_lang" %}?lang=ja" class="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md  items-center space-x-2">
-                        <span>🇯🇵</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Dark Mode Toggle -->
             <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:duration-300 focus:outline-none">
                 <svg id="theme-icon-light" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="5"></circle>
@@ -59,11 +40,3 @@
         <a href="{% url 'projects:projects_page' %}" class="block px-6 py-2 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Projects</a>
     </nav>
 </header>
-
-<script>
-    // Toggle language options visibility
-    document.getElementById('language-dropdown').addEventListener('click', function() {
-        const languageOptions = document.getElementById('language-options');
-        languageOptions.classList.toggle('hidden');
-    });
-</script>

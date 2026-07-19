@@ -1,6 +1,5 @@
 {% extends "portfolio/core/base.html" %}
 {% load static %}
-{% load i18n %}
 
 {% block content %}
 <meta name="csrf-token" content="{{ csrf_token }}">
@@ -12,13 +11,13 @@
    <!-- ============================================================ -->
    <header class="text-center max-w-3xl mx-auto pt-8">
       <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
-         {% trans "Beyond the Code" %}
+         Beyond the Code
       </span>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
-         {% trans "Architecting Systems with Precision & Curiosity" %}
+         Architecting Systems with Precision & Curiosity
       </h2>
       <p class="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-         {% trans "A snapshot of how I think, what I've learned, and where I'm investing my engineering energy right now." %}
+         A snapshot of how I think, what I've learned, and where I'm investing my engineering energy right now.
       </p>
    </header>
 
@@ -56,10 +55,10 @@
             </div>
             <div>
                <p class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">
-                  {% trans "Ask Me Anything" %}
+                  Ask Me Anything
                </p>
                <p class="text-xs text-slate-500 dark:text-slate-300">
-                  {% trans "Tap to chat with an AI trained on my portfolio" %}
+                  Tap to chat with an AI trained on my portfolio
                </p>
             </div>
          </div>
@@ -98,10 +97,10 @@
                   </div>
                   <div>
                      <p class="font-semibold text-sm text-slate-900 dark:text-white">
-                        {% trans "Chat with AI" %}
+                        Chat with AI
                      </p>
                      <p class="text-xs text-slate-500 dark:text-slate-300">
-                        {% trans "Ask anything about me" %}
+                        Ask anything about me
                      </p>
                   </div>
                </div>
@@ -140,11 +139,11 @@
                <input
                   type="text"
                   x-model="userMessage"
-                  placeholder="{% trans 'Type your question...' %}"
+                  placeholder="Type your question..."
                   class="flex-1 px-3 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500 outline-none text-sm"
                >
                <button class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm" :disabled="loading">
-                  {% trans "Send" %}
+                  Send
                </button>
             </form>
          </div>
@@ -167,12 +166,12 @@
                          transition-all duration-200">
             <div>
                <h3 class="text-xl font-bold text-slate-900 dark:text-white">
-                  {% trans "Engineering Philosophy" %} 🛠️
+                  Engineering Philosophy 🛠️
                </h3>
                <div class="mt-4 text-slate-600 dark:text-slate-300
                            leading-relaxed text-sm sm:text-base space-y-3">
                   <p>
-                     {% blocktrans %}I believe robust software starts with clean domain boundaries, asynchronous efficiency, and obsessive automation. Working primarily across Python, Golang, and Odoo, my approach centers on deconstructing complex systems to understand their core architecture—whether that means optimizing sub-500ms graph database queries or building custom CLI tools to streamline developer workflows. I thrive in autonomous, asynchronous remote engineering environments.{% endblocktrans %}
+                     I believe robust software starts with clean domain boundaries, asynchronous efficiency, and obsessive automation. Working primarily across Python, Golang, and Odoo, my approach centers on deconstructing complex systems to understand their core architecture—whether that means optimizing sub-500ms graph database queries or building custom CLI tools to streamline developer workflows. I thrive in autonomous, asynchronous remote engineering environments.
                   </p>
                </div>
             </div>
@@ -186,51 +185,51 @@
                          transition-all duration-200">
             <div>
                <h3 class="text-xl font-bold text-slate-900 dark:text-white">
-                  {% trans "Education & Credentials" %} 🎓
+                  Education & Credentials 🎓
                </h3>
                <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
                   <li class="flex items-start gap-3">
                      <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
                      <span>
                         <span class="font-semibold text-slate-800 dark:text-slate-100">
-                           {% trans "B.S. in Software Engineering" %}
+                           B.S. in Software Engineering
                         </span>
-                        — {% trans "Graduated 2024 (GPA: 3.38)" %}
+                        — Graduated 2024 (GPA: 3.38)
                      </span>
                   </li>
                   <li class="flex items-start gap-3">
                      <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
                      <span>
                         <span class="font-semibold text-slate-800 dark:text-slate-100">
-                           {% trans "IBM DevOps & Software Engineering" %}
+                           IBM DevOps & Software Engineering
                         </span>
-                        — {% trans "Coursera Professional Certificate" %}
+                        — Coursera Professional Certificate
                      </span>
                   </li>
                   <li class="flex items-start gap-3">
                      <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
                      <span>
                         <span class="font-semibold text-slate-800 dark:text-slate-100">
-                           {% trans "Meta Advanced Back-End Development" %}
+                           Meta Advanced Back-End Development
                         </span>
-                        — {% trans "Coursera Professional Certificate" %}
+                        — Coursera Professional Certificate
                      </span>
                   </li>
                   <li class="flex items-start gap-3">
                      <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
                      <span>
                         <span class="font-semibold text-slate-800 dark:text-slate-100">
-                           {% trans "Odoo Development Training" %}
+                           Odoo Development Training
                         </span>
-                        — {% trans "Certified by EBTECH" %}
+                        — Certified by EBTECH
                      </span>
                   </li>
                </ul>
             </div>
             <p class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/60
                       text-xs text-slate-500 dark:text-slate-400">
-               <span class="font-semibold text-slate-700 dark:text-slate-200">{% trans "Focus" %}:</span>
-               {% trans "Continuous learning through hands-on system replication and infrastructure design." %}
+               <span class="font-semibold text-slate-700 dark:text-slate-200">Focus:</span>
+               Continuous learning through hands-on system replication and infrastructure design.
             </p>
          </article>
 
@@ -242,26 +241,26 @@
                          transition-all duration-200">
             <div>
                <h3 class="text-xl font-bold text-slate-900 dark:text-white">
-                  {% trans "Current Focus & Setup" %} 🚀
+                  Current Focus & Setup 🚀
                </h3>
                <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
                   <li>
                      <span class="font-semibold text-slate-800 dark:text-slate-100">
-                        {% trans "Environment" %}:
+                        Environment:
                      </span>
-                     {% trans "Daily driver on Linux (Debian & Pop!_OS setups) for high-control software development, server configuration, and containerized deployment." %}
+                     Daily driver on Linux (Debian & Pop!_OS setups) for high-control software development, server configuration, and containerized deployment.
                   </li>
                   <li>
                      <span class="font-semibold text-slate-800 dark:text-slate-100">
-                        {% trans "Engineering Focus" %}:
+                        Engineering Focus:
                      </span>
-                     {% trans "Deepening expertise in cloud infrastructure, distributed storage mechanics, and automated CI/CD observability pipelines." %}
+                     Deepening expertise in cloud infrastructure, distributed storage mechanics, and automated CI/CD observability pipelines.
                   </li>
                   <li>
                      <span class="font-semibold text-slate-800 dark:text-slate-100">
-                        {% trans "Communication" %}:
+                        Communication:
                      </span>
-                     {% trans "Native Arabic, professional English (B2), and currently studying German to expand collaboration across international and European tech teams." %}
+                     Native Arabic, professional English (B2), and currently studying German to expand collaboration across international and European tech teams.
                   </li>
                </ul>
             </div>
@@ -277,13 +276,13 @@
    <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <header class="text-center max-w-3xl mx-auto mb-10">
          <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
-            {% trans "Current Pursuits" %}
+            Current Pursuits
          </span>
          <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 mb-6">
-            {% trans "The Engineering Lab" %} 🧪
+            The Engineering Lab 🧪
          </h3>
          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            {% trans "Active experiments and self-directed system replicas that deconstruct the platforms I depend on in production." %}
+            Active experiments and self-directed system replicas that deconstruct the platforms I depend on in production.
          </p>
       </header>
 
@@ -307,11 +306,11 @@
                   </svg>
                </div>
                <h4 class="text-lg font-bold text-slate-900 dark:text-white">
-                  {% trans "Bare-Metal & Distributed Storage Replicas" %}
+                  Bare-Metal & Distributed Storage Replicas
                </h4>
             </div>
             <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-               {% blocktrans %}Bypassing commercial cloud providers to build self-hosted object storage services and decentralized storage replicas, deconstructing the core primitives of AWS S3 from scratch on commodity Linux hardware. The goal: full data ownership, predictable performance characteristics, and a deep understanding of erasure coding, replication, and consensus under network partitions.{% endblocktrans %}
+               Bypassing commercial cloud providers to build self-hosted object storage services and decentralized storage replicas, deconstructing the core primitives of AWS S3 from scratch on commodity Linux hardware. The goal: full data ownership, predictable performance characteristics, and a deep understanding of erasure coding, replication, and consensus under network partitions.
             </p>
          </article>
 
@@ -332,11 +331,11 @@
                   </svg>
                </div>
                <h4 class="text-lg font-bold text-slate-900 dark:text-white">
-                  {% trans "Custom DevOps & CLI Tooling" %}
+                  Custom DevOps & CLI Tooling
                </h4>
             </div>
             <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-               {% blocktrans %}Engineering custom command-line utilities and Docker-powered CLI tools — including <span class="font-semibold text-slate-800 dark:text-slate-100">OdooFlow</span> — designed to automate environment bootstrap, repository synchronization, and continuous deployment workflows for distributed engineering teams. Each tool replaces a manual ritual with a reproducible, idempotent command.{% endblocktrans %}
+               Engineering custom command-line utilities and Docker-powered CLI tools — including <span class="font-semibold text-slate-800 dark:text-slate-100">OdooFlow</span> — designed to automate environment bootstrap, repository synchronization, and continuous deployment workflows for distributed engineering teams. Each tool replaces a manual ritual with a reproducible, idempotent command.
             </p>
          </article>
 
@@ -356,11 +355,11 @@
                   </svg>
                </div>
                <h4 class="text-lg font-bold text-slate-900 dark:text-white">
-                  {% trans "Polyglot Performance Benchmarking" %}
+                  Polyglot Performance Benchmarking
                </h4>
             </div>
             <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-               {% blocktrans %}Ongoing experiments in high-concurrency data streaming, comparing non-blocking Server-Sent Events (SSE) against full-duplex WebSockets across asynchronous Python (<span class="font-mono text-emerald-700 dark:text-emerald-400">asyncio</span>, <span class="font-mono text-emerald-700 dark:text-emerald-400">aiohttp</span>) and Golang (<span class="font-mono text-emerald-700 dark:text-emerald-400">net/http</span>, <span class="font-mono text-emerald-700 dark:text-emerald-400">gorilla/websocket</span>) architectures. Measurements include p50/p95/p99 latency, memory residency, and connection-fanout ceilings under realistic load profiles.{% endblocktrans %}
+               Ongoing experiments in high-concurrency data streaming, comparing non-blocking Server-Sent Events (SSE) against full-duplex WebSockets across asynchronous Python (<span class="font-mono text-emerald-700 dark:text-emerald-400">asyncio</span>, <span class="font-mono text-emerald-700 dark:text-emerald-400">aiohttp</span>) and Golang (<span class="font-mono text-emerald-700 dark:text-emerald-400">net/http</span>, <span class="font-mono text-emerald-700 dark:text-emerald-400">gorilla/websocket</span>) architectures. Measurements include p50/p95/p99 latency, memory residency, and connection-fanout ceilings under realistic load profiles.
             </p>
          </article>
 
@@ -374,13 +373,13 @@
    <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <header class="text-center max-w-3xl mx-auto mb-10">
          <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
-            {% trans "Off-Screen Logic" %}
+            Off-Screen Logic
          </span>
          <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 mb-6">
-            {% trans "Beyond the Terminal" %} ⚡
+            Beyond the Terminal ⚡
          </h3>
          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            {% trans "Analytical problem-solving and technical hobbies that live outside of corporate software development." %}
+            Analytical problem-solving and technical hobbies that live outside of corporate software development.
          </p>
       </header>
 
@@ -411,10 +410,10 @@
                   </svg>
                </div>
                <h4 class="text-base font-bold text-slate-900 dark:text-white">
-                  {% trans "Hardware & Electronic Troubleshooting" %}
+                  Hardware & Electronic Troubleshooting
                </h4>
                <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {% blocktrans %}Hands-on physical computing — diagnosing hardware faults, reading schematics, and repairing consumer electronics down to the component level. The same forensic mindset I bring to production outages applies to a dead motherboard: trace the signal, isolate the failure, replace the smallest possible part.{% endblocktrans %}
+                  Hands-on physical computing — diagnosing hardware faults, reading schematics, and repairing consumer electronics down to the component level. The same forensic mindset I bring to production outages applies to a dead motherboard: trace the signal, isolate the failure, replace the smallest possible part.
                </p>
             </div>
          </article>
@@ -439,10 +438,10 @@
                   </svg>
                </div>
                <h4 class="text-base font-bold text-slate-900 dark:text-white">
-                  {% trans "Interactive Media & Game Development" %}
+                  Interactive Media & Game Development
                </h4>
                <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {% blocktrans %}At the intersection of complex programming logic, interactive storytelling, and digital creative tools — engineering immersive indie PC games as a sandbox for real-time systems, procedural generation, and tight feedback loops between code and player experience.{% endblocktrans %}
+                  At the intersection of complex programming logic, interactive storytelling, and digital creative tools — engineering immersive indie PC games as a sandbox for real-time systems, procedural generation, and tight feedback loops between code and player experience.
                </p>
             </div>
          </article>
@@ -464,10 +463,10 @@
                   </svg>
                </div>
                <h4 class="text-base font-bold text-slate-900 dark:text-white">
-                  {% trans "System Deconstruction" %}
+                  System Deconstruction
                </h4>
                <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {% blocktrans %}A relentless curiosity for tearing down complex systems — whether physical computing hardware or production software architectures — to analyze their underlying mechanics and eliminate performance bottlenecks. Every black box is a temporary state.{% endblocktrans %}
+                  A relentless curiosity for tearing down complex systems — whether physical computing hardware or production software architectures — to analyze their underlying mechanics and eliminate performance bottlenecks. Every black box is a temporary state.
                </p>
             </div>
          </article>
@@ -482,7 +481,7 @@
    <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <header class="mb-10">
          <h3 class="text-xl font-bold text-center text-slate-900 dark:text-white mb-8">
-            {% trans "Live Engineering Telemetry" %} 📊
+            Live Engineering Telemetry 📊
          </h3>
       </header>
 
@@ -561,19 +560,19 @@
          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
-               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "GitHub Repositories" %}</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">GitHub Repositories</div>
             </div>
             <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
-               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "Code Commits" %}</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">Code Commits</div>
             </div>
             <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
-               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "Production Deployments" %}</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">Production Deployments</div>
             </div>
             <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-6 text-center shadow-sm">
                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">—</div>
-               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">{% trans "Automated Pipelines" %}</div>
+               <div class="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">Automated Pipelines</div>
             </div>
          </div>
       {% endif %}

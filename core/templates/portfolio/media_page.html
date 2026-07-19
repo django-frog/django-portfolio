@@ -1,8 +1,7 @@
 {% extends "portfolio/core/base.html" %}
 {% load static %}
-{% load i18n %}
 
-{% block title %}{% trans "Social Media & Coding Platforms" %} | Mohammad Hamdan{% endblock %}
+{% block title %}Social Media & Coding Platforms | Mohammad Hamdan{% endblock %}
 
 {% block content %}
 
@@ -10,10 +9,10 @@
 
   <header class="text-center mb-12 max-w-4xl mx-auto">
     <h1 class="text-3xl md:text-5xl font-extrabold text-green-600 dark:text-green-500 uppercase tracking-tight">
-      {% trans "Social Media & Coding Platforms" %}
+      Social Media & Coding Platforms
     </h1>
     <p class="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-300">
-      {% trans "Live stats from the platforms I use daily, plus quick links to my profiles." %}
+      Live stats from the platforms I use daily, plus quick links to my profiles.
     </p>
   </header>
 
@@ -23,7 +22,7 @@
   {# ============================================================ #}
   {% if stat_platforms %}
     <section aria-labelledby="stats-heading" class="mb-16">
-      <h2 id="stats-heading" class="sr-only">{% trans "Live Stats Platforms" %}</h2>
+      <h2 id="stats-heading" class="sr-only">Live Stats Platforms</h2>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-6xl mx-auto">
 
@@ -102,7 +101,7 @@
               </ul>
             {% else %}
               <p class="mt-auto text-sm text-gray-500 dark:text-gray-400 italic">
-                {% trans "No stats available yet." %}
+                No stats available yet.
               </p>
             {% endif %}
 
@@ -122,7 +121,7 @@
       <header class="text-center mb-8">
         <h2 id="connect-heading"
             class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-          {% trans "Connect With Me" %}
+          Connect With Me
         </h2>
       </header>
 
@@ -197,11 +196,11 @@
           </div>
 
           <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
-            {% trans "No Platforms Connected" %}
+            No Platforms Connected
           </h3>
 
           <p class="text-gray-500 dark:text-gray-400 text-base leading-relaxed">
-            {% trans "It looks like there are no social media or coding platform links in the database right now. Please check back later once they are configured!" %}
+            It looks like there are no social media or coding platform links in the database right now. Please check back later once they are configured!
           </p>
 
       </div>
