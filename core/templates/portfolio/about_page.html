@@ -5,152 +5,271 @@
 {% block content %}
 <meta name="csrf-token" content="{{ csrf_token }}">
 
-<div class="flex flex-col justify-center items-center p-12 md:h-full min-h-screen gap-6 bg-gray-50 dark:bg-gray-900">
+<div class="flex flex-col justify-center items-center p-6 sm:p-10 md:p-12 min-h-screen gap-10 bg-gray-50 dark:bg-gray-900">
 
-    <div>
-        <h1 class="text-3xl md:text-5xl text-green-600 dark:text-green-500 font-bold uppercase">{% trans "About me" %}</h1>
-    </div>
+   <!-- ============================================================ -->
+   <!-- PAGE HEADER                                                  -->
+   <!-- ============================================================ -->
+   <header class="text-center max-w-3xl mx-auto pt-8">
+      <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+         {% trans "Beyond the Code" %}
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+         {% trans "Architecting Systems with Precision & Curiosity" %}
+      </h2>
+      <p class="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+         {% trans "A snapshot of how I think, what I've learned, and where I'm investing my engineering energy right now." %}
+      </p>
+   </header>
 
 
-    <!-- CHATBOT COMPONENT -->
-    <div x-data="chatbot()" class="w-full max-w-4xl mx-auto px-4 mt-6">
+   <!-- ============================================================ -->
+   <!-- CHATBOT COMPONENT                                            -->
+   <!-- ============================================================ -->
+   <div x-data="chatbot()" class="w-full max-w-4xl mx-auto px-4">
 
-        <!-- Collapsed State -->
-        <div 
-            @click="open = true"
-            x-show="!open"
-            x-cloak
-            class="flex items-center justify-between p-4 rounded-2xl shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 cursor-pointer"
-        >
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">
-                    🤖
-                </div>
-                <div>
-                    <p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Ask Me Anything</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-300">Tap to open chat</p>
-                </div>
+      <!-- Collapsed State -->
+      <div
+         @click="open = true"
+         x-show="!open"
+         x-cloak
+         class="flex items-center justify-between p-4 sm:p-6
+                bg-gradient-to-r from-emerald-50 to-slate-50
+                dark:from-slate-800 dark:to-slate-800/50
+                border-2 border-emerald-500/30
+                rounded-2xl shadow-sm mb-12
+                hover:border-emerald-500 transition-all cursor-pointer"
+      >
+         <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center
+                        bg-emerald-100 dark:bg-emerald-900/40
+                        text-emerald-600 dark:text-emerald-400">
+               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                  <circle cx="12" cy="5" r="2"></circle>
+                  <path d="M12 7v4"></path>
+                  <line x1="8" y1="16" x2="8" y2="16"></line>
+                  <line x1="16" y1="16" x2="16" y2="16"></line>
+               </svg>
+            </div>
+            <div>
+               <p class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">
+                  {% trans "Ask Me Anything" %}
+               </p>
+               <p class="text-xs text-slate-500 dark:text-slate-300">
+                  {% trans "Tap to chat with an AI trained on my portfolio" %}
+               </p>
+            </div>
+         </div>
+
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 dark:text-emerald-400"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+         </svg>
+      </div>
+
+      <!-- Open Chat Window -->
+      <div
+         x-show="open"
+         x-cloak
+         x-transition:enter="transition duration-200 ease-out"
+         x-transition:enter-start="opacity-0 translate-y-4"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition duration-150 ease-in"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 translate-y-4"
+         class="fixed bottom-0 left-0 right-0 md:static md:mt-4 z-50"
+      >
+         <div class="mx-4 md:mx-0 md:rounded-2xl bg-white dark:bg-gray-800 shadow-xl border border-gray-200 dark:border-gray-700 md:max-w-4xl md:mb-6">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+               <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                        <circle cx="12" cy="5" r="2"></circle>
+                        <path d="M12 7v4"></path>
+                     </svg>
+                  </div>
+                  <div>
+                     <p class="font-semibold text-sm text-slate-900 dark:text-white">
+                        {% trans "Chat with AI" %}
+                     </p>
+                     <p class="text-xs text-slate-500 dark:text-slate-300">
+                        {% trans "Ask anything about me" %}
+                     </p>
+                  </div>
+               </div>
+               <button @click="open = false" class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+               </button>
             </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
-            </svg>
-        </div>
+            <!-- Messages -->
+            <div id="chat-scroll" class="h-[60vh] md:h-80 overflow-y-auto p-4 space-y-3" x-ref="container">
 
-        <!-- Open Chat Window -->
-        <div 
-            x-show="open"
-            x-cloak
-            x-transition:enter="transition duration-200 ease-out"
-            x-transition:enter-start="opacity-0 translate-y-4"
-            x-transition:enter-end="opacity-100 translate-y-0"
-            x-transition:leave="transition duration-150 ease-in"
-            x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 translate-y-4"
-            class="fixed bottom-0 left-0 right-0 md:static md:mt-4 z-50"
-        >
-            <div class="mx-4 md:mx-0 md:rounded-2xl bg-white dark:bg-gray-800 shadow-xl border border-gray-200 dark:border-gray-700 md:max-w-4xl md:mb-6">
+               <template x-for="(m, i) in messages" :key="i">
+                  <div class="flex" :class="m.sender === 'user' ? 'justify-end' : 'justify-start'">
+                     <div
+                        class="max-w-[75%] px-4 py-2 rounded-2xl text-sm leading-relaxed"
+                        :class="m.sender === 'user'
+                            ? 'bg-emerald-600 text-white rounded-br-none'
+                            : 'bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-slate-100 rounded-bl-none'"
+                        x-text="m.text"
+                     ></div>
+                  </div>
+               </template>
 
-                <!-- Header -->
-                <div class="flex justify-between items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">
-                            🤖
-                        </div>
-                        <div>
-                            <p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Chat with AI</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-300">Ask anything about me</p>
-                        </div>
-                    </div>
-                    <button @click="open = false" class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Messages -->
-                <div id="chat-scroll" class="h-[60vh] md:h-80 overflow-y-auto p-4 space-y-3" x-ref="container">
-
-                    <template x-for="(m, i) in messages" :key="i">
-                        <div class="flex" :class="m.sender === 'user' ? 'justify-end' : 'justify-start'">
-                            <div
-                                class="max-w-[75%] px-4 py-2 rounded-2xl text-sm leading-relaxed"
-                                :class="m.sender === 'user'
-                                    ? 'bg-green-600 text-white rounded-br-none'
-                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-bl-none'"
-                                x-text="m.text"
-                            ></div>
-                        </div>
-                    </template>
-
-                    <!-- Typing -->
-                    <div x-show="loading" class="flex justify-start">
-                        <div class="px-4 py-2 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 text-sm">
-                            ...
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Input -->
-                <form @submit.prevent="sendMessage" class="border-t border-gray-200 dark:border-gray-700 p-4 flex gap-2">
-                    <input 
-                        type="text"
-                        x-model="userMessage"
-                        placeholder="Type your question..."
-                        class="flex-1 px-3 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-green-500 outline-none text-sm"
-                    >
-                    <button class="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white text-sm" :disabled="loading">
-                        Send
-                    </button>
-                </form>
+               <!-- Typing -->
+               <div x-show="loading" class="flex justify-start">
+                  <div class="px-4 py-2 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 text-sm">
+                     ...
+                  </div>
+               </div>
             </div>
-        </div>
 
-    </div>
+            <!-- Input -->
+            <form @submit.prevent="sendMessage" class="border-t border-gray-200 dark:border-gray-700 p-4 flex gap-2">
+               <input
+                  type="text"
+                  x-model="userMessage"
+                  placeholder="{% trans 'Type your question...' %}"
+                  class="flex-1 px-3 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500 outline-none text-sm"
+               >
+               <button class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm" :disabled="loading">
+                  {% trans "Send" %}
+               </button>
+            </form>
+         </div>
+      </div>
+
+   </div>
 
 
+   <!-- ============================================================ -->
+   <!-- 3 NARRATIVE PILLARS                                          -->
+   <!-- ============================================================ -->
+   <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
 
-    <div class="text-center justify-items-start">
-        <p class="text-sm dark:text-gray-50 text-gray-500 italic font-thin my-4">{% trans "(In Short)" %}</p>
-        <p class="text-2xl font-sans dark:text-gray-50 text-black font-extrabold">I <span class="text-red-500 font-bold">❤️</span> Django</p>
-    </div>
+         <!-- Card 1: Engineering Philosophy -->
+         <article class="bg-white dark:bg-slate-800/80 border border-slate-200
+                         dark:border-slate-700 rounded-2xl p-8 shadow-sm
+                         flex flex-col justify-between h-full
+                         hover:shadow-md hover:-translate-y-1
+                         transition-all duration-200">
+            <div>
+               <h3 class="text-xl font-bold text-slate-900 dark:text-white">
+                  {% trans "Engineering Philosophy" %} 🛠️
+               </h3>
+               <div class="mt-4 text-slate-600 dark:text-slate-300
+                           leading-relaxed text-sm sm:text-base space-y-3">
+                  <p>
+                     {% blocktrans %}I believe robust software starts with clean domain boundaries, asynchronous efficiency, and obsessive automation. Working primarily across Python, Golang, and Odoo, my approach centers on deconstructing complex systems to understand their core architecture—whether that means optimizing sub-500ms graph database queries or building custom CLI tools to streamline developer workflows. I thrive in autonomous, asynchronous remote engineering environments.{% endblocktrans %}
+                  </p>
+               </div>
+            </div>
+         </article>
 
-    <div class="text-center">
-        <ul class="list-none grid grid-cols-1 md:grid-cols-3 md:space-x-6 text-gray-500 gap-12 md:gap-6 dark:text-gray-50 text-lg">
-            <!-- Biography Section -->
-            <li class="list-item p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 hover:scale-105 transform hover:bg-green-50 dark:bg-gray-800 dark:hover:bg-green-900">
-                <h2 class="font-mono font-bold text-green-500">{% trans "Biography" %} 👏</h2>
-                <p class="font-sans font-light text-sm md:text-lg mt-4">
-                    {% blocktrans %}Passionate and detail-oriented Django Developer with over 5 years of experience in building robust and scalable web applications.{% endblocktrans %}
-                    
-                </p>
-            </li>
-    
-            <!-- Education Section -->
-            <li class="list-item p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 hover:scale-105 transform hover:bg-green-50 dark:bg-gray-800 dark:hover:bg-green-900">
-                <h2 class="font-mono font-bold text-green-500">{% trans "Education" %} 📚</h2>
-                <p class="font-sans font-light text-sm md:text-lg mt-4">
-                    {% blocktrans %}Bachelor in Computer Science, I focused on courses like Web Development, Database Systems, and Algorithms. I was also an active member of the Coding Club and participated in several hackathons, which helped me sharpen my problem-solving and teamwork skills.{% endblocktrans %}
-                </p>
-            </li>
-    
-            <!-- Skills Section -->
-            <li class="list-item p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 hover:scale-105 transform hover:bg-green-50 dark:bg-gray-800 dark:hover:bg-green-900">
-                <h2 class="font-mono font-bold text-green-500">{% trans "Skills" %} 🧗‍♂️</h2>
-                <ul class="font-sans font-light text-sm md:text-lg list mt-4 space-y-2">
-                    <li>Django, Django REST Framework</li>
-                    <li>PostgreSQL, MySQL</li>
-                    <li>RESTful APIs, Third-Party Integrations</li>
-                    <li>Docker, AWS Basics</li>
-                    <li>Redis, Celery</li>
-                    <li>Git, GitHub</li>
-                    <li>HTML, CSS, JavaScript</li>
-                    <li>Problem-Solving, Team Collaboration</li>
-                </ul>
-            </li>
-        </ul>
-    </div>    
+         <!-- Card 2: Education & Credentials -->
+         <article class="bg-white dark:bg-slate-800/80 border border-slate-200
+                         dark:border-slate-700 rounded-2xl p-8 shadow-sm
+                         flex flex-col justify-between h-full
+                         hover:shadow-md hover:-translate-y-1
+                         transition-all duration-200">
+            <div>
+               <h3 class="text-xl font-bold text-slate-900 dark:text-white">
+                  {% trans "Education & Credentials" %} 🎓
+               </h3>
+               <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                  <li class="flex items-start gap-3">
+                     <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
+                     <span>
+                        <span class="font-semibold text-slate-800 dark:text-slate-100">
+                           {% trans "B.S. in Software Engineering" %}
+                        </span>
+                        — {% trans "Graduated 2024 (GPA: 3.38)" %}
+                     </span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                     <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
+                     <span>
+                        <span class="font-semibold text-slate-800 dark:text-slate-100">
+                           {% trans "IBM DevOps & Software Engineering" %}
+                        </span>
+                        — {% trans "Coursera Professional Certificate" %}
+                     </span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                     <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
+                     <span>
+                        <span class="font-semibold text-slate-800 dark:text-slate-100">
+                           {% trans "Meta Advanced Back-End Development" %}
+                        </span>
+                        — {% trans "Coursera Professional Certificate" %}
+                     </span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                     <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500"></span>
+                     <span>
+                        <span class="font-semibold text-slate-800 dark:text-slate-100">
+                           {% trans "Odoo Development Training" %}
+                        </span>
+                        — {% trans "Certified by EBTECH" %}
+                     </span>
+                  </li>
+               </ul>
+            </div>
+            <p class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/60
+                      text-xs text-slate-500 dark:text-slate-400">
+               <span class="font-semibold text-slate-700 dark:text-slate-200">{% trans "Focus" %}:</span>
+               {% trans "Continuous learning through hands-on system replication and infrastructure design." %}
+            </p>
+         </article>
+
+         <!-- Card 3: Current Focus & Setup -->
+         <article class="bg-white dark:bg-slate-800/80 border border-slate-200
+                         dark:border-slate-700 rounded-2xl p-8 shadow-sm
+                         flex flex-col justify-between h-full
+                         hover:shadow-md hover:-translate-y-1
+                         transition-all duration-200">
+            <div>
+               <h3 class="text-xl font-bold text-slate-900 dark:text-white">
+                  {% trans "Current Focus & Setup" %} 🚀
+               </h3>
+               <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                  <li>
+                     <span class="font-semibold text-slate-800 dark:text-slate-100">
+                        {% trans "Environment" %}:
+                     </span>
+                     {% trans "Daily driver on Linux (Debian & Pop!_OS setups) for high-control software development, server configuration, and containerized deployment." %}
+                  </li>
+                  <li>
+                     <span class="font-semibold text-slate-800 dark:text-slate-100">
+                        {% trans "Engineering Focus" %}:
+                     </span>
+                     {% trans "Deepening expertise in cloud infrastructure, distributed storage mechanics, and automated CI/CD observability pipelines." %}
+                  </li>
+                  <li>
+                     <span class="font-semibold text-slate-800 dark:text-slate-100">
+                        {% trans "Communication" %}:
+                     </span>
+                     {% trans "Native Arabic, professional English (B2), and currently studying German to expand collaboration across international and European tech teams." %}
+                  </li>
+               </ul>
+            </div>
+         </article>
+
+      </div>
+   </section>
+
 </div>
 
 <script>
