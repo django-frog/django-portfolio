@@ -106,6 +106,7 @@ class Skill(models.Model):
             "django", "flask", "fastapi", "fast api", "starlette", "express",
             "react", "next.js", "nextjs", "vue", "angular", "svelte",
             "odoo", "openerp", "rails", "laravel", "spring", "odoo.sh",
+            "owl",
         ),
         "data": (
             "postgres", "postgresql", "mysql", "mariadb", "sqlite", "redis",
@@ -117,7 +118,7 @@ class Skill(models.Model):
             "jenkins", "github actions", "gitlab ci", "circleci", "argo",
             "nginx", "apache", "aws", "azure", "gcp", "digitalocean",
             "linux", "ubuntu", "debian", "centos", "prometheus",
-            "grafana", "datadog", "ci/cd", "cicd",
+            "grafana", "datadog", "ci/cd", "cicd", "loki"
         ),
     }
 
