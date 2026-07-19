@@ -16,29 +16,22 @@ from .models import (
 )
 
 
-class SkillInline(admin.TabularInline):
-    """Edit Skills directly under their parent TechnicalDomain."""
-
-    model = Skill
-    fields = ("name", "proficiency", "is_featured", "sort_order")
-    extra = 1
-    autocomplete_fields: tuple[str, ...] = ()
-
-
 @admin.register(TechnicalDomain)
 class TechnicalDomainAdmin(admin.ModelAdmin):
-    list_display = ("name", "sort_order")
-    list_editable = ("sort_order",)
+    list_display = ("name", "order")
+    list_editable = ("order",)
     search_fields = ("name", "description")
-    inlines = [SkillInline]
+    filter_horizontal = ("skills",)
 
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ("name", "domain", "proficiency", "is_featured", "sort_order")
-    list_filter = ("domain", "is_featured")
-    list_editable = ("proficiency", "is_featured", "sort_order")
-    search_fields = ("name",)
+    list_display = ("name", "proficiency", "slug")
+    list_editable = ("proficiency",)
+    list_filter = ("domains",)
+    search_fields = ("name", "slug")
+    filter_horizontal = ("domains",)
+    prepopulated_fields = {"slug": ("name",)}
 
 
 @admin.register(WorkExperience)

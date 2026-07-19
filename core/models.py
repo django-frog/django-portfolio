@@ -46,12 +46,50 @@ class ContactInquiry(models.Model):
         return f"{self.name} - {self.subject}"
 
 
+class Skill(models.Model):
+    """An individual technical skill (e.g. 'Python', 'Django').
+
+    Skills are an atomic concept: a single row can belong to many
+    ``TechnicalDomain`` rows via the M2M on ``TechnicalDomain.skills``.
+    """
+
+    name = models.CharField(
+        verbose_name=_("Skill Name"),
+        max_length=100,
+        unique=True,
+    )
+    slug = models.SlugField(
+        verbose_name=_("URL Slug"),
+        max_length=100,
+        unique=True,
+        blank=True,
+    )
+    proficiency = models.PositiveSmallIntegerField(
+        verbose_name=_("Proficiency %"),
+        default=80,
+        validators=[MinValueValidator(1), MaxValueValidator(100)],
+        help_text=_("Percentage from 1 to 100"),
+    )
+
+    class Meta:
+        ordering = ["-proficiency", "name"]
+        verbose_name = _("Skill")
+        verbose_name_plural = _("Skills")
+        indexes = [
+            models.Index(fields=["-proficiency"]),
+        ]
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class TechnicalDomain(models.Model):
     """A grouping of related skills (e.g. 'Backend Architecture')."""
 
     name = models.CharField(
         verbose_name=_("Domain Name"),
         max_length=100,
+        unique=True,
     )
     description = models.CharField(
         verbose_name=_("Short Description"),
@@ -63,61 +101,27 @@ class TechnicalDomain(models.Model):
         blank=True,
         help_text=_("FontAwesome or SVG icon class name"),
     )
-    sort_order = models.PositiveIntegerField(
+    order = models.PositiveSmallIntegerField(
         default=0,
         db_index=True,
+        verbose_name=_("Display Order"),
         help_text=_("Lower numbers appear first"),
+    )
+    skills = models.ManyToManyField(
+        Skill,
+        related_name="domains",
+        blank=True,
+        verbose_name=_("Skills"),
+        help_text=_("Select all skills that apply to this technical domain."),
     )
 
     class Meta:
-        ordering = ["sort_order", "name"]
+        ordering = ["order", "name"]
         verbose_name = _("Technical Domain")
         verbose_name_plural = _("Technical Domains")
 
     def __str__(self) -> str:
         return self.name
-
-
-class Skill(models.Model):
-    """An individual technical skill belonging to a domain."""
-
-    domain = models.ForeignKey(
-        TechnicalDomain,
-        on_delete=models.CASCADE,
-        related_name="skills",
-        verbose_name=_("Technical Domain"),
-    )
-    name = models.CharField(
-        verbose_name=_("Skill Name"),
-        max_length=100,
-    )
-    proficiency = models.PositiveSmallIntegerField(
-        verbose_name=_("Proficiency %"),
-        default=80,
-        validators=[MinValueValidator(1), MaxValueValidator(100)],
-        help_text=_("Percentage from 1 to 100"),
-    )
-    is_featured = models.BooleanField(
-        default=True,
-        db_index=True,
-        help_text=_("Show on front page summaries"),
-    )
-    sort_order = models.PositiveIntegerField(
-        default=0,
-        db_index=True,
-    )
-
-    class Meta:
-        ordering = ["sort_order", "-proficiency", "name"]
-        verbose_name = _("Skill")
-        verbose_name_plural = _("Skills")
-        indexes = [
-            models.Index(fields=["domain", "sort_order"]),
-            models.Index(fields=["is_featured", "-proficiency"]),
-        ]
-
-    def __str__(self) -> str:
-        return f"{self.name} ({self.domain.name})"
 
 
 class WorkExperience(models.Model):

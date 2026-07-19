@@ -164,73 +164,18 @@ class FrontPageView(generic.TemplateView):
     """
     template_name = "portfolio/front_page.html"
 
-    _SKILL_THEMES: list[dict[str, str]] = [
-        {
-            "label": "blue",
-            "tag_bg":          "bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700",
-            "tag_ring":        "ring-blue-400 dark:ring-blue-300",
-            "ring_stroke":     "text-blue-500 dark:text-blue-400",
-        },
-        {
-            "label": "purple",
-            "tag_bg":          "bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-700 dark:text-white dark:hover:bg-purple-800",
-            "tag_ring":        "ring-purple-400 dark:ring-purple-300",
-            "ring_stroke":     "text-purple-500 dark:text-purple-400",
-        },
-        {
-            "label": "yellow",
-            "tag_bg":          "bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-700",
-            "tag_ring":        "ring-yellow-400 dark:ring-yellow-300",
-            "ring_stroke":     "text-yellow-500 dark:text-yellow-400",
-        },
-        {
-            "label": "green",
-            "tag_bg":          "bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-600 dark:text-white dark:hover:bg-green-700",
-            "tag_ring":        "ring-green-400 dark:ring-green-300",
-            "ring_stroke":     "text-green-500 dark:text-green-400",
-        },
-        {
-            "label": "red",
-            "tag_bg":          "bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-600 dark:text-white dark:hover:bg-red-700",
-            "tag_ring":        "ring-red-400 dark:ring-red-300",
-            "ring_stroke":     "text-red-500 dark:text-red-400",
-        },
-        {
-            "label": "emerald",
-            "tag_bg":          "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 dark:bg-emerald-600 dark:text-white dark:hover:bg-emerald-700",
-            "tag_ring":        "ring-emerald-400 dark:ring-emerald-300",
-            "ring_stroke":     "text-emerald-500 dark:text-emerald-400",
-        },
-    ]
-
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context: dict[str, Any] = super().get_context_data(**kwargs)
         context["experiences"] = WorkExperience.objects.all()
-
-        domains = list(
+        context["domains"] = (
             TechnicalDomain.objects
             .prefetch_related("skills")
-            .order_by("sort_order", "name")
+            .order_by("order", "name")
         )
-
-        # Build a parallel theme list so each domain card can pick a colour
-        # in a stable order without any model field.
-        themes: list[dict[str, str]] = []
-        for index, domain in enumerate(domains):
-            theme: dict[str, str] = self._SKILL_THEMES[
-                index % len(self._SKILL_THEMES)
-            ]
-            theme["domain_id"] = domain.pk
-            themes.append(theme)
-
-        context["domains"] = domains
-        context["domain_themes"] = themes
-
-        # Flat list of all skills for the progress-bar grid (Option A).
         context["skills"] = (
             Skill.objects
-            .select_related("domain")
-            .order_by("domain__sort_order", "sort_order", "-proficiency", "name")
+            .prefetch_related("domains")
+            .order_by("-proficiency", "name")
         )
         return context
 
