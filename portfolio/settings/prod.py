@@ -1,5 +1,6 @@
 # portfolio/settings/prod.py
 from .base import *
+import dj_database_url
 
 DEBUG = False
 ALLOWED_HOSTS = [
@@ -9,5 +10,11 @@ ALLOWED_HOSTS = [
     '.onrender.com',
 ]
 
-# Production cache and DB already in base
-print("🏭 Running in PRODUCTION mode")
+DATABASES = {
+    'default': dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
+
+print("🏭 Running in PRODUCTION mode (PostgreSQL)")

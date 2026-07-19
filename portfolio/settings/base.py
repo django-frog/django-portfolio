@@ -87,13 +87,7 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'portfolio_db',
-    }
-}
+# Engine-specific DB config lives in dev.py (SQLite) and prod.py (PostgreSQL).
 
 # Cache
 # https://docs.djangoproject.com/en/5.1/topics/cache/

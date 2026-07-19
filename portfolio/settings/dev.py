@@ -1,5 +1,6 @@
 # portfolio/settings/dev.py
 from .base import *
+from pathlib import Path
 
 DEBUG = True
 
@@ -11,4 +12,11 @@ MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-print("🚀 Running in DEVELOPMENT mode")
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'portfolio_db',
+    }
+}
+
+print("🚀 Running in DEVELOPMENT mode (SQLite)")
