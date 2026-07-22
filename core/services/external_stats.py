@@ -59,7 +59,7 @@ async def fetch_github_data(
 
     Args:
         api_url: Endpoint to hit. Falls back to ``settings.GITHUB_API``.
-        token: GitHub token. Falls back to ``settings.GITHUB_TOKEN``.
+        token: GitHub token. Falls back to ``settings.GITHUB_API_TOKEN``.
         timeout: HTTP timeout in seconds.
 
     Returns:
@@ -67,7 +67,7 @@ async def fetch_github_data(
         On error, the existing cached value (if any) is preserved.
     """
     api_url = api_url or settings.GITHUB_API
-    token = token or settings.GITHUB_TOKEN
+    token = token or settings.GITHUB_API_TOKEN
 
     try:
         async with httpx.AsyncClient() as client:
